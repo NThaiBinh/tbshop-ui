@@ -1,0 +1,47 @@
+export const objProductImages = [
+   { imageId: '', image: '' },
+   { imageId: '', image: '' },
+   { imageId: '', image: '' },
+   { imageId: '', image: '' },
+   { imageId: '', image: '' },
+]
+
+export const objProductInfo = {
+   categoryId: '',
+   productTypeId: '',
+   manufacId: '',
+   name: '',
+   quantity: '',
+   price: '',
+}
+
+export const objProductConfiguration = {
+   operatingSystem: '',
+   cpu: '',
+   gpu: '',
+   core: '',
+   threads: '',
+   cpuSpeed: '',
+   maxSpeed: '',
+   cacheCPU: '',
+   ram: '',
+   ramType: '',
+   monitor: '',
+   resolution: '',
+   refreshRate: '',
+   colorCoverage: '',
+   monitorTechnology: '',
+   brightness: '',
+   storageCapacity: '',
+   availableStorageCapacity: '',
+   frontCamera: '',
+   frontCameraTechnology: '',
+   backCamera: '',
+   backCameraTechnology: '',
+   charging: '',
+   material: '',
+   weight: '',
+   port: '',
+   wireless: '',
+   keyboardLight: '',
+}

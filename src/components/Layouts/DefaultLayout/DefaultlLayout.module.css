@@ -1,0 +1,12 @@
+.container {
+   width: 100%;
+   max-width: 1900px;
+   height: auto;
+   display: flex;
+   margin-top: calc(var(--header-height) + 10px);
+}
+
+.content {
+   width: 100%;
+   margin-left: var(--sidebar-width);
+}

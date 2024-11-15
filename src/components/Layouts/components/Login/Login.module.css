@@ -1,0 +1,167 @@
+.modal {
+   position: fixed;
+   top: 0px;
+   right: 0px;
+   bottom: 0px;
+   left: 0px;
+   z-index: 9999;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: rgba(153, 153, 153, 0.5);
+   backdrop-filter: blur(4px);
+}
+
+.loginForm {
+   width: 800px;
+   height: 400px;
+   border-radius: 20px;
+   display: flex;
+   justify-content: space-between;
+   background-color: #fff;
+   overflow: hidden;
+   font-size: 1.5rem;
+   animation: zoomIn 0.3s ease-in-out;
+   box-shadow: -10px -10px 10px #adf5ff, 10px 10px 10px #adf5ff;
+}
+
+.loginInfo {
+   width: 50%;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   padding: 40px 40px;
+   color: #242424;
+   animation: slideLeftToRight 0.4s linear;
+}
+
+.title {
+   width: 100%;
+   height: 40px;
+   align-content: center;
+   text-align: center;
+}
+
+.inputGroup {
+   width: 100%;
+   height: 50px;
+   margin-top: 10px;
+   display: flex;
+   flex-direction: column;
+}
+
+.labelInput {
+   width: 100%;
+   height: 20px;
+}
+
+.loginInput {
+   width: 100%;
+   height: 30px;
+   border: none;
+   border-bottom: 2px solid #757575;
+   font-size: 1.5rem;
+   outline: none;
+}
+
+.loginInput:focus {
+   border-color: #20004b;
+}
+
+.meaasge {
+   width: 100%;
+   height: 20px;
+   margin: 20px 0px;
+   color: red;
+}
+
+.buttonGroup {
+   display: flex;
+   justify-content: space-between;
+}
+
+.btnSubmit {
+   background-color: var(--primary-background-color);
+}
+
+.switchForm {
+   width: 100%;
+   height: 20px;
+   margin-top: 10px;
+   text-align: center;
+}
+
+.switchFormLink {
+   text-decoration: none;
+   color: #024252;
+}
+
+/*WELLCOME*/
+.wellcome {
+   width: 400px;
+   height: 650px;
+   position: relative;
+   left: 90px;
+   bottom: 145px;
+   background-color: var(--primary-background-color);
+   transform: rotate(-30deg);
+   animation: slideRightToLeft 0.4s linear;
+}
+
+.wellcomeContent {
+   width: 305px;
+   height: 250px;
+   padding: 0px 40px 0px 0px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: end;
+   transform: rotate(30deg);
+   position: relative;
+   top: 200px;
+   color: #242424;
+}
+
+.contentTitle {
+   width: 100%;
+   height: 90px;
+   font-size: 4rem;
+   line-height: 40px;
+   text-align: right;
+}
+
+.contentDescription {
+   width: 150px;
+   height: auto;
+   text-align: right;
+}
+
+/* ANIMATION */
+
+@keyframes zoomIn {
+   from {
+      transform: scale(50%);
+   }
+   to {
+      transform: scale(100%);
+   }
+}
+
+@keyframes slideRightToLeft {
+   from {
+      transform: translateX(500px);
+   }
+   to {
+      transform: translateX(0px);
+   }
+}
+
+@keyframes slideLeftToRight {
+   from {
+      transform: translateX(-500px);
+   }
+   to {
+      transform: translateX(0px);
+   }
+}

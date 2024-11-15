@@ -1,25 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import Cookies from 'js-cookie'
+import { publicRoutes, privateRoutes } from './routes/routes'
+import StoreContext from './store/StoreContext'
+import { setLocation, setShowToast } from './store/actions'
+import Login from './components/Layouts/components/Login/Login'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   const [state, dispatch] = useContext(StoreContext)
+   const location = useLocation()
+
+   useEffect(() => {
+      if (location.pathname !== '/login') dispatch(setLocation(location.pathname))
+      else dispatch(setLocation('/'))
+   }, [])
+   return (
+      <div className="App">
+         <Routes>
+            {publicRoutes.map((publicRoute, index) => {
+               const Layout = publicRoute.layout
+               const Page = publicRoute.component
+               const Modal = publicRoute.modal
+               return (
+                  <Route
+                     key={index}
+                     path={publicRoute.path}
+                     element={
+                        <Layout>
+                           {Modal && <Modal />}
+                           <Page />
+                        </Layout>
+                     }
+                  />
+               )
+            })}
+            {privateRoutes.map((privateRoute, index) => {
+               const Layout = privateRoute.layout
+               const Page = privateRoute.component
+               const EditPage = privateRoute.edit
+               const isLogin = Cookies.get('customerId')
+               return (
+                  <Route
+                     key={index}
+                     path={privateRoute.path}
+                     element={
+                        <Layout>
+                           {!isLogin && <Login />}
+                           {EditPage && <EditPage />}
+                           <Page />
+                        </Layout>
+                     }
+                  />
+               )
+            })}
+         </Routes>
+      </div>
+   )
 }
 
-export default App;
+export default App

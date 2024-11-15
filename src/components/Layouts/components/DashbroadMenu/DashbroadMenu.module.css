@@ -1,0 +1,60 @@
+.selectMenu {
+   width: 100%;
+   height: auto;
+   margin-top: 10px;
+}
+
+.selectMenu:hover .listMenu {
+   display: block;
+}
+
+.menuTitle {
+   width: 100%;
+   height: 40px;
+   padding: 10px;
+   display: flex;
+   align-items: center;
+   background-color: #dfdfdf;
+   border-radius: 20px;
+   cursor: pointer;
+   color: #007070;
+   font-size: 1.4rem;
+}
+
+.menuTitle:hover {
+   background-color: #d3d3d3;
+}
+
+.menuIcon {
+   font-size: 1rem;
+   margin-right: 5px;
+}
+
+.listMenu {
+   width: 100%;
+   height: auto;
+   margin-top: 10px;
+   padding: 10px 15px;
+   border-radius: 20px;
+   background-color: #d2d2d2;
+   position: relative;
+   transform-origin: top center;
+   cursor: pointer;
+   display: none;
+}
+
+.menuOption {
+   width: 100%;
+   height: auto;
+   border-bottom: 1px solid #b6b6b6;
+   margin-top: 5px;
+}
+
+.menuLink {
+   color: #008f99;
+   text-decoration: none;
+}
+
+.menuOption:last-child {
+   border-bottom: none;
+}

@@ -1,0 +1,25 @@
+.groupInut {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+.labelInput {
+   padding-left: 10px;
+}
+
+.inputValue {
+   width: 100%;
+   height: 30px;
+   border: 1px solid #ccc;
+   padding: 10px;
+   border-radius: 15px;
+}
+
+.inputValue:focus {
+   border: 2px dashed #333;
+}
+
+.labelMessage {
+   color: red;
+}

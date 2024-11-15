@@ -1,0 +1,52 @@
+.sidebar {
+   width: 100px;
+   height: calc(100% - 60px);
+   padding: 0px 10px;
+   display: flex;
+   justify-content: center;
+   position: fixed;
+   z-index: 1;
+   font-size: 1.2rem;
+}
+
+.menuList {
+   width: 100px;
+   height: auto;
+   display: flex;
+   flex-direction: column;
+}
+
+.active {
+   background-color: rgb(231, 231, 231);
+}
+
+.menuItem {
+   width: 80px;
+   height: 80px;
+   display: flex;
+   flex-direction: column;
+   padding: 10px;
+   justify-content: center;
+   align-items: center;
+   margin-top: 4px;
+   border-radius: 20px;
+   color: var(--primary-text-color);
+}
+
+.menuLink {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   text-decoration: none;
+   margin-top: 5px;
+   color: rgb(59, 59, 59);
+}
+
+.menuIcon {
+   font-size: 2.2rem;
+}
+
+.menuItem:hover {
+   background-color: #f6f6f6;
+}

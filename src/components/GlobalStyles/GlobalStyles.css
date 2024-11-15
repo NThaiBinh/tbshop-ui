@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css');
+
+:root {
+   --primary-background-color: #a8eed3;
+   --primary-text-color: #313131;
+   --header-height: 65px;
+   --sidebar-width: 100px;
+}
+
+* {
+   box-sizing: border-box;
+   margin: 0px;
+   padding: 0px;
+}
+
+html {
+   font-size: 62.5%;
+}
+
+body {
+   font-size: 1.6rem;
+   line-height: 1.5;
+   font-family: 'Roboto', sans-serif;
+   text-rendering: optimizeSpeed;
+}
+
+::-webkit-scrollbar {
+   width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+   background: rgb(199, 199, 199);
+   border-radius: 10px;
+}
+
+a,
+input,
+select {
+   text-decoration: none;
+   outline: none;
+}
+
+ul {
+   list-style: none;
+}
+
+.btnMediumLink {
+   text-align: center;
+   align-content: center;
+   text-decoration: none;
+   color: #333;
+}

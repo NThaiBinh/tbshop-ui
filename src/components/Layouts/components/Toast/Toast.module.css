@@ -1,0 +1,86 @@
+.wrapper {
+   width: 550px;
+   height: 100px;
+   box-shadow: 2px 2px 3px #333;
+   display: flex;
+   justify-content: start;
+   align-items: center;
+   position: absolute;
+   top: 60px;
+   right: 10px;
+   z-index: 9999;
+   background-color: #fff;
+   border-radius: 50px 0 0 50px;
+   animation: slideRightToLeft 0.4s ease-in, fadeOut 1s linear 2s forwards;
+}
+
+.imgToast {
+   width: 100px;
+   height: auto;
+   padding: 10px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.img {
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+}
+
+.lineState {
+   width: 6px;
+   height: 100%;
+}
+
+.iconState {
+   width: 50px;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.success {
+   background-color: green;
+}
+
+.error {
+   background-color: red;
+}
+
+.iconSuccess {
+   color: green;
+}
+
+.iconError {
+   color: red;
+}
+
+.message {
+   flex: 1;
+   color: var(--primary-text-color);
+}
+
+.clear {
+   width: 40px;
+   cursor: pointer;
+}
+
+@keyframes slideRightToLeft {
+   from {
+      opacity: 0;
+      transform: translateX(450px);
+   }
+   to {
+      opacity: 1;
+      transform: translateX(0);
+   }
+}
+
+@keyframes fadeOut {
+   to {
+      opacity: 0;
+   }
+}

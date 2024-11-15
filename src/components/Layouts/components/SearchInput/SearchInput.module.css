@@ -1,0 +1,35 @@
+.body {
+   width: 400px;
+   height: 40px;
+   border: 2px solid #b6b6b6;
+   border-radius: 20px;
+   display: flex;
+   justify-content: space-between;
+   padding: 0px 20px;
+   align-items: center;
+   z-index: 2;
+}
+
+.body:focus-within {
+   border: 2px dashed #333;
+}
+
+.searchInput {
+   width: 335px;
+   height: 100%;
+   margin: 0px 10px;
+   border: none;
+   outline: none;
+   font-size: 1.4rem;
+   z-index: 1;
+}
+
+.clearText {
+   display: none;
+   cursor: pointer;
+   font-size: 1.6rem;
+}
+
+.visible {
+   display: block;
+}
