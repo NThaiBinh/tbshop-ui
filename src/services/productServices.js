@@ -1,5 +1,11 @@
 import { api } from '.'
-import { productDetailMapper, productImageMapper, productInfoMapper, productMapper } from '../utils/productMapper'
+import {
+   productColorsMapper,
+   productDetailMapper,
+   productImageMapper,
+   productInfoMapper,
+   productMapper,
+} from '../utils/productMapper'
 
 async function getAllProductsInfo(page) {
    return await fetch(`${api}/products?page=${page}`, {
@@ -45,11 +51,13 @@ async function getProductDetails(productId, productConfigurationId) {
    })
       .then((response) => response.json())
       .then((productDetails) => {
-         console.log(productDetails)
          return {
             code: productDetails.code,
             data: {
                productImages: productDetails.data.productImages.map((productImage) => productImageMapper(productImage)),
+               productColors: productDetails.data.productColors.map((productColor) =>
+                  productColorsMapper(productColor),
+               ),
                productDetails: productDetailMapper({
                   productInfo: productDetails.data.productInfo,
                   productConfiguration: productDetails.data.productConfiguration,

@@ -63,7 +63,7 @@
 
 .configItem {
    width: 100%;
-   height: 30px;
+   min-height: 30px;
    border-bottom: 1px solid #ccc;
    display: flex;
    align-items: center;
@@ -99,9 +99,53 @@
    width: 100%;
 }
 
-.productPrice {
-   color: #b30000;
+.groupProductColor {
+   width: 100%;
+   height: 40px;
+   display: flex;
+   align-items: center;
+}
+
+.productColor {
+   height: 100%;
+   background-color: #ffffff;
+   display: flex;
+   padding: 10px 15px 10px 10px;
+   border-radius: 20px;
+   align-items: center;
+   margin-right: 10px;
+}
+
+.color {
+   width: 20px;
+   height: 20px;
+   border-radius: 50%;
+   margin-right: 10px;
+}
+
+.productName {
+   width: 100%;
+   margin-top: 10px;
+   align-content: center;
    font-size: 2rem;
+}
+
+.productPrice {
+   font-size: 2rem;
+   margin-top: 5px;
+   display: flex;
+   color: #b30000;
+}
+
+.oldPrice {
+   color: #4e4e4e;
+   text-decoration: line-through;
+   text-decoration-thickness: 1px;
+   margin: 0px 8px;
+}
+
+.newPrice {
+   margin-left: 8px;
 }
 
 .salePanel {
@@ -109,6 +153,7 @@
    height: auto;
    background-color: #fff;
    padding: 10px;
+   margin-top: 10px;
 }
 .saleTitle {
    width: 100%;
@@ -128,33 +173,36 @@
 }
 
 .listSaleItem {
-   width: 60%;
-   height: 30px;
+   width: 80%;
+   height: 60px;
    margin-top: 10px;
-   margin-left: 40px;
-   padding: 5px 20px;
+   margin-left: 60px;
+   padding: 5px 0px;
    background-color: var(--primary-background-color);
    position: relative;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
 }
 
 .listSaleItem::before {
    content: '';
-   border: 15px solid #ccc;
+   border: 30px solid #ccc;
    border-color: var(--primary-background-color) var(--primary-background-color) var(--primary-background-color)
       transparent;
    position: absolute;
    top: 0px;
-   left: -30px;
+   left: -60px;
    z-index: 99;
 }
 
 .listSaleItem::after {
    content: '';
-   border: 15px solid #ccc;
+   border: 30px solid #ccc;
    border-color: transparent transparent transparent var(--primary-background-color);
    position: absolute;
    top: 0px;
-   right: -30px;
+   right: -60px;
    z-index: 99;
 }
 
@@ -182,4 +230,8 @@
 .btnAddToCart {
    background-color: #0a7075;
    color: #ffffff;
+}
+
+.productColorActive {
+   background-color: #5decb5;
 }

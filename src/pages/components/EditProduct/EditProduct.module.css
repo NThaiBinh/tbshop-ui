@@ -1,48 +1,48 @@
-.productInfoColumn {
-   width: 300px;
+.columnLeft {
+   min-width: 300px;
    padding: 10px;
    margin-right: 10px;
    border-right: 1px solid #ccc;
    display: flex;
    flex-direction: column;
-   justify-content: space-evenly;
 }
 
-.title {
+.columnRight {
+   width: 1440px;
+   flex: 1;
+   padding: 10px;
+}
+
+.columnHeader {
    width: 100%;
    height: 40px;
    padding: 10px;
-   text-align: center;
-   align-content: center;
    margin-bottom: 10px;
    border-bottom: 1px solid #ccc;
 }
 
-.groupColumn {
-   padding: 10px;
-   flex: 1;
-}
-
-.headerGroupColumn {
-}
-
-.containerGroupColumn {
+.columnBody {
+   width: 100%;
    display: flex;
-   justify-content: space-evenly;
 }
-.columns {
+
+.groupColumn {
+   flex: 1;
    display: flex;
    flex-direction: column;
-   justify-content: space-evenly;
+   border-right: 1px solid #ccc;
    padding: 10px;
-   border-left: 1px solid #ccc;
 }
 
-.columns:first-child {
-   border-left: none;
+.groupColumn:last-child {
+   border-right: none;
 }
 
-.inputHorizontal {
+.title {
+   width: 100%;
+   height: 100%;
+   text-align: center;
+   align-content: center;
 }
 
 .labelAddConfig {
@@ -50,6 +50,63 @@
 }
 
 .input {
-   width: 100%;
    display: flex;
+   margin-top: 10px;
+}
+
+.groupCheckBox {
+   width: 100%;
+}
+
+.groupChooseColor {
+   display: flex;
+   align-items: center;
+   font-size: 1.4rem;
+}
+
+.colorPicker {
+   width: 20px;
+   height: 20px;
+   border: none;
+   border-radius: 20px;
+}
+
+.btnChooseColor {
+   width: 45px;
+   height: 20px;
+   margin-left: 5px;
+   padding: 2px;
+   border: none;
+   border-radius: 10px;
+   background-color: var(--primary-background-color);
+}
+
+.groupProductColor {
+   width: 100%;
+   height: 20px;
+   display: flex;
+}
+
+.groupColor {
+   min-width: 50px;
+   display: flex;
+   justify-content: space-between;
+   padding: 10px;
+   align-items: center;
+   background-color: #f1f1f1;
+   margin-right: 10px;
+   font-size: 1.2rem;
+}
+
+.groupColor span {
+   cursor: pointer;
+   font-size: 1.2rem;
+   margin-left: 10px;
+}
+
+.color {
+   width: 15px;
+   height: 15px;
+   margin-right: 4px;
+   border: 1px solid #ccc;
 }

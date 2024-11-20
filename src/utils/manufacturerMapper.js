@@ -6,8 +6,8 @@ function manufacturerMapper(manufacturerInfo) {
       phoneNumber: manufacturerInfo.SDTNSX,
       email: manufacturerInfo.EMAIL,
       address: manufacturerInfo.DIACHINSX,
-      createAt: manufacturerInfo.NGAYTAO,
-      updateAt: manufacturerInfo.NGAYCAPNHAT,
+      createdAt: manufacturerInfo.NGAYTAO,
+      updatedAt: manufacturerInfo.NGAYCAPNHAT,
    }
 }
 

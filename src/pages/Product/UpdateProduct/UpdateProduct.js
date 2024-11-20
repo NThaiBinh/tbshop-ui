@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { json, useLocation, useNavigate, useParams } from 'react-router-dom'
 import StoreContext from '../../../store/StoreContext'
 import { setShowToast } from '../../../store/actions'
 import { getProductDetails, updateProduct } from '../../../services/productServices'
 import EditProduct from '../../components/EditProduct/EditProduct'
-import { objProductConfiguration, objProductImages, objProductInfo } from '../objectProduct'
+import { objProductColors, objProductConfiguration, objProductImages, objProductInfo } from '../objectProduct'
 
 function UpdateProduct() {
    const navigate = useNavigate()
@@ -18,16 +18,17 @@ function UpdateProduct() {
       productInfo: objProductInfo,
       productConfiguration: objProductConfiguration,
    })
+   const [productColors, setProductColors] = useState([])
 
    async function handleGetProductDetails(productId, productConfigurationId) {
       const productDetailsInfo = await getProductDetails(productId, productConfigurationId)
       if (productDetailsInfo.code === 'SS') {
-         const { productImages, productDetails } = productDetailsInfo.data
+         const { productImages, productDetails, productColors } = productDetailsInfo.data
          setProductImages(productImages)
          setProductDetails(productDetails)
+         setProductColors(productColors)
       }
    }
-
    useEffect(() => {
       handleGetProductDetails(productId, productConfigurationId)
    }, [productId, productConfigurationId])
@@ -41,6 +42,8 @@ function UpdateProduct() {
       })
       formData.append('productInfo', JSON.stringify(productDetails.productInfo))
       formData.append('productConfiguration', JSON.stringify(productDetails.productConfiguration))
+      productColors.forEach((productColor) => formData.append('productColors', JSON.stringify(productColor)))
+
       const result = await updateProduct({ productId, productConfigurationId, formData })
       if (result.code === 'SS') {
          dispatch(setShowToast(true, 'success', 'Sửa sản phẩm thành công!'))
@@ -55,6 +58,8 @@ function UpdateProduct() {
          setProductImages={setProductImages}
          productDetails={productDetails}
          setProductDetails={setProductDetails}
+         productColors={productColors}
+         setProductColors={setProductColors}
          handleSubmit={handleSubmit}
       />
    )

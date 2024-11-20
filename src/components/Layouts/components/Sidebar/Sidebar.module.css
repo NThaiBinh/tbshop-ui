@@ -1,9 +1,11 @@
 .sidebar {
    width: 100px;
-   height: calc(100% - 60px);
+   height: calc(100% - 75px);
    padding: 0px 10px;
    display: flex;
-   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
    position: fixed;
    z-index: 1;
    font-size: 1.2rem;
@@ -49,4 +51,7 @@
 
 .menuItem:hover {
    background-color: #f6f6f6;
+}
+
+.menuAdmin {
 }

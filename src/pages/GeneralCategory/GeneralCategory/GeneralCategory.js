@@ -66,34 +66,45 @@ function GeneralCategory() {
 
    return (
       <Fragment>
-         {categories.length > 0 && (
-            <TableInfoDashbroad title="THÔNG TIN DANH MỤC SẢN PHẨM" image={false} pagination={false}>
-               {categories.map((category, index) => (
-                  <TabelBodyDashbroad
-                     key={index}
-                     id={category.categoryId}
-                     name={category.name}
-                     updateAt={category.updateAt}
-                     handleEdit={() => handleEditCategory(category.categoryId)}
-                     handleDelete={() => handleDeleteCategory(category.categoryId)}
-                  />
-               ))}
-            </TableInfoDashbroad>
-         )}
-         <div style={{ height: '40px' }}></div>
-         {productTypes.length > 0 && (
-            <TableInfoDashbroad title="THÔNG TIN LOẠI SẢN PHẨM" image={false} pagination={false}>
-               {productTypes.map((productType, index) => (
-                  <TabelBodyDashbroad
-                     key={index}
-                     id={productType.productTypeId}
-                     name={productType.name}
-                     updateAt={productType.updateAt}
-                     handleEdit={() => handleEditProductType(productType.productTypeId)}
-                     handleDelete={() => handleDeleteProductType(productType.productTypeId)}
-                  />
-               ))}
-            </TableInfoDashbroad>
+         {categories.length > 0 || productTypes.length > 0 ? (
+            <Fragment>
+               {categories.length > 0 && (
+                  <TableInfoDashbroad
+                     title="THÔNG TIN DANH MỤC SẢN PHẨM"
+                     image={false}
+                     pagination={false}
+                     updatedAt={true}
+                  >
+                     {categories.map((category, index) => (
+                        <TabelBodyDashbroad
+                           key={index}
+                           id={category.categoryId}
+                           name={category.name}
+                           updatedAt={category.updatedAt}
+                           handleEdit={() => handleEditCategory(category.categoryId)}
+                           handleDelete={() => handleDeleteCategory(category.categoryId)}
+                        />
+                     ))}
+                  </TableInfoDashbroad>
+               )}
+               <div style={{ height: '40px' }}></div>
+               {productTypes.length > 0 && (
+                  <TableInfoDashbroad title="THÔNG TIN LOẠI SẢN PHẨM" image={false} pagination={false} updatedAt={true}>
+                     {productTypes.map((productType, index) => (
+                        <TabelBodyDashbroad
+                           key={index}
+                           id={productType.productTypeId}
+                           name={productType.name}
+                           updatedAt={productType.updatedAt}
+                           handleEdit={() => handleEditProductType(productType.productTypeId)}
+                           handleDelete={() => handleDeleteProductType(productType.productTypeId)}
+                        />
+                     ))}
+                  </TableInfoDashbroad>
+               )}
+            </Fragment>
+         ) : (
+            <BlankPage />
          )}
       </Fragment>
    )

@@ -34,7 +34,6 @@ function Manufacturer() {
       }
    }
    useEffect(() => {
-      // navigate(`/dashbroad/manufacturers/page/${state.page}`)
       getAllManufacInPageHandle(state.page)
    }, [state.page, state.isShowToast])
 
@@ -45,16 +44,16 @@ function Manufacturer() {
    return (
       <Fragment>
          {manufactuers.length > 0 ? (
-            <TableInfoDashbroad title="THÔNG TIN NHÀ SẢN XUẤT" image={true} pagination={true}>
+            <TableInfoDashbroad title="THÔNG TIN NHÀ SẢN XUẤT" image={true} pagination={true} updatedAt={true}>
                {manufactuers.map((manufactuer, index) => (
                   <TabelBodyDashbroad
                      key={index}
                      id={manufactuer.manufacId}
                      name={manufactuer.name}
                      image={manufactuer.manufacImage}
-                     updateAt={manufactuer.updateAt}
-                     handleEdit={() => handleEdit(manufactuer.MANSX)}
-                     handleDelete={() => handleDelete(manufactuer.MANSX)}
+                     updatedAt={manufactuer.updatedAt}
+                     handleEdit={() => handleEdit(manufactuer.manufacId)}
+                     handleDelete={() => handleDelete(manufactuer.manufacId)}
                   />
                ))}
             </TableInfoDashbroad>

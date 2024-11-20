@@ -6,7 +6,6 @@ import { imageApi } from '../../../services'
 function Slider({ imageArray = [], widthSlide, maxWidthSlide }) {
    const [position, setPosition] = useState(0)
    useEffect(() => {
-      console.log('mount')
       const timerId = setTimeout(() => {
          setPosition((prev) => {
             if (prev - widthSlide < maxWidthSlide) {

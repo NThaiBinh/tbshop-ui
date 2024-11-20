@@ -1,33 +1,91 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import clsx from 'clsx'
 import Slider from '../Slider/Slider'
 import cssProductDetail from './ProductDetail.module.css'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import curencyFormat from '../../../utils/currencyFormat'
 import { getProductDetails } from '../../../services/productServices'
+import { objProductConfiguration, objProductInfo } from '../../Product/objectProduct'
+import { getAllStorewideDiscountsValid } from '../../../services/storewideDiscountServices'
+import { getAllProductDiscountsValidByProductId } from '../../../services/productDiscountServices'
+import { dateFormat } from '../../../utils/formatDate'
+import currencyFormat from '../../../utils/currencyFormat'
 function ProductDetail() {
-   const params = useParams()
+   const location = useLocation()
+   const queryParams = new URLSearchParams(location.search)
+   const productId = queryParams.get('productId')
+   const productConfigurationId = queryParams.get('productConfigurationId')
    const [imagesDetail, setImagesDetail] = useState([])
-   const [productInfo, setProductInfo] = useState([])
-   const [productConfiguration, setProductConfiguration] = useState([])
+   const [productDetails, setProductDetails] = useState({
+      productInfo: objProductInfo,
+      productConfiguration: objProductConfiguration,
+   })
+   const [productColors, setProductColors] = useState([])
+   const [productColorId, setProductColorId] = useState()
+   const [storewideDiscounts, setStorewideDiscounts] = useState([])
+   const [productDiscounts, setProductDiscounts] = useState([])
+   const [discountPrice, setDiscountPrice] = useState(0)
    const widthSlide = 680
    const maxWidthSlide = (imagesDetail.length - 1) * widthSlide * -1
 
-   async function getProductDetail(productId) {
-      const productDetail = await getProductDetails(productId)
-      if (productDetail.code === 'SS') {
-         var imageArray = productDetail.data.productImages?.map((productImage) => productImage.image)
+   async function handleGetProductDetails(productId, productConfigurationId) {
+      const productDetailsInfo = await getProductDetails(productId, productConfigurationId)
+      if (productDetailsInfo.code === 'SS') {
+         var imageArray = productDetailsInfo.data.productImages?.map((productImage) => productImage.image)
          imageArray.splice(0, 1)
          setImagesDetail(imageArray)
-         setProductInfo(productDetail.data.productInfo)
-         setProductConfiguration(productDetail.data.productConfiguration)
+         setProductDetails(productDetailsInfo.data.productDetails)
+         setProductColors((prev) => {
+            const productColors = productDetailsInfo.data.productColors
+            setProductColorId(productColors[0]?.productColorId)
+            return productColors
+         })
       }
    }
 
+   async function handleGetStorewideDiscount() {
+      const storewideDiscountInfo = await getAllStorewideDiscountsValid()
+      if (storewideDiscountInfo.code === 'SS') {
+         setStorewideDiscounts(storewideDiscountInfo.data)
+      }
+   }
+
+   async function handleGetProductDiscount(productId) {
+      const productDiscountInfo = await getAllProductDiscountsValidByProductId(productId)
+      if (productDiscountInfo.code === 'SS') {
+         setProductDiscounts(productDiscountInfo.data)
+      }
+   }
+
+   function handleProductPrice(productPrice) {
+      let discountPercentage = 0
+      productDiscounts.forEach((productDiscount) => {
+         if (!`${productDiscount.price}`.includes('%')) {
+            productPrice = productPrice - parseFloat(productDiscount.price)
+         } else {
+            discountPercentage +=
+               parseFloat(`${productDiscount.price}`.slice(0, `${productDiscount.price}`.length - 1)) / 100
+         }
+      })
+
+      return productPrice - productPrice * discountPercentage
+   }
+
+   function handleAddToCart() {
+      const cartItem = {
+         productId,
+         productConfigurationId,
+         productColorId,
+      }
+      console.log(cartItem)
+   }
+
    useEffect(() => {
-      getProductDetail(params.productId)
-   }, [params.productId])
+      handleGetProductDetails(productId, productConfigurationId)
+      handleGetStorewideDiscount()
+      handleGetProductDiscount(productId)
+   }, [productId, productConfigurationId])
 
    useEffect(() => {
       const groupConfigs = document.querySelectorAll('.groupConfig')
@@ -61,70 +119,64 @@ function ProductDetail() {
                         <i className="fa-solid fa-circle-chevron-up"></i>
                      </h3>
                      <ul className={cssProductDetail.listConfig}>
-                        {productConfiguration.operatingSystem && (
+                        {productDetails.productConfiguration.operatingSystem && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Hệ điều hành</aside>
-                              <aside>{productConfiguration.operatingSystem}</aside>
+                              <aside>{productDetails.productConfiguration.operatingSystem}</aside>
                            </li>
                         )}
-                        {productConfiguration.core && (
+                        {productDetails.productConfiguration.core && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Số nhân</aside>
-                              <aside>{productConfiguration.core}</aside>
+                              <aside>{productDetails.productConfiguration.core}</aside>
                            </li>
                         )}
-                        {productConfiguration.SOLUONG && (
+                        {productDetails.productConfiguration.threads && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Số luồng</aside>
-                              <aside>{productConfiguration.SOLUONG}</aside>
+                              <aside>{productDetails.productConfiguration.threads}</aside>
                            </li>
                         )}
-                        {productConfiguration.DUNGLUONGKHADUNG && (
-                           <li className={cssProductDetail.configItem}>
-                              <aside>Dung lượng khả dụng</aside>
-                              <aside>{productConfiguration.DUNGLUONGKHADUNG}</aside>
-                           </li>
-                        )}
-                        {productConfiguration.TOCDOCPU && (
+                        {productDetails.productConfiguration.cpuSpeed && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Tốc độ CPU</aside>
-                              <aside>{productConfiguration.TOCDOCPU}</aside>
+                              <aside>{productDetails.productConfiguration.cpuSpeed}</aside>
                            </li>
                         )}
-                        {productConfiguration.TOCDOTOIDA && (
+                        {productDetails.productConfiguration.maxSpeed && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Tốc độ tối đa</aside>
-                              <aside>{productConfiguration.TOCDOTOIDA}</aside>
+                              <aside>{productDetails.productConfiguration.maxSpeed}</aside>
                            </li>
                         )}
-                        {productConfiguration.GPU && (
+                        {productDetails.productConfiguration.gpu && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Chip đồ họa (GPU)</aside>
-                              <aside>{productConfiguration.GPU}</aside>
+                              <aside>{productDetails.productConfiguration.gpu}</aside>
                            </li>
                         )}
-                        {productConfiguration.RAM && (
+                        {productDetails.productConfiguration.ram && (
                            <li className={cssProductDetail.configItem}>
                               <aside>RAM</aside>
-                              <aside>{productConfiguration.RAM}</aside>
+                              <aside>{productDetails.productConfiguration.ram}</aside>
                            </li>
                         )}
-                        {productConfiguration.LOAIRAM && (
+                        {productDetails.productConfiguration.ramType && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Loại RAM</aside>
-                              <aside>{productConfiguration.LOAIRAM}</aside>
+                              <aside>{productDetails.productConfiguration.ramType}</aside>
                            </li>
                         )}
-                        {productConfiguration.DUNGLUONG && (
+                        {productDetails.productConfiguration.storageCapacity && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Dung lượng lưu trữ</aside>
-                              <aside>{productConfiguration.DUNGLUONG}</aside>
+                              <aside>{productDetails.productConfiguration.storageCapacity}</aside>
                            </li>
                         )}
-                        {productConfiguration.DUNGLUONGKHADUNG && (
+                        {productDetails.productConfiguration.availableStorageCapacity && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Dung lượng khả dụng</aside>
-                              <aside>{productConfiguration.DUNGLUONGKHADUNG}</aside>
+                              <aside>{productDetails.productConfiguration.availableStorageCapacity}</aside>
                            </li>
                         )}
                      </ul>
@@ -135,58 +187,58 @@ function ProductDetail() {
                         <i className="fa-solid fa-circle-chevron-up"></i>
                      </h3>
                      <ul className={cssProductDetail.listConfig}>
-                        {productConfiguration.CAMERASAU && (
+                        {productDetails.productConfiguration.backCamera && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Camera sau</aside>
-                              <aside>{productConfiguration.CAMERASAU}</aside>
+                              <aside>{productDetails.productConfiguration.backCamera}</aside>
                            </li>
                         )}
-                        {productConfiguration.CONGNGHECAMERASAU && (
+                        {productDetails.productConfiguration.backCameraTechnology && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Tính năng camera sau</aside>
-                              <aside>{productConfiguration.CONGNGHECAMERASAU}</aside>
+                              <aside>{productDetails.productConfiguration.backCameraTechnology}</aside>
                            </li>
                         )}
-                        {productConfiguration.CAMERATRUOC && (
+                        {productDetails.productConfiguration.frontCamera && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Camera trước</aside>
-                              <aside>{productConfiguration.CAMERATRUOC}</aside>
+                              <aside>{productDetails.productConfiguration.frontCamera}</aside>
                            </li>
                         )}
-                        {productConfiguration.CONGNGHECAMERATRUOC && (
+                        {productDetails.productConfiguration.frontCameraTechnology && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Tính năng camera trước</aside>
-                              <aside>{productConfiguration.CONGNGHECAMERATRUOC}</aside>
+                              <aside>{productDetails.productConfiguration.frontCameraTechnology}</aside>
                            </li>
                         )}
-                        {productConfiguration.MANHINH && (
+                        {productDetails.productConfiguration.monitor && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Màn hình</aside>
-                              <aside>{productConfiguration.MANHINH}</aside>
+                              <aside>{productDetails.productConfiguration.monitor}</aside>
                            </li>
                         )}
-                        {productConfiguration.CONGNGHEMANHINH && (
+                        {productDetails.productConfiguration.monitorTechnology && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Công nghệ màn hình</aside>
-                              <aside>{productConfiguration.CONGNGHEMANHINH}</aside>
+                              <aside>{productDetails.productConfiguration.monitorTechnology}</aside>
                            </li>
                         )}
-                        {productConfiguration.TANGSOQUET && (
+                        {productDetails.productConfiguration.refreshRate && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Tầng số quét</aside>
-                              <aside>{productConfiguration.TANGSOQUET}</aside>
+                              <aside>{productDetails.productConfiguration.refreshRate}</aside>
                            </li>
                         )}
-                        {productConfiguration.DOPHUMAU && (
+                        {productDetails.productConfiguration.colorCoverage && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Độ phủ màu</aside>
-                              <aside>{productConfiguration.DOPHUMAU}</aside>
+                              <aside>{productDetails.productConfiguration.colorCoverage}</aside>
                            </li>
                         )}
-                        {productConfiguration.DOSANG && (
+                        {productDetails.productConfiguration.brightness && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Độ sáng</aside>
-                              <aside>{productConfiguration.DOSANG}</aside>
+                              <aside>{productDetails.productConfiguration.brightness}</aside>
                            </li>
                         )}
                      </ul>
@@ -197,10 +249,10 @@ function ProductDetail() {
                         <i className="fa-solid fa-circle-chevron-up"></i>
                      </h3>
                      <ul className={cssProductDetail.listConfig}>
-                        {productConfiguration.SAC && (
+                        {productDetails.productConfiguration.charging && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Sạc</aside>
-                              <aside>{productConfiguration.SAC}</aside>
+                              <aside>{productDetails.productConfiguration.charging}</aside>
                            </li>
                         )}
                      </ul>
@@ -211,16 +263,16 @@ function ProductDetail() {
                         <i className="fa-solid fa-circle-chevron-up"></i>
                      </h3>
                      <ul className={cssProductDetail.listConfig}>
-                        {productConfiguration.SAC && (
+                        {productDetails.productConfiguration.port && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Cổng giao tiếp</aside>
-                              <aside>{productConfiguration.SAC}</aside>
+                              <aside>{productDetails.productConfiguration.port}</aside>
                            </li>
                         )}
-                        {productConfiguration.KHONGDAY && (
+                        {productDetails.productConfiguration.wireless && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Kết nối không dây</aside>
-                              <aside>{productConfiguration.KHONGDAY}</aside>
+                              <aside>{productDetails.productConfiguration.wireless}</aside>
                            </li>
                         )}
                      </ul>
@@ -231,16 +283,16 @@ function ProductDetail() {
                         <i className="fa-solid fa-circle-chevron-up"></i>
                      </h3>
                      <ul className={cssProductDetail.listConfig}>
-                        {productConfiguration.CHATLIEU && (
+                        {productDetails.productConfiguration.material && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Chất liệu</aside>
-                              <aside>{productConfiguration.CHATLIEU}</aside>
+                              <aside>{productDetails.productConfiguration.material}</aside>
                            </li>
                         )}
-                        {productConfiguration.KHOILUONG && (
+                        {productDetails.productConfiguration.weight && (
                            <li className={cssProductDetail.configItem}>
                               <aside>Khối lượng</aside>
-                              <aside>{productConfiguration.KHOILUONG}</aside>
+                              <aside>{productDetails.productConfiguration.weight}</aside>
                            </li>
                         )}
                      </ul>
@@ -252,29 +304,82 @@ function ProductDetail() {
                   <h3 className={cssProductDetail.productInfoTitle}>Thông tin sản phẩm</h3>
                </div>
                <div className={cssProductDetail.rightBody}>
-                  <h3>{productInfo.TENSP}</h3>
-                  <h4 className={cssProductDetail.productPrice}>Giá sản phẩm: {curencyFormat(productInfo.GIASP)}</h4>
-                  {
+                  <div className={cssProductDetail.groupProductColor}>
+                     {productColors.map((productColor) => (
+                        <div
+                           key={productColor.productColorId}
+                           className={clsx(cssProductDetail.productColor, {
+                              [cssProductDetail.productColorActive]: productColorId === productColor.productColorId,
+                           })}
+                           onClick={() => setProductColorId(productColor.productColorId)}
+                        >
+                           <div
+                              className={cssProductDetail.color}
+                              style={{ backgroundColor: `${productColor.color}` }}
+                           ></div>
+                           <span>{productColor.name}</span>
+                        </div>
+                     ))}
+                  </div>
+                  <h3 className={cssProductDetail.productName}>
+                     {productDetails.productInfo.name} {productDetails.productConfiguration.storageCapacity}{' '}
+                     {productDetails.productConfiguration.cpu} {productDetails.productConfiguration.gpu}
+                  </h3>
+                  <div className={cssProductDetail.productPrice}>
+                     <strong>Giá sản phẩm:</strong>
+                     <h4 className={cssProductDetail.oldPrice}>{currencyFormat(productDetails.productInfo.price)}</h4>
+                     {'-'}
+                     <h4 className={cssProductDetail.newPrice}>
+                        {currencyFormat(handleProductPrice(productDetails.productInfo.price))}
+                     </h4>
+                  </div>
+                  {(storewideDiscounts.length > 0 || productDiscounts.length > 0) && (
                      <div className={cssProductDetail.salePanel}>
-                        <h4 className={cssProductDetail.saleTitle}>
-                           KHUYẾN MÃI
-                           <p>Áp dụng từ 13/11/2024 - 15/11/2024</p>
-                        </h4>
+                        <h4 className={cssProductDetail.saleTitle}>KHUYẾN MÃI</h4>
                         <div className={cssProductDetail.saleBody}>
                            <ul className={cssProductDetail.listSale}>
-                              <li className={cssProductDetail.listSaleItem}>Giảm 500k cho HSSV</li>
-                              <li className={cssProductDetail.listSaleItem}>Giảm 20% tháng 11</li>
+                              {storewideDiscounts.map((storewideDiscount, index) => (
+                                 <li key={index} className={cssProductDetail.listSaleItem}>
+                                    <strong>
+                                       {storewideDiscount.name}{' '}
+                                       {`${storewideDiscount.price}`.includes('%')
+                                          ? storewideDiscount.price
+                                          : curencyFormat(storewideDiscount.price)}
+                                    </strong>
+                                    <p>
+                                       Áp dụng từ {dateFormat(storewideDiscount.startDate)} -{' '}
+                                       {dateFormat(storewideDiscount.endDate)}
+                                    </p>
+                                 </li>
+                              ))}
+                              {productDiscounts.map((productDiscount, index) => (
+                                 <li key={index} className={cssProductDetail.listSaleItem}>
+                                    <strong>
+                                       {productDiscount.name}{' '}
+                                       {`${productDiscount.price}`.includes('%')
+                                          ? productDiscount.price
+                                          : curencyFormat(productDiscount.price)}
+                                    </strong>
+                                    <p>
+                                       Áp dụng từ {dateFormat(productDiscount.startDate)} -{' '}
+                                       {dateFormat(productDiscount.endDate)}
+                                    </p>
+                                 </li>
+                              ))}
                            </ul>
                         </div>
                      </div>
-                  }
+                  )}
                </div>
                <div className={cssProductDetail.rightFooter}>
                   <button className={clsx(cssProductDetail.btn, cssProductDetail.btnBuyNow)}>
-                     <i class="fa-solid fa-dollar-sign"></i>Mua ngay
+                     <i className="fa-solid fa-dollar-sign"></i>Mua ngay
                   </button>
-                  <button className={clsx(cssProductDetail.btn, cssProductDetail.btnAddToCart)}>
-                     <i class="fa-solid fa-cart-plus"></i>Thêm vào giỏ
+                  <button
+                     className={clsx(cssProductDetail.btn, cssProductDetail.btnAddToCart)}
+                     onClick={handleAddToCart}
+                  >
+                     <i className="fa-solid fa-cart-plus"></i>Thêm vào giỏ
                   </button>
                </div>
             </div>

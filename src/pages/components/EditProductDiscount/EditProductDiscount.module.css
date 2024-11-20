@@ -1,0 +1,15 @@
+.wrapper {
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.input {
+   width: 420px;
+   margin-top: 10px;
+}
+
+.flexInput {
+   width: 420px;
+   display: flex;
+}

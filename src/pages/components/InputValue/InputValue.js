@@ -14,7 +14,7 @@ function InputValue({
    isDisabled,
 }) {
    return (
-      <div className={cssInputValue.groupInut}>
+      <div className={cssInputValue.groupInput}>
          <label className={cssInputValue.labelInput} htmlFor={id}>
             {title} {isRequire && <span style={{ color: 'red' }}>*</span>}
          </label>

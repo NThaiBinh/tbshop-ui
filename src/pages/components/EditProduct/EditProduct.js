@@ -12,7 +12,16 @@ import { getAllProductTypes } from '../../../services/productTypeServices'
 import { getProductInfoWidthoutConfig } from '../../../services/productServices'
 import { objProductImages, objProductInfo, objProductConfiguration } from '../../Product/objectProduct'
 
-function EditProduct({ isCreate, productImages, setProductImages, productDetails, setProductDetails, handleSubmit }) {
+function EditProduct({
+   isCreate,
+   productImages,
+   setProductImages,
+   productDetails,
+   setProductDetails,
+   productColors = [],
+   setProductColors,
+   handleSubmit,
+}) {
    const navigate = useNavigate()
    const [state, dispatch] = useContext(StoreContext)
    const [manufacs, setManufacs] = useState([])
@@ -76,6 +85,30 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
       }
    }
 
+   const colorPickerElement = document.getElementById('colorPicker')
+   const colorNameElement = document.getElementById('colorName')
+
+   function handleAddColor(e) {
+      setProductColors([
+         ...productColors,
+         { id: productColors.length, color: colorPickerElement.value, name: colorNameElement.value, state: 'add' },
+      ])
+   }
+
+   function handleDeleteColor(e) {
+      setProductColors(
+         productColors.map((productColor, index) => {
+            if (index.toString() === e.target.id) {
+               return {
+                  ...productColor,
+                  state: 'delete',
+               }
+            }
+            return productColor
+         }),
+      )
+   }
+
    useEffect(() => {
       if (isAddConfig) {
          handleGetProductInfoWithoutConfig(productHandleId)
@@ -105,113 +138,118 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
             handleSubmit={handleSubmit}
             isDisableInput={isDisableInput}
          >
-            <div className={cssEditProduct.productInfoColumn}>
-               <h4 className={cssEditProduct.title}>THÔNG TIN SẢN PHẨM</h4>
-               <div className={cssEditProduct.input}>
-                  <SelectOptions
-                     id="manufacturer"
-                     title="Nhà sản xuất:"
-                     values={manufacs}
-                     defaultValue={productDetails.productInfo.manufacId}
-                     isRequire={true}
-                     isDisabled={isDisableInput}
-                     handleOptionChange={(e) => {
-                        setProductDetails({
-                           productInfo: { ...productDetails.productInfo, manufacId: e.target.value },
-                           productConfiguration: { ...productDetails.productConfiguration },
-                        })
-                        console.log('dssd')
-                     }}
-                  />
+            <div className={cssEditProduct.columnLeft}>
+               <div className={cssEditProduct.columnHeader}>
+                  <h4 className={cssEditProduct.title}>THÔNG TIN SẢN PHẨM</h4>
                </div>
-               <div className={cssEditProduct.input}>
-                  <SelectOptions
-                     id="category"
-                     title="Danh mục:"
-                     values={categories}
-                     defaultValue={productDetails.productInfo.categoryId}
-                     isRequire={true}
-                     isDisabled={isDisableInput}
-                     handleOptionChange={(e) =>
-                        setProductDetails({
-                           productInfo: { ...productDetails.productInfo, categoryId: e.target.value },
-                           productConfiguration: { ...productDetails.productConfiguration },
-                        })
-                     }
-                  />
-               </div>
-               <div className={cssEditProduct.input}>
-                  <SelectOptions
-                     id="productType"
-                     title="Loại sản phẩm:"
-                     values={productTypes}
-                     defaultValue={productDetails.productInfo.productTypeId}
-                     isRequire={true}
-                     isDisabled={isDisableInput}
-                     handleOptionChange={(e) =>
-                        setProductDetails({
-                           productInfo: { ...productDetails.productInfo, productTypeId: e.target.value },
-                           productConfiguration: { ...productDetails.productConfiguration },
-                        })
-                     }
-                  />
-               </div>
-               <div className={cssEditProduct.input}>
-                  <InputValue
-                     id="name"
-                     title="Tên sản phẩm:"
-                     value={productDetails.productInfo.name}
-                     isDisabled={isDisableInput}
-                     onChange={(e) =>
-                        setProductDetails({
-                           productInfo: { ...productDetails.productInfo, name: e.target.value },
-                           productConfiguration: { ...productDetails.productConfiguration },
-                        })
-                     }
-                     isRequire={true}
-                  />
-               </div>
-               <div className={cssEditProduct.input}>
-                  <InputValue
-                     id="price"
-                     title="Giá sản phẩm:"
-                     value={productDetails.productInfo.price}
-                     type="number"
-                     min="0"
-                     isDisabled={isDisableInput}
-                     onChange={(e) =>
-                        setProductDetails({
-                           productInfo: { ...productDetails.productInfo, price: e.target.value },
-                           productConfiguration: { ...productDetails.productConfiguration },
-                        })
-                     }
-                     isRequire={true}
-                  />
-               </div>
-               <div className={cssEditProduct.input}>
-                  <InputValue
-                     id="quantity"
-                     title="Số lượng tồn:"
-                     value={productDetails.productInfo.quantity}
-                     type="number"
-                     min="0"
-                     isDisabled={isDisableInput}
-                     onChange={(e) =>
-                        setProductDetails({
-                           productInfo: { ...productDetails.productInfo, quantity: e.target.value },
-                           productConfiguration: { ...productDetails.productConfiguration },
-                        })
-                     }
-                     isRequire={true}
-                  />
+               <div className={cssEditProduct.columnBody}>
+                  <div className={cssEditProduct.groupColumn}>
+                     <div className={cssEditProduct.input}>
+                        <SelectOptions
+                           id="manufacturer"
+                           title="Nhà sản xuất:"
+                           values={manufacs}
+                           defaultValue={productDetails.productInfo.manufacId}
+                           isRequire={true}
+                           isDisabled={isDisableInput}
+                           handleOptionChange={(e) => {
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo, manufacId: e.target.value },
+                                 productConfiguration: { ...productDetails.productConfiguration },
+                              })
+                           }}
+                        />
+                     </div>
+                     <div className={cssEditProduct.input}>
+                        <SelectOptions
+                           id="category"
+                           title="Danh mục:"
+                           values={categories}
+                           defaultValue={productDetails.productInfo.categoryId}
+                           isRequire={true}
+                           isDisabled={isDisableInput}
+                           handleOptionChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo, categoryId: e.target.value },
+                                 productConfiguration: { ...productDetails.productConfiguration },
+                              })
+                           }
+                        />
+                     </div>
+                     <div className={cssEditProduct.input}>
+                        <SelectOptions
+                           id="productType"
+                           title="Loại sản phẩm:"
+                           values={productTypes}
+                           defaultValue={productDetails.productInfo.productTypeId}
+                           isRequire={true}
+                           isDisabled={isDisableInput}
+                           handleOptionChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo, productTypeId: e.target.value },
+                                 productConfiguration: { ...productDetails.productConfiguration },
+                              })
+                           }
+                        />
+                     </div>
+                     <div className={cssEditProduct.input}>
+                        <InputValue
+                           id="name"
+                           title="Tên sản phẩm:"
+                           value={productDetails.productInfo.name}
+                           isDisabled={isDisableInput}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo, name: e.target.value },
+                                 productConfiguration: { ...productDetails.productConfiguration },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                     </div>
+                     <div className={cssEditProduct.input}>
+                        <InputValue
+                           id="price"
+                           title="Giá sản phẩm:"
+                           value={productDetails.productInfo.price}
+                           type="number"
+                           min="0"
+                           isDisabled={isDisableInput}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo, price: e.target.value },
+                                 productConfiguration: { ...productDetails.productConfiguration },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                     </div>
+                     <div className={cssEditProduct.input}>
+                        <InputValue
+                           id="quantity"
+                           title="Số lượng tồn:"
+                           value={productDetails.productInfo.quantity}
+                           type="number"
+                           min="0"
+                           isDisabled={isDisableInput}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo, quantity: e.target.value },
+                                 productConfiguration: { ...productDetails.productConfiguration },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                     </div>
+                  </div>
                </div>
             </div>
-            <div className={cssEditProduct.groupColumn}>
-               <div className={cssEditProduct.headerGroupColumn}>
+            <div className={cssEditProduct.columnRight}>
+               <div className={cssEditProduct.columnHeader}>
                   <h4 className={cssEditProduct.title}>CẤU HÌNH SẢN PHẨM</h4>
                </div>
-               <div className={cssEditProduct.containerGroupColumn}>
-                  <div className={cssEditProduct.columns}>
+               <div className={cssEditProduct.columnBody}>
+                  <div className={cssEditProduct.groupColumn}>
                      {isCreate && (
                         <div className={cssEditProduct.groupCheckBox}>
                            <input
@@ -227,13 +265,15 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                               Thêm cấu hình cho sản phẩm có sẳn
                            </label>
                            {isAddConfig && (
-                              <InputValue
-                                 id="productHandleId"
-                                 title="Nhập mã sản phẩm cần thêm:"
-                                 value={productHandleId}
-                                 onChange={(e) => setProductHandleId(e.target.value)}
-                                 isRequire={true}
-                              />
+                              <div className={cssEditProduct.input}>
+                                 <InputValue
+                                    id="productHandleId"
+                                    title="Nhập mã sản phẩm cần thêm:"
+                                    value={productHandleId}
+                                    onChange={(e) => setProductHandleId(e.target.value)}
+                                    isRequire={true}
+                                 />
+                              </div>
                            )}
                         </div>
                      )}
@@ -263,6 +303,36 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                                  productConfiguration: {
                                     ...productDetails.productConfiguration,
                                     gpu: e.target.value,
+                                 },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                        <InputValue
+                           id="cpuSpeed"
+                           title="Tốc độ CPU:"
+                           value={productDetails.productConfiguration.cpuSpeed}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo },
+                                 productConfiguration: {
+                                    ...productDetails.productConfiguration,
+                                    cpuSpeed: e.target.value,
+                                 },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                        <InputValue
+                           id="maxSpeed"
+                           title="Tốc độ tối đa:"
+                           value={productDetails.productConfiguration.maxSpeed}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo },
+                                 productConfiguration: {
+                                    ...productDetails.productConfiguration,
+                                    maxSpeed: e.target.value,
                                  },
                               })
                            }
@@ -300,70 +370,6 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                            }
                            isRequire={true}
                         />
-                     </div>
-                     <div className={cssEditProduct.input}>
-                        <InputValue
-                           id="cpuSpeed"
-                           title="Tốc độ CPU:"
-                           value={productDetails.productConfiguration.cpuSpeed}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    cpuSpeed: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                        <InputValue
-                           id="maxSpeed"
-                           title="Tốc độ tối đa:"
-                           value={productDetails.productConfiguration.maxSpeed}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    maxSpeed: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                        <InputValue
-                           id="cacheCPU"
-                           title="Bộ nhớ đệm:"
-                           value={productDetails.productConfiguration.caheCPU}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    cacheCPU: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                     </div>
-                     <div className={cssEditProduct.input}>
-                        <InputValue
-                           id="operatingSystem"
-                           title="Hệ điều hành:"
-                           value={productDetails.productConfiguration.operatingSystem}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    operatingSystem: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
                         <InputValue
                            id="ram"
                            title="RAM:"
@@ -396,6 +402,36 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                         />
                      </div>
                      <div className={cssEditProduct.input}>
+                        <InputValue
+                           id="cacheCPU"
+                           title="Bộ nhớ đệm:"
+                           value={productDetails.productConfiguration.caheCPU}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo },
+                                 productConfiguration: {
+                                    ...productDetails.productConfiguration,
+                                    cacheCPU: e.target.value,
+                                 },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                        <InputValue
+                           id="operatingSystem"
+                           title="Hệ điều hành:"
+                           value={productDetails.productConfiguration.operatingSystem}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo },
+                                 productConfiguration: {
+                                    ...productDetails.productConfiguration,
+                                    operatingSystem: e.target.value,
+                                 },
+                              })
+                           }
+                           isRequire={true}
+                        />
                         <InputValue
                            id="monitor"
                            title="Màn hình:"
@@ -443,25 +479,6 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                            }
                            isRequire={true}
                         />
-                     </div>
-                     <div className={cssEditProduct.input}>
-                        <InputValue
-                           id="monitorTechnology"
-                           title="Công nghệ màn hình:"
-                           value={productDetails.productConfiguration.monitorTechnology}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    monitorTechnology: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                     </div>
-                     <div className={cssEditProduct.input}>
                         <InputValue
                            id="brightness"
                            title="Độ sáng:"
@@ -495,71 +512,20 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                      </div>
                      <div className={cssEditProduct.input}>
                         <InputValue
-                           id="storageCapacity"
-                           title="Dung lượng:"
-                           value={productDetails.productConfiguration.storageCapacity}
+                           id="monitorTechnology"
+                           title="Công nghệ màn hình:"
+                           value={productDetails.productConfiguration.monitorTechnology}
                            onChange={(e) =>
                               setProductDetails({
                                  productInfo: { ...productDetails.productInfo },
                                  productConfiguration: {
                                     ...productDetails.productConfiguration,
-                                    storageCapacity: e.target.value,
+                                    monitorTechnology: e.target.value,
                                  },
                               })
                            }
                            isRequire={true}
                         />
-                        <InputValue
-                           id="availableStoregaCapatity"
-                           title="Khả dụng:"
-                           value={productDetails.productConfiguration.availableStorageCapacity}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    availableStorageCapacity: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                     </div>
-                     <div className={cssEditProduct.input}>
-                        <InputValue
-                           id="material"
-                           title="Chất liệu:"
-                           value={productDetails.productConfiguration.material}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    material: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                        <InputValue
-                           id="weight"
-                           title="Khối lượng:"
-                           value={productDetails.productConfiguration.weight}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    weight: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                     </div>
-                  </div>
-                  <div className={cssEditProduct.columns}>
-                     <div className={cssEditProduct.input}>
                         <InputValue
                            id="port"
                            title="Cổng giao tiếp:"
@@ -576,6 +542,106 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                            isRequire={true}
                         />
                      </div>
+                     {!isAddConfig && (
+                        <div className={cssEditProduct.input}>
+                           <InputValue
+                              id="wireless"
+                              title="Kết nối không dây:"
+                              value={productDetails.productConfiguration.wireless}
+                              onChange={(e) =>
+                                 setProductDetails({
+                                    productInfo: { ...productDetails.productInfo },
+                                    productConfiguration: {
+                                       ...productDetails.productConfiguration,
+                                       wireless: e.target.value,
+                                    },
+                                 })
+                              }
+                              isRequire={true}
+                           />
+                           <InputValue
+                              id="storageCapacity"
+                              title="Dung lượng:"
+                              value={productDetails.productConfiguration.storageCapacity}
+                              onChange={(e) =>
+                                 setProductDetails({
+                                    productInfo: { ...productDetails.productInfo },
+                                    productConfiguration: {
+                                       ...productDetails.productConfiguration,
+                                       storageCapacity: e.target.value,
+                                    },
+                                 })
+                              }
+                              isRequire={true}
+                           />
+                           <InputValue
+                              id="availableStoregaCapatity"
+                              title="Khả dụng:"
+                              value={productDetails.productConfiguration.availableStorageCapacity}
+                              onChange={(e) =>
+                                 setProductDetails({
+                                    productInfo: { ...productDetails.productInfo },
+                                    productConfiguration: {
+                                       ...productDetails.productConfiguration,
+                                       availableStorageCapacity: e.target.value,
+                                    },
+                                 })
+                              }
+                              isRequire={true}
+                           />
+                        </div>
+                     )}
+                  </div>
+                  <div className={cssEditProduct.groupColumn}>
+                     {isAddConfig && (
+                        <div className={cssEditProduct.input}>
+                           <InputValue
+                              id="wireless"
+                              title="Kết nối không dây:"
+                              value={productDetails.productConfiguration.wireless}
+                              onChange={(e) =>
+                                 setProductDetails({
+                                    productInfo: { ...productDetails.productInfo },
+                                    productConfiguration: {
+                                       ...productDetails.productConfiguration,
+                                       wireless: e.target.value,
+                                    },
+                                 })
+                              }
+                              isRequire={true}
+                           />
+                           <InputValue
+                              id="storageCapacity"
+                              title="Dung lượng:"
+                              value={productDetails.productConfiguration.storageCapacity}
+                              onChange={(e) =>
+                                 setProductDetails({
+                                    productInfo: { ...productDetails.productInfo },
+                                    productConfiguration: {
+                                       ...productDetails.productConfiguration,
+                                       storageCapacity: e.target.value,
+                                    },
+                                 })
+                              }
+                              isRequire={true}
+                           />
+                           <InputValue
+                              id="availableStoregaCapatity"
+                              title="Khả dụng:"
+                              value={productDetails.productConfiguration.availableStorageCapacity}
+                              onChange={(e) =>
+                                 setProductDetails({
+                                    productInfo: { ...productDetails.productInfo },
+                                    productConfiguration: {
+                                       ...productDetails.productConfiguration,
+                                       availableStorageCapacity: e.target.value,
+                                    },
+                                 })
+                              }
+                              isRequire={true}
+                           />
+                        </div>
+                     )}
                      <div className={cssEditProduct.input}>
                         <InputValue
                            id="frontCamera"
@@ -642,7 +708,6 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                            isRequire={true}
                         />
                      </div>
-
                      <div className={cssEditProduct.input}>
                         <InputValue
                            id="charging"
@@ -659,25 +724,6 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                            }
                            isRequire={true}
                         />
-                     </div>
-                     <div className={cssEditProduct.input}>
-                        <InputValue
-                           id="wireless"
-                           title="Kết nối không dây:"
-                           value={productDetails.productConfiguration.wireless}
-                           onChange={(e) =>
-                              setProductDetails({
-                                 productInfo: { ...productDetails.productInfo },
-                                 productConfiguration: {
-                                    ...productDetails.productConfiguration,
-                                    wireless: e.target.value,
-                                 },
-                              })
-                           }
-                           isRequire={true}
-                        />
-                     </div>
-                     <div className={cssEditProduct.input}>
                         <InputValue
                            id="keyboardLight"
                            title="Đèn bàn phím:"
@@ -693,6 +739,66 @@ function EditProduct({ isCreate, productImages, setProductImages, productDetails
                            }
                            isRequire={true}
                         />
+                        <InputValue
+                           id="material"
+                           title="Chất liệu:"
+                           value={productDetails.productConfiguration.material}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo },
+                                 productConfiguration: {
+                                    ...productDetails.productConfiguration,
+                                    material: e.target.value,
+                                 },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                        <InputValue
+                           id="weight"
+                           title="Khối lượng:"
+                           value={productDetails.productConfiguration.weight}
+                           onChange={(e) =>
+                              setProductDetails({
+                                 productInfo: { ...productDetails.productInfo },
+                                 productConfiguration: {
+                                    ...productDetails.productConfiguration,
+                                    weight: e.target.value,
+                                 },
+                              })
+                           }
+                           isRequire={true}
+                        />
+                     </div>
+                     <div className={cssEditProduct.input}>
+                        <div className={cssEditProduct.productColor}>
+                           <div className={cssEditProduct.groupChooseColor}>
+                              <input id="colorPicker" className={cssEditProduct.colorPicker} type="color" /> Chọn màu
+                              sản phẩm
+                              <input id="colorName" className={cssEditProduct.productColorName} />
+                              <button className={cssEditProduct.btnChooseColor} onClick={handleAddColor}>
+                                 Chọn
+                              </button>
+                           </div>
+                           <div className={cssEditProduct.groupProductColor}>
+                              {productColors?.map((productColor, index) => {
+                                 if (productColor.state !== 'delete') {
+                                    return (
+                                       <div key={index} className={cssEditProduct.groupColor}>
+                                          <div
+                                             className={cssEditProduct.color}
+                                             style={{ backgroundColor: `${productColor.color}` }}
+                                          ></div>
+                                          <strong>{productColor.name}</strong>
+                                          <span id={index} onClick={handleDeleteColor}>
+                                             x
+                                          </span>
+                                       </div>
+                                    )
+                                 }
+                              })}
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>

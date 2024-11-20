@@ -13,9 +13,11 @@ function CreateProduct() {
       productInfo: objProductInfo,
       productConfiguration: objProductConfiguration,
    })
+   const [productColors, setProductColors] = useState([])
 
    async function handleSubmit() {
       let result
+      //Add new product configuration
       if (productDetails.productConfiguration.productId) {
          result = await createProductConfiguration(
             {
@@ -30,9 +32,10 @@ function CreateProduct() {
                formData.append('productImages', productImage.image, productImage.imageId)
             }
          })
-         console.log(productDetails)
+
          formData.append('productInfo', JSON.stringify(productDetails.productInfo))
          formData.append('productConfiguration', JSON.stringify(productDetails.productConfiguration))
+         productColors.forEach((productColor) => formData.append('productColors', JSON.stringify(productColor)))
          result = await createProduct(formData)
       }
       if (result.code === 'SS') {
@@ -43,7 +46,6 @@ function CreateProduct() {
       }
    }
 
-   console.log(productDetails.productInfo)
    return (
       <EditProduct
          isCreate={true}
@@ -51,6 +53,8 @@ function CreateProduct() {
          setProductImages={setProductImages}
          productDetails={productDetails}
          setProductDetails={setProductDetails}
+         productColors={productColors}
+         setProductColors={setProductColors}
          handleSubmit={handleSubmit}
       />
    )

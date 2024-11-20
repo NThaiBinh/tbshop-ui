@@ -45,14 +45,14 @@ function Product() {
    return (
       <Fragment>
          {products.length > 0 ? (
-            <TableInfoDashbroad title="THÔNG TIN SẢN PHẨM" image={true}>
+            <TableInfoDashbroad title="THÔNG TIN SẢN PHẨM" image={true} updatedAt={true}>
                {products.map((product, index) => (
                   <TabelBodyDashbroad
                      key={index}
                      id={product.productId}
                      name={`${product.name} ${product.cpu} ${product.gpu}`}
                      image={product.productImage}
-                     updateAt={product.updateAt}
+                     updatedAt={product.updatedAt}
                      handleEdit={() => handleEdit(product.productId, product.productConfigurationId)}
                      handleDelete={() => handleDelete(product.productId)}
                   />

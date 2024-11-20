@@ -3,7 +3,7 @@ import cssSidebar from './Sidebar.module.css'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 
-function Sidebar() {
+function Sidebar({ isAdmin = true }) {
    const [activeMenu, setActiveMenu] = useState('home')
 
    const menuItems = [
@@ -58,6 +58,12 @@ function Sidebar() {
                </li>
             ))}
          </ul>
+         {isAdmin && (
+            <Link to="/dashbroad/products/page/1" className={cssSidebar.menuItem}>
+               <i className={clsx(cssSidebar.menuIcon, 'fa-solid fa-screwdriver-wrench')}></i>
+               Quản trị
+            </Link>
+         )}
       </div>
    )
 }

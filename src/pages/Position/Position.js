@@ -35,7 +35,7 @@ function Position() {
                      key={index}
                      id={position.MACV}
                      name={position.TENCV}
-                     updateAt={position.NGAYCAPNHAT}
+                     updatedAt={position.NGAYCAPNHAT}
                      objectHandle="positions"
                   />
                ))}

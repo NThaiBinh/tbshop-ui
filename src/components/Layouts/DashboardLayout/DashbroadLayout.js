@@ -43,7 +43,7 @@ function Dashbroad({ children }) {
                <DashbroadMenu
                   title="Quản lý sản phẩm"
                   viewAll="Xem tất cả sản phẩm"
-                  addNews={[{ title: 'Thêm sản phẩm' }]}
+                  addNews={[{ title: 'Thêm sản phẩm hoặc cấu hình' }]}
                   objectHandle="products"
                   pagination={true}
                />
@@ -61,6 +61,17 @@ function Dashbroad({ children }) {
                   viewAll="Danh sách nhân viên"
                   addNews={[{ title: 'Thêm nhân viên' }]}
                   objectHandle="positions"
+                  pagination={true}
+               />
+
+               <DashbroadMenu
+                  title="Khuyến mãi"
+                  viewAll="Xem danh mục khuyến mãi"
+                  addNews={[
+                     { title: 'Thêm khuyến mãi chung', objectChildren: 'storewide-discount' },
+                     { title: 'Thêm khuyến mãi cho sản phẩm', objectChildren: 'product-discount' },
+                  ]}
+                  objectHandle="discounts"
                   pagination={true}
                />
             </div>

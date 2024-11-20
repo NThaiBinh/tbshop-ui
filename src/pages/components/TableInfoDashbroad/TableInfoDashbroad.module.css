@@ -25,7 +25,7 @@ th {
 }
 
 .id {
-   width: 300px;
+   width: 200px;
 }
 
 .name {
@@ -34,8 +34,8 @@ th {
 .image {
    width: 20px;
 }
-.createAt {
-   width: 300px;
+.date {
+   width: 250px;
 }
 .action {
    width: 250px;

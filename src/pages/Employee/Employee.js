@@ -20,7 +20,7 @@ function Employee() {
                key={index}
                id={employee.MANV}
                name={employee.TENNV}
-               updateAt={employee.NGAYCAPNHAT}
+               updatedAt={employee.NGAYCAPNHAT}
                objectHandle="employees"
             />
          ))}

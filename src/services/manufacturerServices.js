@@ -7,7 +7,12 @@ async function getAllManufacInPage(page) {
       credentials: 'include',
    })
       .then((response) => response.json())
-      .then((manufacs) => manufacs)
+      .then((manufacs) => {
+         return {
+            code: manufacs.code,
+            data: manufacs.data.map((manufac) => manufacturerMapper(manufac)),
+         }
+      })
 }
 
 async function getAllManufacs() {

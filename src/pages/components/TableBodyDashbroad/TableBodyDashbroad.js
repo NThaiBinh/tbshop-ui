@@ -1,12 +1,22 @@
 import cssTabelBodyDashbroad from './TableBodyDashbroad.module.css'
 import ButtonMedium from '../ButtonMedium/ButtonMedium'
-import { formattedDate } from '../../../utils/formatDate'
+import { dateTimeFormat } from '../../../utils/formatDate'
 import { imageApi } from '../../../services'
-function TabelBodyDashbroad({ id, name, image, updateAt, handleEdit, handleDelete }) {
-   const dateFormated = formattedDate(updateAt)
+function TabelBodyDashbroad({ id, refId, name, image, updatedAt, startDate, endDate, handleEdit, handleDelete }) {
+   let updatedAtFormat, startDateFormat, endDateFormat
+   if (updatedAt) {
+      updatedAtFormat = dateTimeFormat(updatedAt)
+   }
+   if (startDate) {
+      startDateFormat = dateTimeFormat(startDate)
+   }
+   if (endDate) {
+      endDateFormat = dateTimeFormat(endDate)
+   }
    return (
       <tr>
          <td>{id}</td>
+         {refId && <td>{refId}</td>}
          <td>
             <h3>{name}</h3>
          </td>
@@ -15,7 +25,9 @@ function TabelBodyDashbroad({ id, name, image, updateAt, handleEdit, handleDelet
                <img className={cssTabelBodyDashbroad.img} src={`${imageApi}/${image}`} />
             </td>
          )}
-         <td>{dateFormated}</td>
+         {updatedAt && <td>{updatedAtFormat}</td>}
+         {startDate && <td>{startDateFormat}</td>}
+         {endDate && <td>{endDateFormat}</td>}
          <td className={cssTabelBodyDashbroad.action}>
             <ButtonMedium title="Sửa" type="submit" handleClick={handleEdit} />
             <ButtonMedium title="Xóa" type="delete" handleClick={handleDelete} />

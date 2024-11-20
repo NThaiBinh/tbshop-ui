@@ -7,8 +7,8 @@ function productMapper(productInfo) {
       name: productInfo.TENSP,
       price: productInfo.GIASP,
       quantity: productInfo.SOLUONGTON,
-      createAt: productInfo.NGAYTAO,
-      updateAt: productInfo.NGAYCAPNHAT,
+      createdAt: productInfo.NGAYTAO,
+      updatedAt: productInfo.NGAYCAPNHAT,
    }
 }
 
@@ -27,8 +27,8 @@ function productInfoMapper(productInfo) {
       ram: productInfo.RAM,
       charging: productInfo.SAC,
       price: productInfo.GIASP,
-      createAt: productInfo.NGAYTAO,
-      updateAt: productInfo.NGAYCAPNHAT,
+      createdAt: productInfo.NGAYTAO,
+      updatedAt: productInfo.NGAYCAPNHAT,
    }
 }
 
@@ -42,6 +42,7 @@ function productDetailMapper(productDetailInfo) {
          quantity: productDetailInfo.productInfo.SOLUONGTON,
          price: productDetailInfo.productInfo.GIASP,
       },
+      productColors: [],
       productConfiguration: {
          operatingSystem: productDetailInfo.productConfiguration.HEDIEUHANH,
          cpu: productDetailInfo.productConfiguration.CPU,
@@ -82,4 +83,13 @@ function productImageMapper(productImageInfo) {
    }
 }
 
-export { productMapper, productInfoMapper, productDetailMapper, productImageMapper }
+function productColorsMapper(productColorsInfo) {
+   return {
+      productColorId: productColorsInfo.MAMAUSP,
+      productConfigurationId: productColorsInfo.MACAUHINH,
+      color: productColorsInfo.MAUSP,
+      name: productColorsInfo.TENMAUSP,
+   }
+}
+
+export { productMapper, productInfoMapper, productDetailMapper, productImageMapper, productColorsMapper }

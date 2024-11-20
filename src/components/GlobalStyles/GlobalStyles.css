@@ -39,6 +39,7 @@ input,
 select {
    text-decoration: none;
    outline: none;
+   border: none;
 }
 
 ul {

@@ -45,7 +45,7 @@ function App() {
                      path={privateRoute.path}
                      element={
                         <Layout>
-                           {!isLogin && <Login />}
+                           {/* {!isLogin && <Login />} */}
                            {EditPage && <EditPage />}
                            <Page />
                         </Layout>
