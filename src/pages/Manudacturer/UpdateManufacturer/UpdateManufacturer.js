@@ -4,6 +4,7 @@ import StoreContext from '../../../store/StoreContext'
 import EditManufacturer from '../../components/EditManufacturer/EditManufacturer'
 import { getManufacturerById, updateManufacturer } from '../../../services/manufacturerServices'
 import { setShowToast } from '../../../store/actions'
+import { imageApi } from '../../../services'
 
 function UpdateManufacturer() {
    const [name, setName] = useState('')
@@ -18,13 +19,13 @@ function UpdateManufacturer() {
 
    async function getManufacturerHandle(manufacId) {
       if (manufacId) {
-         const manufacturer = await getManufacturerById(manufacId)
-         if (manufacturer) {
-            setName(manufacturer.TENNSX)
-            setAddress(manufacturer.DIACHINSX)
-            setPhoneNumber(manufacturer.SDTNSX)
-            setEmail(manufacturer.EMAILNSX)
-            setImage(manufacturer.ANHNSX)
+         const manufacturerInfo = await getManufacturerById(manufacId)
+         if (manufacturerInfo.code === 'SS') {
+            setName(manufacturerInfo.data.name)
+            setImage(manufacturerInfo.data.image)
+            setPhoneNumber(manufacturerInfo.data.phoneNumber)
+            setEmail(manufacturerInfo.data.email)
+            setAddress(manufacturerInfo.data.address)
          }
       }
    }
@@ -43,22 +44,25 @@ function UpdateManufacturer() {
 
       const message = await updateManufacturer({ manufacId: params.manufacId, formData })
       if (message === 'SS') {
-         navigate(state.previousPath)
+         navigate(-1)
          dispatch(setShowToast(true, 'success', 'Sửa nhà sản xuất thành công'))
       } else {
          dispatch(setShowToast(true, 'error', 'Sửa nhà sản xuất thất bại'))
       }
    }
 
-   function handleExit() {
-      navigate(state.previousPath)
+   function handleDropFile(id, file) {
+      setImage(file)
+   }
+
+   function handleImageChange(id, file) {
+      setImage(file)
    }
 
    return (
       <EditManufacturer
          title="SỬA NHÀ SẢN XUẤT"
          image={image}
-         imageChange={(e) => setImage(e.target.files[0])}
          name={name}
          setName={setName}
          address={address}
@@ -67,8 +71,9 @@ function UpdateManufacturer() {
          setPhoneNumber={setPhoneNumber}
          email={email}
          setEmail={setEmail}
+         handleDropFile={handleDropFile}
+         handleImageChange={handleImageChange}
          handleSubmit={handleSubmit}
-         handleExit={handleExit}
       />
    )
 }

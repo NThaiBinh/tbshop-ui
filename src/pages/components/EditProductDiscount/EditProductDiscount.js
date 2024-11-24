@@ -4,7 +4,6 @@ import Modal from '../../../components/Layouts/components/Modal/Modal'
 import InputValue from '../InputValue/InputValue'
 import cssEditProductDiscount from './EditProductDiscount.module.css'
 import StoreContext from '../../../store/StoreContext'
-import EditWithoutImage from '../EditWithoutImage/EditWithoutImage'
 import EditWidthPanel from '../EditWidthPanel/EditWidthPanel'
 function EditProductDiscount({
    title,
@@ -19,20 +18,22 @@ function EditProductDiscount({
    endDate,
    setEndDate,
    posterDiscount,
-   setPosterDiscount,
+   handleDropFile,
+   handleImageChange,
    handleSubmit,
 }) {
    const navidate = useNavigate()
    const [state, dispatch] = useContext(StoreContext)
    function handleExit() {
-      navidate(state.previousPath)
+      navidate(-1)
    }
    return (
       <Modal>
          <EditWidthPanel
             title={title}
             posterDiscount={posterDiscount}
-            setPosterDiscount={setPosterDiscount}
+            handleDropFile={handleDropFile}
+            handleImageChange={handleImageChange}
             handleSubmit={handleSubmit}
             handleExit={handleExit}
          >
@@ -65,7 +66,6 @@ function EditProductDiscount({
                         isRequire={true}
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                        type="number"
                      />
                   </div>
                </div>

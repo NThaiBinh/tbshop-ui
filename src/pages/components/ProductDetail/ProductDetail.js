@@ -1,90 +1,57 @@
-import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
+import Cookie from 'js-cookie'
 import Slider from '../Slider/Slider'
 import cssProductDetail from './ProductDetail.module.css'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import curencyFormat from '../../../utils/currencyFormat'
 import { getProductDetails } from '../../../services/productServices'
 import { objProductConfiguration, objProductInfo } from '../../Product/objectProduct'
-import { getAllStorewideDiscountsValid } from '../../../services/storewideDiscountServices'
-import { getAllProductDiscountsValidByProductId } from '../../../services/productDiscountServices'
 import { dateFormat } from '../../../utils/formatDate'
 import currencyFormat from '../../../utils/currencyFormat'
+import StoreContext from '../../../store/StoreContext'
+import { setShowToast } from '../../../store/actions'
+import { addCartItem } from '../../../services/cartServices'
+import Quantity from '../Quantity/Quantity'
+
 function ProductDetail() {
    const location = useLocation()
+   const navigate = useNavigate()
+   const [state, dispatch] = useContext(StoreContext)
    const queryParams = new URLSearchParams(location.search)
-   const productId = queryParams.get('productId')
-   const productConfigurationId = queryParams.get('productConfigurationId')
+
    const [imagesDetail, setImagesDetail] = useState([])
    const [productDetails, setProductDetails] = useState({
       productInfo: objProductInfo,
       productConfiguration: objProductConfiguration,
    })
-   const [productColors, setProductColors] = useState([])
-   const [productColorId, setProductColorId] = useState()
-   const [storewideDiscounts, setStorewideDiscounts] = useState([])
-   const [productDiscounts, setProductDiscounts] = useState([])
-   const [discountPrice, setDiscountPrice] = useState(0)
    const widthSlide = 680
    const maxWidthSlide = (imagesDetail.length - 1) * widthSlide * -1
 
-   async function handleGetProductDetails(productId, productConfigurationId) {
-      const productDetailsInfo = await getProductDetails(productId, productConfigurationId)
-      if (productDetailsInfo.code === 'SS') {
-         var imageArray = productDetailsInfo.data.productImages?.map((productImage) => productImage.image)
-         imageArray.splice(0, 1)
-         setImagesDetail(imageArray)
-         setProductDetails(productDetailsInfo.data.productDetails)
-         setProductColors((prev) => {
-            const productColors = productDetailsInfo.data.productColors
-            setProductColorId(productColors[0]?.productColorId)
-            return productColors
-         })
-      }
-   }
-
-   async function handleGetStorewideDiscount() {
-      const storewideDiscountInfo = await getAllStorewideDiscountsValid()
-      if (storewideDiscountInfo.code === 'SS') {
-         setStorewideDiscounts(storewideDiscountInfo.data)
-      }
-   }
-
-   async function handleGetProductDiscount(productId) {
-      const productDiscountInfo = await getAllProductDiscountsValidByProductId(productId)
-      if (productDiscountInfo.code === 'SS') {
-         setProductDiscounts(productDiscountInfo.data)
-      }
-   }
-
-   function handleProductPrice(productPrice) {
-      let discountPercentage = 0
-      productDiscounts.forEach((productDiscount) => {
-         if (!`${productDiscount.price}`.includes('%')) {
-            productPrice = productPrice - parseFloat(productDiscount.price)
-         } else {
-            discountPercentage +=
-               parseFloat(`${productDiscount.price}`.slice(0, `${productDiscount.price}`.length - 1)) / 100
-         }
-      })
-
-      return productPrice - productPrice * discountPercentage
-   }
-
-   function handleAddToCart() {
-      const cartItem = {
-         productId,
-         productConfigurationId,
-         productColorId,
-      }
-      console.log(cartItem)
-   }
+   const [productColors, setProductColors] = useState([])
+   const productId = queryParams.get('productId')
+   const productConfigurationId = queryParams.get('productConfigurationId')
+   const [productColorId, setProductColorId] = useState()
+   const [quantity, setQuantity] = useState(1)
 
    useEffect(() => {
+      async function handleGetProductDetails(productId, productConfigurationId) {
+         const productDetailsInfo = await getProductDetails(productId, productConfigurationId)
+         if (productDetailsInfo.code === 'SS') {
+            var imageArray = productDetailsInfo.data.productImages?.map((productImage) => productImage.image)
+            imageArray.splice(0, 1)
+            setImagesDetail(imageArray)
+            setProductDetails(productDetailsInfo.data.productDetails)
+            setProductColors((prev) => {
+               const productColors = productDetailsInfo.data.productColors
+               setProductColorId(productColors[0]?.productColorId)
+               return productColors
+            })
+         }
+      }
+
       handleGetProductDetails(productId, productConfigurationId)
-      handleGetStorewideDiscount()
-      handleGetProductDiscount(productId)
    }, [productId, productConfigurationId])
 
    useEffect(() => {
@@ -103,6 +70,53 @@ function ProductDetail() {
          }),
       )
    }, [])
+
+   function handleIncrease(maxValue) {
+      setQuantity((perv) => {
+         const nextValue = perv + 1
+         return nextValue > maxValue ? perv : nextValue
+      })
+   }
+
+   function handleDecrease(minValue) {
+      setQuantity((perv) => {
+         const nextValue = perv - 1
+         return nextValue < minValue ? perv : nextValue
+      })
+   }
+
+   function handleQuantityChange(minValue, maxValue, value) {
+      setQuantity((perv) => {
+         const nextValue = parseInt(value === '' ? 0 : value)
+         return nextValue < minValue || nextValue > maxValue ? perv : nextValue
+      })
+   }
+
+   async function handleAddToCart() {
+      if (!localStorage.getItem('userInfo')) {
+         navigate('/login')
+      } else {
+         const cartInfo = JSON.parse(localStorage.getItem('cartInfo'))
+         const cartItem = {
+            cartId: cartInfo.cartId,
+            productId,
+            productConfigurationId,
+            productColorId,
+            quantity: quantity === '' || quantity === '0' ? 1 : quantity,
+            price: productDetails.productInfo.discountPrice || productDetails.productInfo.price,
+            totalPrice:
+               quantity * productDetails.productInfo.discountPrice || quantity * productDetails.productInfo.price,
+            productDiscountIds: productDetails.productInfo.productDiscounts?.map(
+               (productDiscount) => productDiscount.productDiscountId,
+            ),
+         }
+         const result = await addCartItem(cartItem)
+         if (result.code === 'SS') {
+            dispatch(setShowToast(true, 'success', 'Thêm vào giỏ hàng thành công!'))
+            navigate(-1)
+         }
+      }
+   }
 
    return (
       <Modal>
@@ -304,41 +318,33 @@ function ProductDetail() {
                   <h3 className={cssProductDetail.productInfoTitle}>Thông tin sản phẩm</h3>
                </div>
                <div className={cssProductDetail.rightBody}>
-                  <div className={cssProductDetail.groupProductColor}>
-                     {productColors.map((productColor) => (
-                        <div
-                           key={productColor.productColorId}
-                           className={clsx(cssProductDetail.productColor, {
-                              [cssProductDetail.productColorActive]: productColorId === productColor.productColorId,
-                           })}
-                           onClick={() => setProductColorId(productColor.productColorId)}
-                        >
-                           <div
-                              className={cssProductDetail.color}
-                              style={{ backgroundColor: `${productColor.color}` }}
-                           ></div>
-                           <span>{productColor.name}</span>
-                        </div>
-                     ))}
-                  </div>
                   <h3 className={cssProductDetail.productName}>
                      {productDetails.productInfo.name} {productDetails.productConfiguration.storageCapacity}{' '}
                      {productDetails.productConfiguration.cpu} {productDetails.productConfiguration.gpu}
                   </h3>
                   <div className={cssProductDetail.productPrice}>
                      <strong>Giá sản phẩm:</strong>
-                     <h4 className={cssProductDetail.oldPrice}>{currencyFormat(productDetails.productInfo.price)}</h4>
-                     {'-'}
+                     {productDetails.productInfo.discountPrice && (
+                        <h4 className={cssProductDetail.oldPrice}>
+                           {currencyFormat(productDetails.productInfo.price)}
+                        </h4>
+                     )}
+                     -
                      <h4 className={cssProductDetail.newPrice}>
-                        {currencyFormat(handleProductPrice(productDetails.productInfo.price))}
+                        {currencyFormat(
+                           productDetails.productInfo.discountPrice
+                              ? productDetails.productInfo.discountPrice
+                              : productDetails.productInfo.price,
+                        )}
                      </h4>
                   </div>
-                  {(storewideDiscounts.length > 0 || productDiscounts.length > 0) && (
+                  {(productDetails.productInfo.productDiscounts?.length > 0 ||
+                     productDetails.productInfo.storewideDiscounts?.length > 0) && (
                      <div className={cssProductDetail.salePanel}>
                         <h4 className={cssProductDetail.saleTitle}>KHUYẾN MÃI</h4>
                         <div className={cssProductDetail.saleBody}>
                            <ul className={cssProductDetail.listSale}>
-                              {storewideDiscounts.map((storewideDiscount, index) => (
+                              {productDetails.productInfo.storewideDiscounts.map((storewideDiscount, index) => (
                                  <li key={index} className={cssProductDetail.listSaleItem}>
                                     <strong>
                                        {storewideDiscount.name}{' '}
@@ -352,7 +358,7 @@ function ProductDetail() {
                                     </p>
                                  </li>
                               ))}
-                              {productDiscounts.map((productDiscount, index) => (
+                              {productDetails.productInfo.productDiscounts.map((productDiscount, index) => (
                                  <li key={index} className={cssProductDetail.listSaleItem}>
                                     <strong>
                                        {productDiscount.name}{' '}
@@ -370,6 +376,36 @@ function ProductDetail() {
                         </div>
                      </div>
                   )}
+                  <div className={cssProductDetail.groupProductColor}>
+                     <strong>Màu sắc:</strong>
+                     {productColors.map((productColor) => (
+                        <div
+                           key={productColor.productColorId}
+                           className={clsx(cssProductDetail.productColor, {
+                              [cssProductDetail.productColorActive]: productColorId === productColor.productColorId,
+                           })}
+                           onClick={() => setProductColorId(productColor.productColorId)}
+                        >
+                           <div
+                              className={cssProductDetail.color}
+                              style={{ backgroundColor: `${productColor.color}` }}
+                           ></div>
+                           <span>{productColor.name}</span>
+                        </div>
+                     ))}
+                  </div>
+                  <div className={cssProductDetail.groupProductQuantity}>
+                     <strong>Số lượng</strong>
+                     <Quantity
+                        quantity={quantity}
+                        onIncrease={() => handleIncrease(productDetails.productInfo.quantity)}
+                        onDecrease={() => handleDecrease(0)}
+                        onChange={(e) => handleQuantityChange(0, productDetails.productInfo.quantity, e.target.value)}
+                     />
+                     <p className={cssProductDetail.availableQuantity}>
+                        Số lượng có sẳn: {productDetails.productInfo.quantity}
+                     </p>
+                  </div>
                </div>
                <div className={cssProductDetail.rightFooter}>
                   <button className={clsx(cssProductDetail.btn, cssProductDetail.btnBuyNow)}>

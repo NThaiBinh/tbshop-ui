@@ -5,9 +5,9 @@ import { imageApi } from '../../../services'
 
 function DropFile({ id, image, handleDropFile, handleImageChange, isDisabled }) {
    const [preview, setPreview] = useState()
-   const fileInput = document.getElementById(id)
-
+   let fileInput
    useEffect(() => {
+      fileInput = document.getElementById(id)
       return () => URL.revokeObjectURL(preview)
    })
 

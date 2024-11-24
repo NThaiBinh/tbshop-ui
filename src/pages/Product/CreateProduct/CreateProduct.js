@@ -40,7 +40,7 @@ function CreateProduct() {
       }
       if (result.code === 'SS') {
          dispatch(setShowToast(true, 'success', 'Thêm sản phẩm thành công!'))
-         navigate(state.previousPath)
+         navigate(-1)
       } else {
          dispatch(setShowToast(true, 'errer', 'Thêm sản phẩm thất bại!'))
       }

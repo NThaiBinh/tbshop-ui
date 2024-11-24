@@ -58,7 +58,7 @@ async function getAllProductPosterDiscounts() {
 }
 
 async function createProductDiscount(productDiscountInfo) {
-   return await fetch(`${api}/product-siscounts/create`, {
+   return await fetch(`${api}/product-discounts/create`, {
       method: 'POST',
       credentials: 'include',
       body: productDiscountInfo,

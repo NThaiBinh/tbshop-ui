@@ -23,13 +23,13 @@ function UpdateCategory() {
       const result = await updateCategory({ categoryId: params.categoryId, categoryInfo: { name } })
       if (result === 'SS') {
          dispatch(setShowToast(true, 'success', 'Sửa danh mục thành công!'))
-         navigate(state.previousPath)
+         navigate(-1)
       } else {
-         dispatch(setShowToast(true, 'success', 'Sửa danh mục thất bại!'))
+         dispatch(setShowToast(true, 'error', 'Sửa danh mục thất bại!'))
       }
    }
    function handleExit() {
-      navigate(state.previousPath)
+      navigate(-1)
    }
 
    useEffect(() => {

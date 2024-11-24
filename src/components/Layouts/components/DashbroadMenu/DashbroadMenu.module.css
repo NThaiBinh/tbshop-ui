@@ -1,6 +1,6 @@
 .selectMenu {
    width: 100%;
-   height: auto;
+   min-height: 40px;
    margin-top: 10px;
 }
 
@@ -32,7 +32,7 @@
 
 .listMenu {
    width: 100%;
-   height: auto;
+   height: 100%;
    margin-top: 10px;
    padding: 10px 15px;
    border-radius: 20px;
@@ -45,14 +45,15 @@
 
 .menuOption {
    width: 100%;
-   height: auto;
+   height: 100%;
    border-bottom: 1px solid #b6b6b6;
    margin-top: 5px;
 }
 
 .menuLink {
+   width: 100%;
+   height: 100%;
    color: #008f99;
-   text-decoration: none;
 }
 
 .menuOption:last-child {

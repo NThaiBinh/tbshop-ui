@@ -6,7 +6,6 @@ import BlankPage from '../../BlankPage/BlankPage'
 import { getAllStorewideDiscountsInPage } from '../../../services/storewideDiscountServices'
 import { getAllProductDiscountsInPage } from '../../../services/productDiscountServices'
 import StoreContext from '../../../store/StoreContext'
-import { setLocation } from '../../../store/actions'
 
 function Discount() {
    const params = useParams()
@@ -33,9 +32,7 @@ function Discount() {
          setProductDiscounts(productDiscountInfo.data)
       }
    }
-   useEffect(() => {
-      dispatch(setLocation(location.pathname))
-   }, [])
+
    useEffect(() => {
       handleGetAllStorewideDiscount(params.page)
       handleGetAllProductDiscount(params.page)

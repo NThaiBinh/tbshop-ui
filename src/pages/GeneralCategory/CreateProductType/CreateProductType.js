@@ -18,13 +18,13 @@ function CreateProductType() {
          const result = await createProductType({ name })
          if (result === 'SS') {
             dispatch(setShowToast(true, 'success', 'Thêm danh mục thành công!'))
-            navigate(state.previousPath)
+            navigate(-1)
          }
       }
    }
 
    function handleExit() {
-      navigate(state.previousPath)
+      navigate(-1)
    }
    return (
       <EditCategory

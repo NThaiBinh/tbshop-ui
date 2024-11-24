@@ -110,3 +110,8 @@
    margin-right: 4px;
    border: 1px solid #ccc;
 }
+.productColorName {
+   width: 100px;
+   margin: 0px 10px;
+   border: 1px solid #ccc;
+}

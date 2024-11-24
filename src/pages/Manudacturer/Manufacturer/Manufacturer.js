@@ -1,11 +1,10 @@
 import { Fragment, useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import StoreContext from '../../../store/StoreContext'
-import cssManufacturer from './Manufacturer.module.css'
 import TabelBodyDashbroad from '../../components/TableBodyDashbroad/TableBodyDashbroad'
 import TableInfoDashbroad from '../../components/TableInfoDashbroad/TableInfoDashbroad'
 import BlankPage from '../../BlankPage/BlankPage'
-import { setLocation, setShowToast } from '../../../store/actions'
+import { setShowToast } from '../../../store/actions'
 import { deleteManufac, getAllManufacInPage } from '../../../services/manufacturerServices'
 
 function Manufacturer() {
@@ -24,6 +23,7 @@ function Manufacturer() {
    function handleEdit(manufacId) {
       navigate(`/dashbroad/manufacturers/edit/${manufacId}`)
    }
+
    async function handleDelete(manufacId) {
       const result = await deleteManufac(manufacId)
       if (result === 'SS') {
@@ -33,25 +33,21 @@ function Manufacturer() {
          dispatch(setShowToast(true, 'success', 'Xóa thất bại!'))
       }
    }
+
    useEffect(() => {
       getAllManufacInPageHandle(state.page)
    }, [state.page, state.isShowToast])
 
-   useEffect(() => {
-      dispatch(setLocation(location.pathname))
-   }, [])
-
    return (
       <Fragment>
          {manufactuers.length > 0 ? (
-            <TableInfoDashbroad title="THÔNG TIN NHÀ SẢN XUẤT" image={true} pagination={true} updatedAt={true}>
+            <TableInfoDashbroad title="THÔNG TIN NHÀ SẢN XUẤT" image={true} pagination={false}>
                {manufactuers.map((manufactuer, index) => (
                   <TabelBodyDashbroad
                      key={index}
                      id={manufactuer.manufacId}
                      name={manufactuer.name}
-                     image={manufactuer.manufacImage}
-                     updatedAt={manufactuer.updatedAt}
+                     image={manufactuer.image}
                      handleEdit={() => handleEdit(manufactuer.manufacId)}
                      handleDelete={() => handleDelete(manufactuer.manufacId)}
                   />

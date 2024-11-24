@@ -1,28 +1,13 @@
-import { useState, useEffect } from 'react'
-import Cookies from 'js-cookie'
+import { useContext } from 'react'
+import { Link } from 'react-router-dom'
 import SearchInput from '../SearchInput/SearchInput'
 import Authen from '../Authen/Authen'
 import cssHeader from './Header.module.css'
-import CustomerInfo from '../CustomerInfo/CustomerInfo'
-import { Link } from 'react-router-dom'
-import { getCustomerInfo } from '../../../../services/customerServices'
+import UserInfo from '../UserInfo/UserInfo'
+import StoreContext from '../../../../store/StoreContext'
 
 function Header() {
-   const [customerInfo, setCustomerInfo] = useState({})
-
-   const customerId = Cookies.get('customerId')
-   useEffect(() => {
-      async function getCustomerInfoHandle(customerId) {
-         const info = await getCustomerInfo(customerId)
-
-         if (info) {
-            setCustomerInfo(info)
-         }
-      }
-      if (customerId) {
-         getCustomerInfoHandle(customerId)
-      }
-   }, [customerId])
+   const [state, dispatch] = useContext(StoreContext)
 
    return (
       <header id={cssHeader.header}>
@@ -31,7 +16,7 @@ function Header() {
             <h2 className={cssHeader.storeName}>TBSHOP</h2>
          </Link>
          <SearchInput />
-         {customerId ? <CustomerInfo image={customerInfo.ANHKH} name={customerInfo.TENKH} /> : <Authen />}
+         {state.isLogin ? <UserInfo /> : <Authen />}
       </header>
    )
 }

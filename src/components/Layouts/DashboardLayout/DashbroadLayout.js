@@ -1,8 +1,7 @@
 import { useContext } from 'react'
 import StoreContext from '../../../store/StoreContext'
 import cssDashbroadLayout from './DashbroadLayout.module.css'
-import CustomerInfo from '../components/CustomerInfo/CustomerInfo'
-import Toast from '../components/Toast/Toast'
+import UserInfo from '../components/UserInfo/UserInfo'
 import SearchInput from '../components/SearchInput/SearchInput'
 import img from '../../../pages/imagePages/1.png'
 import DashbroadMenu from '../components/DashbroadMenu/DashbroadMenu'
@@ -49,11 +48,21 @@ function Dashbroad({ children }) {
                />
 
                <DashbroadMenu
+                  title="Khuyến mãi"
+                  viewAll="Xem danh mục khuyến mãi"
+                  addNews={[
+                     { title: 'Thêm khuyến mãi chung', objectChildren: 'storewide-discount' },
+                     { title: 'Thêm khuyến mãi cho sản phẩm', objectChildren: 'product-discount' },
+                  ]}
+                  objectHandle="discounts"
+                  pagination={true}
+               />
+
+               <DashbroadMenu
                   title="Quản lý chức vụ"
                   viewAll="Danh sách chức vụ"
                   addNews={[{ title: 'Thêm chức vụ' }]}
                   objectHandle="positions"
-                  pagination={true}
                />
 
                <DashbroadMenu
@@ -65,25 +74,23 @@ function Dashbroad({ children }) {
                />
 
                <DashbroadMenu
-                  title="Khuyến mãi"
-                  viewAll="Xem danh mục khuyến mãi"
+                  title="Quản lý quyền hạn"
+                  viewAll="Danh sách quyền và vai trò"
                   addNews={[
-                     { title: 'Thêm khuyến mãi chung', objectChildren: 'storewide-discount' },
-                     { title: 'Thêm khuyến mãi cho sản phẩm', objectChildren: 'product-discount' },
+                     { title: 'Thêm vai trò', objectChildren: 'add-role' },
+                     { title: 'Thêm quyền hạn', objectChildren: 'add-permission' },
                   ]}
-                  objectHandle="discounts"
-                  pagination={true}
+                  objectHandle="acccess-permissions"
                />
             </div>
          </div>
          <div className={cssDashbroadLayout.container}>
             <div className={cssDashbroadLayout.header}>
                <SearchInput />
-               <CustomerInfo name="ADMIN" image="" />
+               <UserInfo name="ADMIN" image="" />
             </div>
             <div className={cssDashbroadLayout.content}>{children}</div>
          </div>
-         {state.isShowToast && <Toast type={state.toastType} message={state.toastMessage} />}
       </div>
    )
 }

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import { json, useLocation, useNavigate, useParams } from 'react-router-dom'
 import StoreContext from '../../../store/StoreContext'
 import { setShowToast } from '../../../store/actions'
-import { getProductDetails, updateProduct } from '../../../services/productServices'
+import { getProductDetails, getProductEdit, updateProduct } from '../../../services/productServices'
 import EditProduct from '../../components/EditProduct/EditProduct'
 import { objProductColors, objProductConfiguration, objProductImages, objProductInfo } from '../objectProduct'
 
@@ -21,7 +21,8 @@ function UpdateProduct() {
    const [productColors, setProductColors] = useState([])
 
    async function handleGetProductDetails(productId, productConfigurationId) {
-      const productDetailsInfo = await getProductDetails(productId, productConfigurationId)
+      const productDetailsInfo = await getProductEdit(productId, productConfigurationId)
+
       if (productDetailsInfo.code === 'SS') {
          const { productImages, productDetails, productColors } = productDetailsInfo.data
          setProductImages(productImages)
@@ -47,11 +48,12 @@ function UpdateProduct() {
       const result = await updateProduct({ productId, productConfigurationId, formData })
       if (result.code === 'SS') {
          dispatch(setShowToast(true, 'success', 'Sửa sản phẩm thành công!'))
-         navigate(state.previousPath)
+         navigate(-1)
       } else {
          dispatch(setShowToast(true, 'errer', 'Sửa sản phẩm thất bại!'))
       }
    }
+
    return (
       <EditProduct
          productImages={productImages}

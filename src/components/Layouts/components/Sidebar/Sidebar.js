@@ -1,10 +1,20 @@
-import { useEffect, useState } from 'react'
-import cssSidebar from './Sidebar.module.css'
-import clsx from 'clsx'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import clsx from 'clsx'
+import cssSidebar from './Sidebar.module.css'
+import StoreContext from '../../../../store/StoreContext'
 
-function Sidebar({ isAdmin = true }) {
+function Sidebar() {
+   const [state, dispatch] = useContext(StoreContext)
    const [activeMenu, setActiveMenu] = useState('home')
+   const [userInfo, setUserInfo] = useState()
+
+   useEffect(() => {
+      const storedUser = localStorage.getItem('userInfo')
+      if (storedUser) {
+         setUserInfo(JSON.parse(storedUser))
+      }
+   }, [state.isLogin])
 
    const menuItems = [
       {
@@ -33,32 +43,41 @@ function Sidebar({ isAdmin = true }) {
       },
       {
          id: 'cart',
-         href: '/',
+         href: '/cart',
          icon: `${cssSidebar.menuIcon} fa-solid fa-cart-shopping`,
          title: 'Giỏ hàng',
       },
    ]
+   function checkPermission(roles) {
+      if (Array.isArray(roles)) return roles.some((role) => role === 'admin' || role === 'editor')
+      return false
+   }
    return (
       <div className={cssSidebar.sidebar}>
          <ul className={cssSidebar.menuList}>
-            {menuItems.map((menuItem, index) => (
-               <li
-                  key={index}
-                  className={clsx(cssSidebar.menuItem, {
-                     [cssSidebar.active]: menuItem.id === activeMenu,
-                  })}
-                  onClick={() => {
-                     setActiveMenu(menuItem.id)
-                  }}
-               >
-                  <Link className={cssSidebar.menuLink} to={menuItem.href}>
-                     <i className={menuItem.icon}></i>
-                     {menuItem.title}
-                  </Link>
-               </li>
-            ))}
+            {menuItems.map((menuItem, index) => {
+               if (menuItem.id === 'cart' && !localStorage.getItem('cartInfo')) {
+                  return undefined
+               }
+               return (
+                  <li
+                     key={index}
+                     className={clsx(cssSidebar.menuItem, {
+                        [cssSidebar.active]: menuItem.id === activeMenu,
+                     })}
+                     onClick={() => {
+                        setActiveMenu(menuItem.id)
+                     }}
+                  >
+                     <Link className={cssSidebar.menuLink} to={menuItem.href}>
+                        <i className={menuItem.icon}></i>
+                        {menuItem.title}
+                     </Link>
+                  </li>
+               )
+            })}
          </ul>
-         {isAdmin && (
+         {state.isLogin && checkPermission(userInfo?.roles) && (
             <Link to="/dashbroad/products/page/1" className={cssSidebar.menuItem}>
                <i className={clsx(cssSidebar.menuIcon, 'fa-solid fa-screwdriver-wrench')}></i>
                Quản trị

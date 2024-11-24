@@ -1,0 +1,88 @@
+.wrapper {
+   min-width: 100px;
+   height: 100%;
+   margin-right: 20px;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   font-size: 1rem;
+   position: relative;
+}
+
+.userName {
+}
+
+.userImg {
+   width: 50px;
+   height: 50px;
+   margin-left: 10px;
+   border-radius: 50%;
+}
+
+.userAction {
+   width: 200px;
+   background-color: #ffffff;
+   box-shadow: 1px 1px 3px var(--primary-background-color), -1px -1px 3px var(--primary-background-color);
+   top: calc(100% + 10px);
+   right: -5px;
+   padding: 15px;
+   border-radius: 15px;
+   animation: zoomIn 0.3s ease-in;
+   font-size: 1.8rem;
+   position: absolute;
+   display: none;
+}
+
+.wrapper:hover .userAction {
+   display: block;
+}
+
+.userAction::before {
+   content: '';
+   border: 15px solid;
+   border-color: transparent transparent #ffffff transparent;
+   position: absolute;
+   top: -30px;
+   right: 15px;
+}
+
+.userAction::after {
+   content: '';
+   width: 100%;
+   height: 30px;
+   position: absolute;
+   top: -30px;
+   right: 2px;
+}
+
+.menuList {
+   width: 100%;
+}
+
+.menuItem {
+   height: 40px;
+   padding: 10px;
+   cursor: pointer;
+}
+
+.menuItem:hover {
+   background-color: #ccc;
+}
+
+.menuItem i {
+   margin-right: 10px;
+}
+@keyframes zoomIn {
+   0% {
+      transform: scale(0.5); /* Bắt đầu với kích thước nhỏ hơn */
+      opacity: 0; /* Bắt đầu với độ mờ */
+   }
+   50% {
+      transform: scale(1.1); /* Zoom lớn hơn một chút để tạo cảm giác bật */
+      opacity: 0.8; /* Dần hiện ra */
+   }
+   100% {
+      transform: scale(1); /* Trở về kích thước ban đầu */
+      opacity: 1; /* Hiển thị hoàn toàn */
+   }
+}

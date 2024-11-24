@@ -1,3 +1,6 @@
+import { productDiscountMapper } from './productDiscountMapper'
+import { storewideDiscountMapper } from './storewideDiscountMapper'
+
 function productMapper(productInfo) {
    return {
       productId: productInfo.MASP,
@@ -29,20 +32,38 @@ function productInfoMapper(productInfo) {
       price: productInfo.GIASP,
       createdAt: productInfo.NGAYTAO,
       updatedAt: productInfo.NGAYCAPNHAT,
+      productDiscounts: productInfo.DANHSACHKHUYENMAI,
+      discountPercentage: productInfo.PHANTRAMGIAM,
+      discountPrice: productInfo.GIAKM,
+      storewideDiscounts: productInfo.DANHSACHKHUYENMAICHUNG,
    }
 }
 
 function productDetailMapper(productDetailInfo) {
    return {
       productInfo: {
-         categoryId: productDetailInfo.productInfo.MADM,
-         productTypeId: productDetailInfo.productInfo.MALOAISP,
+         productId: productDetailInfo.productInfo.MASP,
          manufacId: productDetailInfo.productInfo.MANSX,
+         categoryId: productDetailInfo.productInfo?.MADM,
+         productTypeId: productDetailInfo.productInfo?.MALOAISP,
          name: productDetailInfo.productInfo.TENSP,
-         quantity: productDetailInfo.productInfo.SOLUONGTON,
          price: productDetailInfo.productInfo.GIASP,
+         discountPrice: productDetailInfo.productInfo.GIAKM,
+         discountPercentage: productDetailInfo.productInfo.PHANTRAMGIAM,
+         quantity: productDetailInfo.productInfo.SOLUONGTON,
+         productDiscounts: productDetailInfo.DANHSACHKHUYENMAI
+            ? productDetailInfo.productInfo.DANHSACHKHUYENMAI.map((productDiscount) =>
+                 productDiscountMapper(productDiscount),
+              )
+            : null,
+         storewideDiscounts: productDetailInfo.productInfo.DANHSACHKHUYENMAICHUNG
+            ? productDetailInfo.productInfo.DANHSACHKHUYENMAICHUNG.map((storewideDiscount) =>
+                 storewideDiscountMapper(storewideDiscount),
+              )
+            : null,
+         createdAt: productDetailInfo.productInfo.NGAYTAO,
+         updatedAt: productDetailInfo.productInfo.NGAYCAPNHAT,
       },
-      productColors: [],
       productConfiguration: {
          operatingSystem: productDetailInfo.productConfiguration.HEDIEUHANH,
          cpu: productDetailInfo.productConfiguration.CPU,

@@ -1,8 +1,8 @@
 import { api } from '.'
 import { manufacturerMapper } from '../utils/manufacturerMapper'
 
-async function getAllManufacInPage(page) {
-   return await fetch(`${api}/manufacturers/?page=${page}`, {
+async function getAllManufacInPage() {
+   return await fetch(`${api}/manufacturers`, {
       method: 'GET',
       credentials: 'include',
    })
@@ -45,7 +45,12 @@ async function getManufacturerById(manufacturerId) {
       credentials: 'include',
    })
       .then((response) => response.json())
-      .then((manufacturer) => manufacturer)
+      .then((manufacturer) => {
+         return {
+            code: manufacturer.code,
+            data: manufacturerMapper(manufacturer.data),
+         }
+      })
 }
 
 async function updateManufacturer({ manufacId, formData }) {

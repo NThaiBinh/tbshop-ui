@@ -1,27 +1,25 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import cssSearchInput from './SearchInput.module.css'
 import clsx from 'clsx'
-import StoreContext from '../../../../store/StoreContext'
-import { setSearchValue } from '../../../../store/actions'
-function SearchInput(props) {
+function SearchInput() {
    const [clearTextBtn, setClearTextBtn] = useState(false)
-   const [state, dispatch] = useContext(StoreContext)
+   const [searchValue, setSearchValue] = useState('')
 
    function handleClear() {
       setClearTextBtn(false)
-      dispatch(setSearchValue(''))
+      setSearchValue('')
    }
 
    return (
       <div className={cssSearchInput.body}>
          <i className="fa-solid fa-magnifying-glass icon-search"></i>
          <input
-            value={state.searchValue}
+            value={searchValue}
             className={cssSearchInput.searchInput}
             placeholder="Bạn cần tìm gì?"
             onChange={(e) => {
                setClearTextBtn(e.target.value !== '')
-               dispatch(setSearchValue(e.target.value))
+               setSearchValue(e.target.value)
             }}
          />
          <div

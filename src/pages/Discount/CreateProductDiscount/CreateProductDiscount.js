@@ -25,12 +25,21 @@ function CreateProductDiscount() {
       formData.append('endDate', endDate)
       const result = await createProductDiscount(formData)
       if (result === 'SS') {
-         navigate(state.previousPath)
+         navigate(-1)
          dispatch(setShowToast(true, 'success', 'Thêm khuyến mãi thành công!'))
       } else {
          dispatch(setShowToast(true, 'error', 'Thêm khuyến mãi thất bại!'))
       }
    }
+
+   function handleDropFile(id, file) {
+      setPosterDiscount(file)
+   }
+
+   function handleImageChange(id, file) {
+      setPosterDiscount(file)
+   }
+
    return (
       <EditProductDiscount
          title="THÔNG TIN KHUYẾN MÃI SẢN PHẨM"
@@ -45,7 +54,8 @@ function CreateProductDiscount() {
          endDate={endDate}
          setEndDate={setEndDate}
          posterDiscount={posterDiscount}
-         setPosterDiscount={setPosterDiscount}
+         handleDropFile={handleDropFile}
+         handleImageChange={handleImageChange}
          handleSubmit={handleSubmit}
       />
    )

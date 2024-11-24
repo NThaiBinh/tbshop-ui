@@ -21,12 +21,20 @@ import ProductDetail from '../pages/components/ProductDetail/ProductDetail'
 import Discount from '../pages/Discount/Discount/Discount'
 import CreateStorewideDiscount from '../pages/Discount/CreateStorewideDiscount/CreateStorewideDiscount'
 import CreateProductDiscount from '../pages/Discount/CreateProductDiscount/CreateProductDiscount'
+import Role from '../pages/AccessPermissions/Role/Role'
+import Cart from '../pages/Cart/Cart'
 
 const publicRoutes = [
    { path: '/', component: Home, layout: DefaultLayout },
    { path: '/login', component: Login, layout: DefaultLayout },
+   { path: '/register', component: Login, layout: DefaultLayout },
    { path: '/products', component: Home, layout: DefaultLayout },
    { path: '/product/detail', component: Home, layout: DefaultLayout, modal: ProductDetail },
+   {
+      path: '/cart',
+      component: Cart,
+      layout: DefaultLayout,
+   },
    { path: '*', component: NotFound, layout: DefaultLayout },
 ]
 
@@ -68,13 +76,18 @@ const privateRoutes = [
    { path: '/dashbroad/employees/page/:employeeId', component: Employee, layout: DashbroadLayout },
    { path: '/dashbroad/discounts/page/:page', component: Discount, layout: DashbroadLayout },
    {
-      path: '/dashbroad/discounts/general-discount/create',
+      path: '/dashbroad/discounts/storewide-discount/create',
       component: CreateStorewideDiscount,
       layout: DashbroadLayout,
    },
    {
       path: '/dashbroad/discounts/product-discount/create',
       component: CreateProductDiscount,
+      layout: DashbroadLayout,
+   },
+   {
+      path: '/dashbroad/acccess-permissions/add-role/create',
+      component: Role,
       layout: DashbroadLayout,
    },
    { path: '*', component: NotFound, layout: DefaultLayout },

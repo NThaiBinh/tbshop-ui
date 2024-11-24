@@ -126,7 +126,7 @@ function EditProduct({
    }, [])
 
    function handleExit() {
-      navigate(state.previousPath)
+      navigate(-1)
    }
 
    return (
@@ -774,7 +774,7 @@ function EditProduct({
                         <div className={cssEditProduct.productColor}>
                            <div className={cssEditProduct.groupChooseColor}>
                               <input id="colorPicker" className={cssEditProduct.colorPicker} type="color" /> Chọn màu
-                              sản phẩm
+                              sản phẩm, Tên màu:
                               <input id="colorName" className={cssEditProduct.productColorName} />
                               <button className={cssEditProduct.btnChooseColor} onClick={handleAddColor}>
                                  Chọn

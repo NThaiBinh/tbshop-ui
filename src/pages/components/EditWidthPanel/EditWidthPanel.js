@@ -5,18 +5,11 @@ function EditWidthPanel({
    children,
    title,
    posterDiscount,
-   setPosterDiscount,
    handleDropFile,
    handleImageChange,
    handleSubmit,
    handleExit,
 }) {
-   function handleDropFile(id, file) {
-      setPosterDiscount(file)
-   }
-   function handleImageChange(id, file) {
-      setPosterDiscount(file)
-   }
    return (
       <div className={cssEditWidthPanel.wrapper}>
          <div className={cssEditWidthPanel.header}>

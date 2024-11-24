@@ -11,10 +11,17 @@ function CreateManufacturer() {
    const [address, setAddress] = useState('')
    const [phoneNumber, setPhoneNumber] = useState('')
    const [email, setEmail] = useState('')
-   const [image, setImage] = useState('')
+   const [image, setImage] = useState()
    const navigate = useNavigate()
    const [state, dispatch] = useContext(StoreContext)
 
+   function handleDropFile(id, file) {
+      setImage(file)
+   }
+
+   function handleImageChange(id, file) {
+      setImage(file)
+   }
    async function handleSubmit() {
       const formData = new FormData()
       formData.append('name', name)
@@ -25,20 +32,16 @@ function CreateManufacturer() {
       const message = await createManufacturer(formData)
       if (message === 'SS') {
          dispatch(setShowToast(true, 'success', 'Thêm nhà sản xuất thành công'))
-         navigate(state.previousPath)
+         navigate(-1)
       } else {
          dispatch(setShowToast(true, 'error', 'Thêm nhà sản xuất thất bại'))
       }
    }
 
-   function handleExit() {
-      navigate(state.previousPath)
-   }
    return (
       <EditManufacturer
          title="THÊM NHÀ SẢN XUẤT"
          image={image}
-         imageChange={(e) => setImage(e.target.files[0])}
          name={name}
          setName={setName}
          address={address}
@@ -47,8 +50,9 @@ function CreateManufacturer() {
          setPhoneNumber={setPhoneNumber}
          email={email}
          setEmail={setEmail}
+         handleDropFile={handleDropFile}
+         handleImageChange={handleImageChange}
          handleSubmit={handleSubmit}
-         handleExit={handleExit}
       />
    )
 }

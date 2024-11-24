@@ -45,6 +45,32 @@ async function createProductConfiguration(productConfiguration, productId) {
 }
 
 async function getProductDetails(productId, productConfigurationId) {
+   return await fetch(
+      `${api}/products/details?productId=${productId}&productConfigurationId=${productConfigurationId}`,
+      {
+         method: 'GET',
+         credentials: 'include',
+      },
+   )
+      .then((response) => response.json())
+      .then((productDetails) => {
+         return {
+            code: productDetails.code,
+            data: {
+               productImages: productDetails.data.productImages.map((productImage) => productImageMapper(productImage)),
+               productColors: productDetails.data.productColors.map((productColor) =>
+                  productColorsMapper(productColor),
+               ),
+               productDetails: productDetailMapper({
+                  productInfo: productDetails.data.productInfo,
+                  productConfiguration: productDetails.data.productConfiguration,
+               }),
+            },
+         }
+      })
+}
+
+async function getProductEdit(productId, productConfigurationId) {
    return await fetch(`${api}/products/edit?productId=${productId}&productConfigurationId=${productConfigurationId}`, {
       method: 'GET',
       credentials: 'include',
@@ -114,4 +140,5 @@ export {
    getProductInfoWidthoutConfig,
    updateProduct,
    deleteProduct,
+   getProductEdit,
 }

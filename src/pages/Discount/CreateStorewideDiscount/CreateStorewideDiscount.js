@@ -23,13 +23,20 @@ function CreateStorewideDiscount() {
       formData.append('endDate', endDate)
       const result = await createStorewideDiscount(formData)
       if (result === 'SS') {
-         navigate(state.previousPath)
+         navigate(-1)
          dispatch(setShowToast(true, 'success', 'Thêm khuyến mãi thành công!'))
       } else {
          dispatch(setShowToast(true, 'error', 'Thêm khuyến mãi thất bại!'))
       }
    }
 
+   function handleDropFile(id, file) {
+      setPosterDiscount(file)
+   }
+
+   function handleImageChange(id, file) {
+      setPosterDiscount(file)
+   }
    return (
       <EditStorewideDiscount
          title="THÔNG TIN KHUYẾN MÃI CHUNG"
@@ -42,7 +49,8 @@ function CreateStorewideDiscount() {
          endDate={endDate}
          setEndDate={setEndDate}
          posterDiscount={posterDiscount}
-         setPosterDiscount={setPosterDiscount}
+         handleDropFile={handleDropFile}
+         handleImageChange={handleImageChange}
          handleSubmit={handleSubmit}
       />
    )

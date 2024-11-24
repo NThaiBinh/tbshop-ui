@@ -5,7 +5,7 @@ import StoreContext from '../../../store/StoreContext'
 import TableInfoDashbroad from '../../components/TableInfoDashbroad/TableInfoDashbroad'
 import BlankPage from '../../BlankPage/BlankPage'
 import TabelBodyDashbroad from '../../components/TableBodyDashbroad/TableBodyDashbroad'
-import { setLocation, setShowToast } from '../../../store/actions'
+import { setShowToast } from '../../../store/actions'
 import { deleteProductType, getAllProductTypes } from '../../../services/productTypeServices'
 
 function GeneralCategory() {
@@ -56,10 +56,6 @@ function GeneralCategory() {
    }
 
    useEffect(() => {
-      dispatch(setLocation(location.pathname))
-   }, [])
-
-   useEffect(() => {
       handleGetAllCategories()
       handleGetAllProductTypes()
    }, [state.isShowToast])
@@ -69,18 +65,12 @@ function GeneralCategory() {
          {categories.length > 0 || productTypes.length > 0 ? (
             <Fragment>
                {categories.length > 0 && (
-                  <TableInfoDashbroad
-                     title="THÔNG TIN DANH MỤC SẢN PHẨM"
-                     image={false}
-                     pagination={false}
-                     updatedAt={true}
-                  >
+                  <TableInfoDashbroad title="THÔNG TIN DANH MỤC SẢN PHẨM" image={false} pagination={false}>
                      {categories.map((category, index) => (
                         <TabelBodyDashbroad
                            key={index}
                            id={category.categoryId}
                            name={category.name}
-                           updatedAt={category.updatedAt}
                            handleEdit={() => handleEditCategory(category.categoryId)}
                            handleDelete={() => handleDeleteCategory(category.categoryId)}
                         />
@@ -89,13 +79,12 @@ function GeneralCategory() {
                )}
                <div style={{ height: '40px' }}></div>
                {productTypes.length > 0 && (
-                  <TableInfoDashbroad title="THÔNG TIN LOẠI SẢN PHẨM" image={false} pagination={false} updatedAt={true}>
+                  <TableInfoDashbroad title="THÔNG TIN LOẠI SẢN PHẨM" image={false} pagination={false}>
                      {productTypes.map((productType, index) => (
                         <TabelBodyDashbroad
                            key={index}
                            id={productType.productTypeId}
                            name={productType.name}
-                           updatedAt={productType.updatedAt}
                            handleEdit={() => handleEditProductType(productType.productTypeId)}
                            handleDelete={() => handleDeleteProductType(productType.productTypeId)}
                         />

@@ -1,0 +1,23 @@
+.wrapper {
+   height: 100%;
+}
+
+.btnChangeQuantity {
+   width: 30px;
+   height: 100%;
+   border: 1px solid #ccc;
+   background-color: #ffffff;
+   cursor: pointer;
+}
+
+.productQuantity {
+   width: 100px;
+   height: 100%;
+   text-align: center;
+   border-top: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+}
+
+.groupProductQuantity strong {
+   margin-right: 10px;
+}

@@ -24,13 +24,10 @@ function UpdateProductType() {
       const result = await updateProductType({ productTypeId: params.productTypeId, productTypeInfo: { name } })
       if (result === 'SS') {
          dispatch(setShowToast(true, 'success', 'Sửa loại sản phẩm thành công!'))
-         navigate(state.previousPath)
+         navigate(-1)
       } else {
-         dispatch(setShowToast(true, 'success', 'Sửa loại sản phẩm thất bại!'))
+         dispatch(setShowToast(true, 'error', 'Sửa loại sản phẩm thất bại!'))
       }
-   }
-   function handleExit() {
-      navigate(state.previousPath)
    }
 
    useEffect(() => {
@@ -43,7 +40,6 @@ function UpdateProductType() {
          name={name}
          setName={setName}
          handleSubmit={handleSubmit}
-         handleExit={handleExit}
       />
    )
 }

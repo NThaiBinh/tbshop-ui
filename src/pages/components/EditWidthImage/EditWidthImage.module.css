@@ -17,55 +17,12 @@
 .container {
    width: 100%;
    display: flex;
-   margin-top: 20px;
+   margin-top: 10px;
 }
 
 .groupImage {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-}
-
-.img {
    width: 300px;
    height: 300px;
-}
-
-.customFileInput {
-   width: 120px;
-   height: 40px;
-   background-color: var(--primary-background-color);
-   padding: 10px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   border-radius: 20px;
-   margin-top: 10px;
-   box-shadow: 1px 1px 4px #ccc, -1px -1px 4px #ccc;
-}
-
-input[type='file'] {
-   display: none;
-}
-
-.custom-file-input {
-   display: inline-block;
-   padding: 10px 20px;
-   border: 1px solid #ccc;
-   border-radius: 5px;
-   cursor: pointer;
-}
-
-.iconUpload {
-   margin-left: 5px;
-}
-
-.custom-file-input:hover {
-   background-color: #f0f0f0;
-}
-
-.fileInput {
 }
 
 .groupInputValue {

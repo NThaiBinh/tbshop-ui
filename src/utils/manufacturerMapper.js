@@ -1,13 +1,11 @@
 function manufacturerMapper(manufacturerInfo) {
    return {
       manufacId: manufacturerInfo.MANSX,
-      manufacImage: manufacturerInfo.ANHNSX,
       name: manufacturerInfo.TENNSX,
+      image: manufacturerInfo.ANHNSX,
       phoneNumber: manufacturerInfo.SDTNSX,
-      email: manufacturerInfo.EMAIL,
+      email: manufacturerInfo.EMAILNSX,
       address: manufacturerInfo.DIACHINSX,
-      createdAt: manufacturerInfo.NGAYTAO,
-      updatedAt: manufacturerInfo.NGAYCAPNHAT,
    }
 }
 

@@ -17,14 +17,15 @@ function EditStorewideDiscount({
    endDate,
    setEndDate,
    posterDiscount,
-   setPosterDiscount,
+   handleDropFile,
+   handleImageChange,
    handleSubmit,
 }) {
    const navidate = useNavigate()
    const [state, dispatch] = useContext(StoreContext)
 
    function handleExit() {
-      navidate(state.previousPath)
+      navidate(-1)
    }
 
    return (
@@ -32,7 +33,8 @@ function EditStorewideDiscount({
          <EditWidthPanel
             title={title}
             posterDiscount={posterDiscount}
-            setPosterDiscount={setPosterDiscount}
+            handleDropFile={handleDropFile}
+            handleImageChange={handleImageChange}
             handleSubmit={handleSubmit}
             handleExit={handleExit}
          >
@@ -53,7 +55,6 @@ function EditStorewideDiscount({
                         title="Giá khuyến mãi:"
                         isRequire={true}
                         value={price}
-                        type="number"
                         onChange={(e) => setPrice(e.target.value)}
                      />
                   </div>
@@ -65,7 +66,7 @@ function EditStorewideDiscount({
                         title="Ngày bắt đầu:"
                         isRequire={true}
                         value={startDate}
-                        type="date"
+                        type="datetime-local"
                         onChange={(e) => setStartDate(e.target.value)}
                      />
                   </div>
@@ -75,7 +76,7 @@ function EditStorewideDiscount({
                         title="Ngày kết thúc:"
                         isRequire={true}
                         value={endDate}
-                        type="date"
+                        type="datetime-local"
                         onChange={(e) => setEndDate(e.target.value)}
                      />
                   </div>

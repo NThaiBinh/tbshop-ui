@@ -5,7 +5,7 @@ import { deleteProduct, getAllProductsInfo } from '../../../services/productServ
 import TableInfoDashbroad from '../../components/TableInfoDashbroad/TableInfoDashbroad'
 import BlankPage from '../../BlankPage/BlankPage'
 import TabelBodyDashbroad from '../../components/TableBodyDashbroad/TableBodyDashbroad'
-import { setLocation, setShowToast } from '../../../store/actions'
+import { setShowToast } from '../../../store/actions'
 
 function Product() {
    const navigate = useNavigate()
@@ -23,10 +23,6 @@ function Product() {
    useEffect(() => {
       handleGetAllProductsInPage(state.page)
    }, [state.page, state.isShowToast])
-
-   useEffect(() => {
-      dispatch(setLocation(location.pathname))
-   }, [])
 
    function handleEdit(productId, productConfigurationId) {
       navigate(`/dashbroad/products/edit?productId=${productId}&productConfigurationId=${productConfigurationId}`)
