@@ -21,6 +21,46 @@ async function getAllProductsInfo(page) {
       })
 }
 
+async function filterPrtoduct(categoryId, manufacId, productTypeId, page) {
+   let queryParams = ''
+
+   if (categoryId) {
+      queryParams += `categoryId=${categoryId}&`
+   }
+
+   if (manufacId) {
+      queryParams += `manufacId=${manufacId}&`
+   }
+
+   if (productTypeId) {
+      queryParams += `productTypeId=${productTypeId}&`
+   }
+
+   if (page) {
+      queryParams += `page=${page}`
+   }
+
+   if (queryParams.charAt(queryParams.length - 1) === '&') {
+   }
+
+   return await fetch(
+      `${api}/products/filter?${
+         queryParams.charAt(queryParams.length - 1) === '&' ? queryParams.slice(0, -1) : queryParams
+      }`,
+      {
+         method: 'GET',
+         credentials: 'include',
+      },
+   )
+      .then((response) => response.json())
+      .then((products) => {
+         return {
+            code: products.code,
+            data: products.data.map((product) => productInfoMapper(product)),
+         }
+      })
+}
+
 async function createProduct(productInfo) {
    return await fetch(`${api}/products/create`, {
       method: 'POST',
@@ -100,13 +140,15 @@ async function getProductInfoWidthoutConfig(productId) {
    })
       .then((response) => response.json())
       .then((productInfo) => {
-         return {
-            code: productInfo.code,
-            data: {
-               productImages: productInfo.data.productImages.map((productImage) => productImageMapper(productImage)),
-               productInfo: productMapper(productInfo.data.productInfo),
-            },
-         }
+         if (productInfo.code === 'SS') {
+            return {
+               code: productInfo.code,
+               data: {
+                  productImages: productInfo.data.productImages.map((productImage) => productImageMapper(productImage)),
+                  productInfo: productMapper(productInfo.data.productInfo),
+               },
+            }
+         } else return productInfo
       })
 }
 
@@ -141,4 +183,5 @@ export {
    updateProduct,
    deleteProduct,
    getProductEdit,
+   filterPrtoduct,
 }

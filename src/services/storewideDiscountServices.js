@@ -30,7 +30,7 @@ async function getAllStorewideDiscountsValid() {
 }
 
 async function getAllStorewidePosterDiscounts() {
-   return await fetch(`${api}/storewide-discounts/panels`, {
+   return await fetch(`${api}/storewide-discounts/posters`, {
       method: 'GET',
       credentials: 'include',
    })

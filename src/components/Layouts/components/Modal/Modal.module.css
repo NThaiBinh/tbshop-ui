@@ -25,12 +25,16 @@
 }
 
 @keyframes zoomIn {
-   from {
-      opacity: 0;
-      transform: scale(0);
+   0% {
+      transform: scale(0.5); /* Bắt đầu với kích thước nhỏ hơn */
+      opacity: 0; /* Bắt đầu với độ mờ */
    }
-   to {
-      opacity: 1;
-      transform: scale(100%);
+   50% {
+      transform: scale(1.1); /* Zoom lớn hơn một chút để tạo cảm giác bật */
+      opacity: 0.8; /* Dần hiện ra */
+   }
+   100% {
+      transform: scale(1); /* Trở về kích thước ban đầu */
+      opacity: 1; /* Hiển thị hoàn toàn */
    }
 }

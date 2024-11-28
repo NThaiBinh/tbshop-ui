@@ -13,4 +13,13 @@ function customerMapper(customerInfo) {
    }
 }
 
-export { customerMapper }
+function customerAddressMapper(customerAddressInfo) {
+   return {
+      addressId: customerAddressInfo.MADIACHI,
+      customerId: customerAddressInfo.MAKH,
+      address: customerAddressInfo.DIACHIGIAO,
+      isDefault: customerAddressInfo.MACDINH,
+   }
+}
+
+export { customerMapper, customerAddressMapper }

@@ -1,16 +1,15 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import cssEditProduct from './EditProduct.module.css'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import EditMultipleImages from '../EditMultipleImages/EditMultipleImages'
 import InputValue from '../InputValue/InputValue'
 import SelectOptions from '../SelectOptions/SelectOptions'
-import StoreContext from '../../../store/StoreContext'
 import { getAllCategories } from '../../../services/categoryServices'
 import { getAllManufacs } from '../../../services/manufacturerServices'
 import { getAllProductTypes } from '../../../services/productTypeServices'
 import { getProductInfoWidthoutConfig } from '../../../services/productServices'
-import { objProductImages, objProductInfo, objProductConfiguration } from '../../Product/objectProduct'
+import { objProductImages, objProductInfo, objProductConfiguration } from '../../Dashbroad/Product/objectProduct'
 
 function EditProduct({
    isCreate,
@@ -23,76 +22,62 @@ function EditProduct({
    handleSubmit,
 }) {
    const navigate = useNavigate()
-   const [state, dispatch] = useContext(StoreContext)
    const [manufacs, setManufacs] = useState([])
    const [categories, setCategories] = useState([])
    const [productTypes, setProductTypes] = useState([])
    const [isAddConfig, setIsAddConfig] = useState(false)
    const [isDisableInput, setIsDisableInput] = useState(false)
-   const [productHandleId, setProductHandleId] = useState()
+   const [productHandleId, setProductHandleId] = useState('')
+   const [colorPickerValue, setColorPickerValue] = useState('')
+   const [colorName, setColorName] = useState('')
 
-   async function handleGetValueSelect() {
-      const categories = await getAllCategories()
-      if (categories.code === 'SS') {
-         setCategories(
-            categories.data.map((category) => {
-               return {
-                  valueMember: category.categoryId,
-                  displayMember: category.name,
-               }
-            }),
-         )
-      }
+   useEffect(() => {
+      async function handleGetValueSelect() {
+         const categories = await getAllCategories()
+         if (categories.code === 'SS') {
+            setCategories(
+               categories.data.map((category) => {
+                  return {
+                     valueMember: category.categoryId,
+                     displayMember: category.name,
+                  }
+               }),
+            )
+         }
 
-      const productTypes = await getAllProductTypes()
-      if (productTypes.code === 'SS') {
-         setProductTypes(
-            productTypes.data.map((productType) => {
-               return {
-                  valueMember: productType.productTypeId,
-                  displayMember: productType.name,
-               }
-            }),
-         )
-      }
+         const productTypes = await getAllProductTypes()
+         if (productTypes.code === 'SS') {
+            setProductTypes(
+               productTypes.data.map((productType) => {
+                  return {
+                     valueMember: productType.productTypeId,
+                     displayMember: productType.name,
+                  }
+               }),
+            )
+         }
 
-      const manufacs = await getAllManufacs()
-      if (manufacs.code === 'SS') {
-         setManufacs(
-            manufacs.data.map((manufac) => {
-               return {
-                  valueMember: manufac.manufacId,
-                  displayMember: manufac.name,
-               }
-            }),
-         )
-      }
-   }
-
-   async function handleGetProductInfoWithoutConfig(productHandleId) {
-      if (productHandleId) {
-         const productInfo = await getProductInfoWidthoutConfig(productHandleId)
-         if (productInfo.code === 'SS') {
-            setProductImages(productInfo.data.productImages)
-            setProductDetails({
-               productInfo: productInfo.data.productInfo,
-               productConfiguration: {
-                  ...productDetails.productConfiguration,
-                  productId: productHandleId,
-               },
-            })
+         const manufacs = await getAllManufacs()
+         if (manufacs.code === 'SS') {
+            setManufacs(
+               manufacs.data.map((manufac) => {
+                  return {
+                     valueMember: manufac.manufacId,
+                     displayMember: manufac.name,
+                  }
+               }),
+            )
          }
       }
-   }
-
-   const colorPickerElement = document.getElementById('colorPicker')
-   const colorNameElement = document.getElementById('colorName')
+      handleGetValueSelect()
+   }, [])
 
    function handleAddColor(e) {
       setProductColors([
          ...productColors,
-         { id: productColors.length, color: colorPickerElement.value, name: colorNameElement.value, state: 'add' },
+         { id: productColors.length, color: colorPickerValue, name: colorName, state: 'add' },
       ])
+      setColorName('')
    }
 
    function handleDeleteColor(e) {
@@ -111,6 +96,27 @@ function EditProduct({
 
    useEffect(() => {
       if (isAddConfig) {
+         async function handleGetProductInfoWithoutConfig(productHandleId) {
+            if (productHandleId) {
+               const productInfo = await getProductInfoWidthoutConfig(productHandleId)
+               if (productInfo.code === 'SS') {
+                  setProductImages(productInfo.data.productImages)
+                  setProductDetails({
+                     productInfo: productInfo.data.productInfo,
+                     productConfiguration: {
+                        ...productDetails.productConfiguration,
+                        productId: productHandleId,
+                     },
+                  })
+               } else {
+                  setProductImages(objProductImages)
+                  setProductDetails({
+                     productInfo: objProductInfo,
+                     productConfiguration: objProductConfiguration,
+                  })
+               }
+            }
+         }
          handleGetProductInfoWithoutConfig(productHandleId)
       } else {
          setProductImages(objProductImages)
@@ -120,10 +126,6 @@ function EditProduct({
          })
       }
    }, [isAddConfig, productHandleId])
-
-   useEffect(() => {
-      handleGetValueSelect()
-   }, [])
 
    function handleExit() {
       navigate(-1)
@@ -773,9 +775,20 @@ function EditProduct({
                      <div className={cssEditProduct.input}>
                         <div className={cssEditProduct.productColor}>
                            <div className={cssEditProduct.groupChooseColor}>
-                              <input id="colorPicker" className={cssEditProduct.colorPicker} type="color" /> Chọn màu
-                              sản phẩm, Tên màu:
-                              <input id="colorName" className={cssEditProduct.productColorName} />
+                              <input
+                                 id="colorPicker"
+                                 className={cssEditProduct.colorPicker}
+                                 type="color"
+                                 value={colorPickerValue}
+                                 onChange={(e) => setColorPickerValue(e.target.value)}
+                              />{' '}
+                              Chọn màu sản phẩm, Tên màu:
+                              <input
+                                 id="colorName"
+                                 className={cssEditProduct.productColorName}
+                                 value={colorName}
+                                 onChange={(e) => setColorName(e.target.value)}
+                              />
                               <button className={cssEditProduct.btnChooseColor} onClick={handleAddColor}>
                                  Chọn
                               </button>

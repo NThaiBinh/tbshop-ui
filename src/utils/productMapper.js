@@ -51,7 +51,7 @@ function productDetailMapper(productDetailInfo) {
          discountPrice: productDetailInfo.productInfo.GIAKM,
          discountPercentage: productDetailInfo.productInfo.PHANTRAMGIAM,
          quantity: productDetailInfo.productInfo.SOLUONGTON,
-         productDiscounts: productDetailInfo.DANHSACHKHUYENMAI
+         productDiscounts: productDetailInfo.productInfo.DANHSACHKHUYENMAI
             ? productDetailInfo.productInfo.DANHSACHKHUYENMAI.map((productDiscount) =>
                  productDiscountMapper(productDiscount),
               )

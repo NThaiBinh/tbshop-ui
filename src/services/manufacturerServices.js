@@ -1,7 +1,7 @@
 import { api } from '.'
 import { manufacturerMapper } from '../utils/manufacturerMapper'
 
-async function getAllManufacInPage() {
+async function getAllManufacs() {
    return await fetch(`${api}/manufacturers`, {
       method: 'GET',
       credentials: 'include',
@@ -15,8 +15,8 @@ async function getAllManufacInPage() {
       })
 }
 
-async function getAllManufacs() {
-   return await fetch(`${api}/manufacturers`, {
+async function getAllManufacsByCategoryId(categoryId) {
+   return await fetch(`${api}/manufacturers/${categoryId}`, {
       method: 'GET',
       credentials: 'include',
    })
@@ -73,8 +73,8 @@ async function deleteManufac(manufacId) {
 }
 
 export {
-   getAllManufacInPage,
    getAllManufacs,
+   getAllManufacsByCategoryId,
    createManufacturer,
    getManufacturerById,
    updateManufacturer,

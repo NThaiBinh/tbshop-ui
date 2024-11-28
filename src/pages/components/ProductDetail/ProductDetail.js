@@ -7,7 +7,7 @@ import cssProductDetail from './ProductDetail.module.css'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import curencyFormat from '../../../utils/currencyFormat'
 import { getProductDetails } from '../../../services/productServices'
-import { objProductConfiguration, objProductInfo } from '../../Product/objectProduct'
+import { objProductConfiguration, objProductInfo } from '../../Dashbroad/Product/objectProduct'
 import { dateFormat } from '../../../utils/formatDate'
 import currencyFormat from '../../../utils/currencyFormat'
 import StoreContext from '../../../store/StoreContext'
@@ -97,26 +97,36 @@ function ProductDetail() {
          navigate('/login')
       } else {
          const cartInfo = JSON.parse(localStorage.getItem('cartInfo'))
-         const cartItem = {
-            cartId: cartInfo.cartId,
-            productId,
-            productConfigurationId,
-            productColorId,
-            quantity: quantity === '' || quantity === '0' ? 1 : quantity,
-            price: productDetails.productInfo.discountPrice || productDetails.productInfo.price,
-            totalPrice:
-               quantity * productDetails.productInfo.discountPrice || quantity * productDetails.productInfo.price,
-            productDiscountIds: productDetails.productInfo.productDiscounts?.map(
-               (productDiscount) => productDiscount.productDiscountId,
-            ),
-         }
-         const result = await addCartItem(cartItem)
-         if (result.code === 'SS') {
-            dispatch(setShowToast(true, 'success', 'Thêm vào giỏ hàng thành công!'))
-            navigate(-1)
+         if (cartInfo) {
+            const cartItem = {
+               cartId: cartInfo.cartId,
+               productId,
+               productConfigurationId,
+               productColorId,
+               quantity: quantity === '' || quantity === '0' ? 1 : quantity,
+               price: productDetails.productInfo.discountPrice || productDetails.productInfo.price,
+               totalPrice:
+                  quantity * productDetails.productInfo.discountPrice || quantity * productDetails.productInfo.price,
+               productDiscountIds: productDetails.productInfo.productDiscounts?.map(
+                  (productDiscount) => productDiscount.productDiscountId,
+               ),
+            }
+            if (cartItem.quantity > 0) {
+               const result = await addCartItem(cartItem)
+               if (result.code === 'SS') {
+                  dispatch(setShowToast(true, 'success', 'Thêm vào giỏ hàng thành công!'))
+                  navigate(-1)
+               }
+            } else {
+               dispatch(setShowToast(true, 'error', 'Số sản phẩm phải lớn lơn 0!'))
+            }
+         } else {
+            dispatch(setShowToast(true, 'error', 'Nhân viên không đặc hàng!'))
          }
       }
    }
+
+   function handleBuyNow() {}
 
    return (
       <Modal>
@@ -408,7 +418,7 @@ function ProductDetail() {
                   </div>
                </div>
                <div className={cssProductDetail.rightFooter}>
-                  <button className={clsx(cssProductDetail.btn, cssProductDetail.btnBuyNow)}>
+                  <button className={clsx(cssProductDetail.btn, cssProductDetail.btnBuyNow)} onClick={handleBuyNow}>
                      <i className="fa-solid fa-dollar-sign"></i>Mua ngay
                   </button>
                   <button

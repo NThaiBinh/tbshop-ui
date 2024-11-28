@@ -22,6 +22,7 @@ function cartItemMapper(cartItemInfo) {
       quantity: cartItemInfo.SOLUONGSP,
       price: cartItemInfo.GIA,
       totalPrice: cartItemInfo.TONGTIEN,
+      status: cartItemInfo.TRANGTHAI,
    }
 }
 

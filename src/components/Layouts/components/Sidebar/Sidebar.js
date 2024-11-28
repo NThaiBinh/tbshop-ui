@@ -18,33 +18,15 @@ function Sidebar() {
 
    const menuItems = [
       {
-         id: 'home',
-         href: '/',
-         icon: `${cssSidebar.menuIcon} fa-solid fa-house`,
-         title: 'Trang chủ',
-      },
-      {
-         id: 'phone',
-         href: '/products/phone',
-         icon: `${cssSidebar.menuIcon} fa-solid fa-mobile`,
-         title: 'Điện thoại',
-      },
-      {
-         id: 'laptop',
-         href: '/products',
-         icon: `${cssSidebar.menuIcon} fa-solid fa-laptop`,
-         title: 'Laptop',
-      },
-      {
          id: 'clock',
          href: '/products/clock',
-         icon: `${cssSidebar.menuIcon} fa-solid fa-clock`,
+         icon: `${cssSidebar.menuIcon} `,
          title: 'Đồng hồ',
       },
       {
          id: 'cart',
          href: '/cart',
-         icon: `${cssSidebar.menuIcon} fa-solid fa-cart-shopping`,
+         icon: ``,
          title: 'Giỏ hàng',
       },
    ]
@@ -55,27 +37,60 @@ function Sidebar() {
    return (
       <div className={cssSidebar.sidebar}>
          <ul className={cssSidebar.menuList}>
-            {menuItems.map((menuItem, index) => {
-               if (menuItem.id === 'cart' && !localStorage.getItem('cartInfo')) {
-                  return undefined
-               }
-               return (
-                  <li
-                     key={index}
-                     className={clsx(cssSidebar.menuItem, {
-                        [cssSidebar.active]: menuItem.id === activeMenu,
-                     })}
-                     onClick={() => {
-                        setActiveMenu(menuItem.id)
-                     }}
-                  >
-                     <Link className={cssSidebar.menuLink} to={menuItem.href}>
-                        <i className={menuItem.icon}></i>
-                        {menuItem.title}
-                     </Link>
-                  </li>
-               )
-            })}
+            <li
+               className={clsx(cssSidebar.menuItem, {
+                  [cssSidebar.active]: activeMenu === 'home',
+               })}
+               onClick={() => {
+                  setActiveMenu('home')
+               }}
+            >
+               <Link className={cssSidebar.menuLink} to="/">
+                  <i className={clsx('fa-solid fa-house', cssSidebar.menuIcon)}></i>
+                  Trang chủ
+               </Link>
+            </li>
+            <li
+               className={clsx(cssSidebar.menuItem, {
+                  [cssSidebar.active]: activeMenu === 'phone',
+               })}
+               onClick={() => {
+                  setActiveMenu('phone')
+               }}
+            >
+               <Link className={cssSidebar.menuLink} to="/phones">
+                  <i className={clsx('fa-solid fa-mobile', cssSidebar.menuIcon)}></i>
+                  Điện thoại
+               </Link>
+            </li>
+            <li
+               className={clsx(cssSidebar.menuItem, {
+                  [cssSidebar.active]: activeMenu === 'laptop',
+               })}
+               onClick={() => {
+                  setActiveMenu('laptop')
+               }}
+            >
+               <Link className={cssSidebar.menuLink} to="/laptops">
+                  <i className={clsx('fa-solid fa-laptop', cssSidebar.menuIcon)}></i>
+                  Laptop
+               </Link>
+            </li>
+            {localStorage.getItem('cartInfo') && (
+               <li
+                  className={clsx(cssSidebar.menuItem, {
+                     [cssSidebar.active]: activeMenu === 'cart',
+                  })}
+                  onClick={() => {
+                     setActiveMenu('cart')
+                  }}
+               >
+                  <Link className={cssSidebar.menuLink} to="/cart">
+                     <i className={clsx('fa-solid fa-cart-shopping', cssSidebar.menuIcon)}></i>
+                     Giỏ hàng
+                  </Link>
+               </li>
+            )}
          </ul>
          {state.isLogin && checkPermission(userInfo?.roles) && (
             <Link to="/dashbroad/products/page/1" className={cssSidebar.menuItem}>

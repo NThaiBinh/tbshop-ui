@@ -1,4 +1,4 @@
-import { IS_LOGIN, SET_PAGE, SET_SHOW_TOAST } from './constant'
+import { IS_LOGIN, IS_USER_UPDATE, SET_PAGE, SET_SHOW_TOAST } from './constant'
 
 function setPage(payload) {
    return {
@@ -23,4 +23,11 @@ function setIsLogin(isLogin) {
    }
 }
 
-export { setPage, setShowToast, setIsLogin }
+function setIsUserUpdate(isUserUpdate) {
+   return {
+      type: IS_USER_UPDATE,
+      isUserUpdate,
+   }
+}
+
+export { setPage, setShowToast, setIsLogin, setIsUserUpdate }

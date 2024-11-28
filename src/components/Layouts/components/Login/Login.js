@@ -42,9 +42,11 @@ function Login() {
          const userInfo = await login(loginInfo)
          if (userInfo.code === 'SS') {
             localStorage.setItem('userInfo', JSON.stringify(userInfo.data.info))
-            localStorage.setItem('cartInfo', JSON.stringify(userInfo.data.cartInfo))
+            if (userInfo.data.info.userType === 'customer') {
+               localStorage.setItem('cartInfo', JSON.stringify(userInfo.data.cartInfo))
+            }
             dispatch(setIsLogin(true))
-            dispatch(setShowToast(true, 'success', 'Đăng nhập thành công!'))
+            dispatch(setShowToast(true, 'success', `Xin chào ${userInfo.data.info.name}!`))
             navigate(-1)
          } else {
             setMessage('Sai tài khoản hoặc mật khẩu!')
@@ -99,18 +101,21 @@ function Login() {
                      <ButtonMedium title="Thoát" type="exit" handleClick={handleExit} />
                      <ButtonMedium title="Đăng nhập" type="submit" handleClick={handleLogin} />
                   </div>
-                  <p className={cssLogin.switchForm}>
-                     Bạn chưa có tài khoản?
-                     <strong
-                        className={cssLogin.switchFormLink}
-                        onClick={() => {
-                           setCheckForm(!checkForm)
-                           navigate('/register', { replace: true })
-                        }}
-                     >
-                        Đăng ký
-                     </strong>
-                  </p>
+                  <div className={cssLogin.switchForm}>
+                     <p>
+                        Bạn chưa có tài khoản?
+                        <strong
+                           className={cssLogin.switchFormLink}
+                           onClick={() => {
+                              setCheckForm(!checkForm)
+                              navigate('/register', { replace: true })
+                           }}
+                        >
+                           Đăng ký
+                        </strong>
+                     </p>
+                     <strong className={cssLogin.switchFormLink}>Quên mật khẩu?</strong>
+                  </div>
                </div>
             )}
             {!checkForm && (
@@ -175,18 +180,20 @@ function Login() {
                      <ButtonMedium title="Thoát" type="exit" handleClick={handleExit} />
                      <ButtonMedium title="Đăng ký" type="submit" handleClick={handleRegister} />
                   </div>
-                  <p className={cssLogin.switchForm}>
-                     Bạn đã có tài khoản?
-                     <strong
-                        className={cssLogin.switchFormLink}
-                        onClick={() => {
-                           setCheckForm(!checkForm)
-                           navigate('/login', { replace: true })
-                        }}
-                     >
-                        Đăng nhập
-                     </strong>
-                  </p>
+                  <div className={cssLogin.switchForm}>
+                     <p>
+                        Bạn đã có tài khoản?
+                        <strong
+                           className={cssLogin.switchFormLink}
+                           onClick={() => {
+                              setCheckForm(!checkForm)
+                              navigate('/login', { replace: true })
+                           }}
+                        >
+                           Đăng nhập
+                        </strong>
+                     </p>
+                  </div>
                </div>
             )}
             <div

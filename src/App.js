@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { publicRoutes, privateRoutes } from './routes/routes'
+import { publicRoutes, userRoutes } from './routes/routes'
 import StoreContext from './store/StoreContext'
 import { setIsLogin } from './store/actions'
 import Toast from './components/Layouts/components/Toast/Toast'
-import ProtectedRoute from './components/Layouts/components/ProtectedRoute/ProtectedRoute'
-import Loading from './pages/components/Loading/Loading'
+import ProtectedAdminRoute from './components/Layouts/components/ProtectedUserRoute/ProtectedUserRoute'
+import NotFound from './pages/NotFound/NotFound'
+import { adminRoutes } from './routes/adminRoutes'
 
 function App() {
    const [state, dispatch] = useContext(StoreContext)
@@ -44,25 +45,43 @@ function App() {
                      />
                   )
                })}
-               {privateRoutes.map((privateRoute, index) => {
+
+               {adminRoutes.map((privateRoute, index) => {
                   const Layout = privateRoute.layout
                   const Page = privateRoute.component
                   const EditPage = privateRoute.edit
+                  const allowedRoles = privateRoute.allowedRoles
                   return (
                      <Route
                         key={index}
                         path={privateRoute.path}
                         element={
-                           <ProtectedRoute allowedRoles={['admin', 'editor']} userRoles={userInfo?.roles}>
+                           <ProtectedAdminRoute allowedRoles={allowedRoles} userRoles={userInfo?.roles}>
                               <Layout>
-                                 {EditPage && <EditPage />}
                                  <Page />
+                                 {EditPage && <EditPage />}
                               </Layout>
-                           </ProtectedRoute>
+                           </ProtectedAdminRoute>
                         }
                      />
                   )
                })}
+               {userRoutes.map((userRoute, index) => {
+                  const Layout = userRoute.layout
+                  const Page = userRoute.component
+                  return (
+                     <Route
+                        key={index}
+                        path={userRoute.path}
+                        element={
+                           <Layout>
+                              <Page />
+                           </Layout>
+                        }
+                     />
+                  )
+               })}
+               <Route path="*" element={<NotFound />} />
             </Routes>
          </div>
       )

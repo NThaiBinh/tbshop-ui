@@ -23,17 +23,14 @@ function Dashbroad({ children }) {
             <div className={cssDashbroadLayout.sidebarContainer}>
                <DashbroadMenu
                   title="Danh mục tổng hợp"
-                  viewAll="Xem tất cả danh mục tổng hợp"
-                  addNews={[
-                     { title: 'Thêm danh mục', objectChildren: 'category' },
-                     { title: 'Thêm loại sản phẩm', objectChildren: 'product-type' },
-                  ]}
+                  viewAlls={[{ title: 'Xem tất cả danh mục tổng hợp', objectView: 'general-categories' }]}
+                  addNews={[{ title: 'Thêm loại sản phẩm', objectChildren: 'product-type' }]}
                   objectHandle="general-categories"
                   pagination={false}
                />
                <DashbroadMenu
                   title="Quản lý nhà sản xuất"
-                  viewAll="Xem tất cả nhà sản xuất"
+                  viewAlls={[{ title: 'Xem tất cả nhà sản xuất', objectView: 'manufacturers' }]}
                   addNews={[{ title: 'Thêm nhà sản xuất' }]}
                   objectHandle="manufacturers"
                   pagination={true}
@@ -41,7 +38,7 @@ function Dashbroad({ children }) {
 
                <DashbroadMenu
                   title="Quản lý sản phẩm"
-                  viewAll="Xem tất cả sản phẩm"
+                  viewAlls={[{ title: 'Xem tất cả sản phẩm', objectView: 'products' }]}
                   addNews={[{ title: 'Thêm sản phẩm hoặc cấu hình' }]}
                   objectHandle="products"
                   pagination={true}
@@ -49,7 +46,7 @@ function Dashbroad({ children }) {
 
                <DashbroadMenu
                   title="Khuyến mãi"
-                  viewAll="Xem danh mục khuyến mãi"
+                  viewAlls={[{ title: 'Xem danh mục khuyến mãi', objectView: 'discounts' }]}
                   addNews={[
                      { title: 'Thêm khuyến mãi chung', objectChildren: 'storewide-discount' },
                      { title: 'Thêm khuyến mãi cho sản phẩm', objectChildren: 'product-discount' },
@@ -60,27 +57,37 @@ function Dashbroad({ children }) {
 
                <DashbroadMenu
                   title="Quản lý chức vụ"
-                  viewAll="Danh sách chức vụ"
+                  viewAlls={[{ title: 'Danh sách chức vụ', objectView: 'positions' }]}
                   addNews={[{ title: 'Thêm chức vụ' }]}
                   objectHandle="positions"
                />
 
                <DashbroadMenu
                   title="Quản lý nhân viên"
-                  viewAll="Danh sách nhân viên"
+                  viewAlls={[{ title: 'Danh sách nhân viên', objectView: 'employees' }]}
                   addNews={[{ title: 'Thêm nhân viên' }]}
-                  objectHandle="positions"
-                  pagination={true}
+                  objectHandle="employees"
+                  pagination={false}
                />
 
                <DashbroadMenu
                   title="Quản lý quyền hạn"
-                  viewAll="Danh sách quyền và vai trò"
+                  viewAlls={[{ title: 'Danh sách quyền và vai trò', objectView: 'acccess-permissions' }]}
                   addNews={[
                      { title: 'Thêm vai trò', objectChildren: 'add-role' },
                      { title: 'Thêm quyền hạn', objectChildren: 'add-permission' },
                   ]}
                   objectHandle="acccess-permissions"
+               />
+
+               <DashbroadMenu
+                  title="Đơn hàng"
+                  viewAlls={[
+                     { title: 'Đơn hàng chờ xác nhận', objectView: 'orders' },
+                     { title: 'Đơn hàng đang giao', objectView: 'orders-delivering' },
+                  ]}
+                  addNews={[]}
+                  objectHandle="orders"
                />
             </div>
          </div>

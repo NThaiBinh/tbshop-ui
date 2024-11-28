@@ -1,6 +1,7 @@
-import { IS_LOGIN, SET_PAGE, SET_SHOW_TOAST } from './constant'
+import { IS_LOGIN, IS_USER_UPDATE, SET_PAGE, SET_SHOW_TOAST } from './constant'
 
 const initState = {
+   isUserUpdate: false,
    isLogin: false,
    page: '1',
    isShowToast: false,
@@ -26,6 +27,11 @@ function reducer(state, action) {
          return {
             ...state,
             isLogin: action.isLogin,
+         }
+      case IS_USER_UPDATE:
+         return {
+            ...state,
+            isUserUpdate: action.isUserUpdate,
          }
       default:
    }

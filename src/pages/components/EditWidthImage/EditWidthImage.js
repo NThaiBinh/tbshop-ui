@@ -8,12 +8,7 @@ function EditWidthImage({ children, title, image, handleDropFile, handleImageCha
          <h2 className={cssEditWithImage.title}>{title}</h2>
          <div className={cssEditWithImage.container}>
             <div className={cssEditWithImage.groupImage}>
-               <DropFile
-                  id="manufacturersImage"
-                  image={image}
-                  handleDropFile={handleDropFile}
-                  handleImageChange={handleImageChange}
-               />
+               <DropFile id="img" image={image} handleDropFile={handleDropFile} handleImageChange={handleImageChange} />
             </div>
             <div className={cssEditWithImage.groupInputValue}>{children}</div>
          </div>

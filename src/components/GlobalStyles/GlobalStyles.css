@@ -40,6 +40,7 @@ select {
    text-decoration: none;
    outline: none;
    border: none;
+   color: var(--primary-text-color);
 }
 
 ul {

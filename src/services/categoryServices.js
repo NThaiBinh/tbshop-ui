@@ -24,19 +24,6 @@ async function getCategoryById(categoryId) {
       .then((category) => category)
 }
 
-async function createCategory(categoryInfo) {
-   return await fetch(`${api}/categories/create`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(categoryInfo),
-   })
-      .then((response) => response.json())
-      .then((result) => result.code)
-}
-
 async function updateCategory({ categoryId, categoryInfo }) {
    return await fetch(`${api}/categories/update/${categoryId}`, {
       method: 'PUT',
@@ -59,4 +46,4 @@ async function deleteCategory(categoryId) {
       .then((result) => result.code)
 }
 
-export { getAllCategories, getCategoryById, createCategory, updateCategory, deleteCategory }
+export { getAllCategories, getCategoryById, updateCategory, deleteCategory }

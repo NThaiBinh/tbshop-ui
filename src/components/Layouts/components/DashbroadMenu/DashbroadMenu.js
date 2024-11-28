@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import cssDashbroadMenu from './DashbroadMenu.module.css'
 import { Link } from 'react-router-dom'
-function DashbroadMenu({ title, pagination, objectHandle, viewAll, addNews = [] }) {
+function DashbroadMenu({ title, pagination, objectHandle, viewAlls = [], addNews = [] }) {
    const [isOpen, setIsOpen] = useState(false)
    const [rotateIcon, setRotateIcon] = useState('0deg')
 
@@ -25,14 +25,16 @@ function DashbroadMenu({ title, pagination, objectHandle, viewAll, addNews = [] 
          </div>
          {isOpen && (
             <ul className={cssDashbroadMenu.listMenu}>
-               <li className={cssDashbroadMenu.menuOption}>
-                  <Link
-                     to={pagination ? `/dashbroad/${objectHandle}/page/1` : `/dashbroad/${objectHandle}`}
-                     className={cssDashbroadMenu.menuLink}
-                  >
-                     {viewAll}
-                  </Link>
-               </li>
+               {viewAlls.map((viewAll, index) => (
+                  <li key={index} className={cssDashbroadMenu.menuOption}>
+                     <Link
+                        to={pagination ? `/dashbroad/${viewAll.objectView}/page/1` : `/dashbroad/${viewAll.objectView}`}
+                        className={cssDashbroadMenu.menuLink}
+                     >
+                        {viewAll.title}
+                     </Link>
+                  </li>
+               ))}
                {addNews.map((addNew, index) => (
                   <li key={index} className={cssDashbroadMenu.menuOption}>
                      <Link

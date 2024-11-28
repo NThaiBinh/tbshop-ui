@@ -44,7 +44,7 @@ async function getAllProductDiscountsValidByProductId(productId) {
 }
 
 async function getAllProductPosterDiscounts() {
-   return await fetch(`${api}/product-discounts/panels`, {
+   return await fetch(`${api}/product-discounts/posters`, {
       method: 'GET',
       credentials: 'include',
    })
