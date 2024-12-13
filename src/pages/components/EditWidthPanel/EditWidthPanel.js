@@ -1,4 +1,4 @@
-import cssEditWidthPanel from './EditWidthPanel.module.css'
+import styles from './EditWidthPanel.module.css'
 import ButtonMedium from '../ButtonMedium/ButtonMedium'
 import DropFile from '../DropFile/DropFile'
 function EditWidthPanel({
@@ -11,12 +11,12 @@ function EditWidthPanel({
    handleExit,
 }) {
    return (
-      <div className={cssEditWidthPanel.wrapper}>
-         <div className={cssEditWidthPanel.header}>
-            <div className={cssEditWidthPanel.groupTitle}>
-               <h3 className={cssEditWidthPanel.title}>{title}</h3>
+      <div className={styles.wrapper}>
+         <div className={styles.header}>
+            <div className={styles.groupTitle}>
+               <h3 className={styles.title}>{title}</h3>
             </div>
-            <div className={cssEditWidthPanel.groupPanel}>
+            <div className={styles.groupPanel}>
                <DropFile
                   id="posterDiscount"
                   image={posterDiscount}
@@ -25,9 +25,9 @@ function EditWidthPanel({
                />
             </div>
          </div>
-         <div className={cssEditWidthPanel.body}>{children}</div>
-         <div className={cssEditWidthPanel.footer}>
-            <div className={cssEditWidthPanel.groupButton}>
+         <div className={styles.body}>{children}</div>
+         <div className={styles.footer}>
+            <div className={styles.groupButton}>
                <ButtonMedium title="Đồng ý" type="submit" handleClick={handleSubmit} />
                <ButtonMedium title="Thoát" type="exit" handleClick={handleExit} />
             </div>

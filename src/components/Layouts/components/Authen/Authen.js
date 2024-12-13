@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import cssAuthen from './Authen.module.css'
+import styles from './Authen.module.css'
 import ButtonMedium from '../../../../pages/components/ButtonMedium/ButtonMedium'
 
 function Authen() {
@@ -14,7 +14,7 @@ function Authen() {
    }
 
    return (
-      <div className={cssAuthen.authen}>
+      <div className={styles.authen}>
          <ButtonMedium title="Đăng ký" type="submit" handleClick={handleRegister} />
          <ButtonMedium title="Đăng nhập" handleClick={handleLogin} />
       </div>

@@ -15,4 +15,14 @@ async function getStoreInfo() {
       })
 }
 
-export { getStoreInfo }
+async function updateStoreInfo(storeInfo) {
+   return await fetch(`${api}/store-info/update`, {
+      method: 'PUT',
+      credentials: 'include',
+      body: storeInfo,
+   })
+      .then((response) => response.json())
+      .then((result) => result)
+}
+
+export { getStoreInfo, updateStoreInfo }

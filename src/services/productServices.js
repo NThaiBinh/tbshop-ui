@@ -21,7 +21,7 @@ async function getAllProductsInfo(page) {
       })
 }
 
-async function filterPrtoduct(categoryId, manufacId, productTypeId, page) {
+async function filterProduct(categoryId, manufacId, productTypeId, page) {
    let queryParams = ''
 
    if (categoryId) {
@@ -52,6 +52,20 @@ async function filterPrtoduct(categoryId, manufacId, productTypeId, page) {
          credentials: 'include',
       },
    )
+      .then((response) => response.json())
+      .then((products) => {
+         return {
+            code: products.code,
+            data: products.data.map((product) => productInfoMapper(product)),
+         }
+      })
+}
+
+async function productFilterDashbroad(q) {
+   return await fetch(`${api}/products/filter-dashbroad?q=${q}`, {
+      method: 'GET',
+      credentials: 'include',
+   })
       .then((response) => response.json())
       .then((products) => {
          return {
@@ -165,17 +179,22 @@ async function updateProduct({ productId, productConfigurationId, formData }) {
       .then((result) => result)
 }
 
-async function deleteProduct(productId) {
-   return await fetch(`${api}/products/delete/${productId}`, {
-      method: 'DELETE',
-      credentials: 'include',
-   })
+async function deleteProduct(productId, productConfigurationId) {
+   return await fetch(
+      `${api}/products/delete?productId=${productId}&productConfigurationId=${productConfigurationId}`,
+      {
+         method: 'DELETE',
+         credentials: 'include',
+      },
+   )
       .then((response) => response.json())
       .then((result) => result)
 }
 
 export {
    getAllProductsInfo,
+   filterProduct,
+   productFilterDashbroad,
    createProduct,
    createProductConfiguration,
    getProductDetails,
@@ -183,5 +202,4 @@ export {
    updateProduct,
    deleteProduct,
    getProductEdit,
-   filterPrtoduct,
 }

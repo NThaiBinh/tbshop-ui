@@ -25,25 +25,26 @@ function Employee() {
       navigate(`/dashbroad/employees/edit/${employeeId}`)
    }
 
-   async function handleDelete(employeeId) {
-      const result = await deleteEmployee(employeeId)
+   async function handleDelete(employeeId, accountId) {
+      const result = await deleteEmployee(employeeId, accountId)
       if (result.code === 'SS') {
          dispatch(setShowToast(true, 'success', 'Xóa nhân viên thành công!'))
       }
    }
 
    return (
-      <TableInfoDashbroad title="THÔNG TIN NHÂN VIÊN" updatedAt={true} image={true}>
+      <TableInfoDashbroad title="THÔNG TIN NHÂN VIÊN" updatedAt={true} image={true} positionName={true}>
          {employees.map((employee, index) => (
             <TabelBodyDashbroad
                key={index}
                id={employee.userId}
                image={employee.image}
                name={employee.name}
+               positionName={employee.positionName}
                updatedAt={employee.updatedAt}
                objectHandle="employees"
                handleEdit={() => handleEdit(employee.userId)}
-               handleDelete={() => handleDelete(employee.userId)}
+               handleDelete={() => handleDelete(employee.userId, employee.accountId)}
             />
          ))}
       </TableInfoDashbroad>

@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { publicRoutes, userRoutes } from './routes/routes'
+import { publicRoutes } from './routes/publicRoutes'
+import { adminRoutes } from './routes/adminRoutes'
+import { userRoutes } from './routes/userRoutes'
 import StoreContext from './store/StoreContext'
 import { setIsLogin } from './store/actions'
 import Toast from './components/Layouts/components/Toast/Toast'
-import ProtectedAdminRoute from './components/Layouts/components/ProtectedUserRoute/ProtectedUserRoute'
 import NotFound from './pages/NotFound/NotFound'
-import { adminRoutes } from './routes/adminRoutes'
+import ProtectedAdminRoute from './components/Layouts/components/ProtectedAdminRoute/ProtectedAdminRoute'
+import ProtectedUserRoute from './components/Layouts/components/ProtectedUserRoute/ProtectedUserRoute'
 
 function App() {
    const [state, dispatch] = useContext(StoreContext)
@@ -15,12 +17,15 @@ function App() {
 
    useEffect(() => {
       const storedUser = localStorage.getItem('userInfo')
+
       if (storedUser) {
          setUserInfo(JSON.parse(storedUser))
          dispatch(setIsLogin(true))
       }
+
       setLoading(false)
    }, [state.isLogin])
+
    if (loading) {
       return null
    } else {
@@ -74,9 +79,11 @@ function App() {
                         key={index}
                         path={userRoute.path}
                         element={
-                           <Layout>
-                              <Page />
-                           </Layout>
+                           <ProtectedUserRoute>
+                              <Layout>
+                                 <Page />
+                              </Layout>
+                           </ProtectedUserRoute>
                         }
                      />
                   )

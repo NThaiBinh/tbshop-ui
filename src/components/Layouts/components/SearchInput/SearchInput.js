@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import cssSearchInput from './SearchInput.module.css'
+import styles from './SearchInput.module.css'
 import clsx from 'clsx'
 import { searchProduct } from '../../../../services/searchServices'
 import { api, imageApi } from '../../../../services'
@@ -33,11 +33,11 @@ function SearchInput() {
    }
 
    return (
-      <div className={cssSearchInput.body}>
+      <div className={styles.body}>
          <i className="fa-solid fa-magnifying-glass icon-search"></i>
          <input
             value={searchValue}
-            className={cssSearchInput.searchInput}
+            className={styles.searchInput}
             placeholder="Bạn cần tìm gì?"
             onChange={(e) => {
                setClearTextBtn(e.target.value !== '')
@@ -45,29 +45,29 @@ function SearchInput() {
             }}
          />
          <div
-            className={clsx(cssSearchInput.clearText, {
-               [cssSearchInput.visible]: clearTextBtn,
+            className={clsx(styles.clearText, {
+               [styles.visible]: clearTextBtn,
             })}
             onClick={handleClear}
          >
             x
          </div>
-         <div className={clsx(cssSearchInput.searchResult, { [cssSearchInput.visible]: searchValue !== '' })}>
-            <div className={cssSearchInput.searchResultHeader}>
+         <div className={clsx(styles.searchResult, { [styles.visible]: searchValue !== '' })}>
+            <div className={styles.searchResultHeader}>
                <h4>Kết quả tìm kiếm cho: {searchValue}</h4>
             </div>
-            <div className={cssSearchInput.searchResultBody}>
+            <div className={styles.searchResultBody}>
                {searchResults.length > 0 &&
                   searchResults.map((searchResult, index) => (
                      <Link
                         key={index}
                         to={`/product/detail?productId=${searchResult.MASP}&productConfigurationId=${searchResult.MACAUHINH}`}
-                        className={cssSearchInput.result}
+                        className={styles.result}
                      >
-                        <img className={cssSearchInput.productImg} src={`${imageApi}/${searchResult.ANHSP}`} />
-                        <div className={cssSearchInput.productInfo}>
-                           <h3 className={cssSearchInput.productName}>{searchResult.TENSP}</h3>
-                           <h4 className={cssSearchInput.productPrice}>{currencyFormat(searchResult.GIASP)}</h4>
+                        <img className={styles.productImg} src={`${imageApi}/${searchResult.ANHSP}`} />
+                        <div className={styles.productInfo}>
+                           <h3 className={styles.productName}>{searchResult.TENSP}</h3>
+                           <h4 className={styles.productPrice}>{currencyFormat(searchResult.GIASP)}</h4>
                         </div>
                      </Link>
                   ))}

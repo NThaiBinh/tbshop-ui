@@ -49,8 +49,8 @@ async function updateEmployee(employeeId, employeeInfo) {
       .then((result) => result)
 }
 
-async function deleteEmployee(employeeId) {
-   return await fetch(`${api}/employees/delete/${employeeId}`, {
+async function deleteEmployee(employeeId, accountId) {
+   return await fetch(`${api}/employees/delete?employeeId=${employeeId}&accountId=${accountId}`, {
       method: 'DELETE',
       credentials: 'include',
    })

@@ -1,7 +1,7 @@
-import cssNotFound from './NotFound.module.css'
+import styles from './NotFound.module.css'
 
 function NotFound() {
-   return <div>NOTFOUND</div>
+   return <div className={styles.wrapper}></div>
 }
 
 export default NotFound

@@ -2,14 +2,11 @@ import Login from '../components/Layouts/components/Login/Login'
 import DefaultLayout from '../components/Layouts/DefaultLayout/DefaultLayout'
 import Home from '../pages/Home/Home'
 import ProductDetail from '../pages/components/ProductDetail/ProductDetail'
-import Cart from '../pages/Cart/Cart'
-import Profile from '../pages/Profile/Profile'
-import Address from '../pages/Address/Address'
-import Order from '../pages/Order/Order'
 import Phone from '../pages/Phone/Phone'
 import Laptop from '../pages/Laptop/Laptop'
+import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 
-const publicRoutes = [
+export const publicRoutes = [
    { path: '/', component: Home, layout: DefaultLayout },
    { path: '/login', component: Login, layout: DefaultLayout },
    { path: '/register', component: Login, layout: DefaultLayout },
@@ -19,29 +16,5 @@ const publicRoutes = [
    { path: '/laptops', component: Laptop, layout: DefaultLayout },
    { path: '/laptops/detail', component: Laptop, layout: DefaultLayout, modal: ProductDetail },
    { path: '/product/detail', component: Home, layout: DefaultLayout, modal: ProductDetail },
+   { path: '/user/forgot-password', component: Home, layout: DefaultLayout, modal: ForgotPassword },
 ]
-
-const userRoutes = [
-   {
-      path: '/cart/',
-      component: Cart,
-      layout: DefaultLayout,
-   },
-   {
-      path: '/user/profile',
-      component: Profile,
-      layout: DefaultLayout,
-   },
-   {
-      path: '/user/address',
-      component: Address,
-      layout: DefaultLayout,
-   },
-   {
-      path: '/user/orders',
-      component: Order,
-      layout: DefaultLayout,
-   },
-]
-
-export { publicRoutes, userRoutes }

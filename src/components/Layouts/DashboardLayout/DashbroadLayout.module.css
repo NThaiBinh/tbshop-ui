@@ -12,13 +12,22 @@
    border-radius: 20px;
    box-shadow: 1px 1px 2px #b8b8b8;
    background-color: var(--primary-background-color);
+   position: relative;
+   padding: 10px;
+   display: flex;
+   flex-direction: column;
 }
 
 .sidebarHeader {
    width: 100%;
-   height: 100px;
    display: flex;
+   flex-direction: column;
    justify-content: center;
+   align-items: center;
+}
+
+.storeLogo {
+   display: flex;
    align-items: center;
 }
 
@@ -29,24 +38,50 @@
    margin-right: 10px;
 }
 
-.title {
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
-}
-
-.name {
+.storeName {
    letter-spacing: 1px;
 }
 
-.description {
+.storeDetail {
+   width: 100%;
+   padding: 10px;
+}
+
+.listInfo {
+   color: #0c6478;
+}
+
+.infoItem {
+   margin-top: 4px;
+   display: flex;
+}
+
+.infoItem h4 {
+   margin-right: 4px;
+}
+
+.infoItem p {
    font-size: 1.2rem;
+   flex: 1;
+   align-content: center;
+   overflow: hidden;
+}
+
+.action {
+   width: 100%;
+   height: 30px;
+   border-radius: 10px;
+   border: none;
+   background-image: linear-gradient(90deg, #f4e7f8, #e3aadd);
+   color: #cf22be;
+   font-size: 1.5rem;
+   font-weight: 700;
 }
 
 .sidebarContainer {
    width: 100%;
    height: auto;
-   padding: 10px;
+   overflow: scroll;
 }
 
 .container {

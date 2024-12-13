@@ -19,4 +19,25 @@ function invoiceItemMapper(invoiceInfo) {
    }
 }
 
-export { invoiceItemMapper }
+function invoicePrintMapper(invoicePrintInfo) {
+   return {
+      status: invoicePrintInfo.TRANGTHAI,
+      invoiceId: invoicePrintInfo.MAHD,
+      customerName: invoicePrintInfo.TENKH,
+      address: invoicePrintInfo.DIACHIGIAO,
+      phoneNumber: invoicePrintInfo.SDTKH,
+      employeeName: invoicePrintInfo.TENNV,
+      totalPrice: invoicePrintInfo.TONGTIEN,
+      createdAt: invoicePrintInfo.NGAYTAO,
+      productList: invoicePrintInfo?.DANHSACHSANPHAM.map((product) => {
+         return {
+            productName: product.TENSP,
+            price: product.GIA,
+            quantity: product.SOLUONGSP,
+            totalPrice: product.TONGTIEN,
+         }
+      }),
+   }
+}
+
+export { invoiceItemMapper, invoicePrintMapper }

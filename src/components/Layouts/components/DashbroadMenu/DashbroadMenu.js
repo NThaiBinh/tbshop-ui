@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import clsx from 'clsx'
-import cssDashbroadMenu from './DashbroadMenu.module.css'
+import styles from './DashbroadMenu.module.css'
 import { Link } from 'react-router-dom'
 function DashbroadMenu({ title, pagination, objectHandle, viewAlls = [], addNews = [] }) {
    const [isOpen, setIsOpen] = useState(false)
@@ -15,33 +15,33 @@ function DashbroadMenu({ title, pagination, objectHandle, viewAlls = [], addNews
    }
 
    return (
-      <div className={cssDashbroadMenu.selectMenu}>
-         <div className={cssDashbroadMenu.groupTitle} onClick={handleToggleDropDown}>
-            <i className={clsx('fa-solid fa-heart', cssDashbroadMenu.menuIcon)}></i>
-            <h3 className={cssDashbroadMenu.menuTitle}>
+      <div className={styles.selectMenu}>
+         <div className={styles.groupTitle} onClick={handleToggleDropDown}>
+            <i className={clsx('fa-solid fa-heart', styles.menuIcon)}></i>
+            <h3 className={styles.menuTitle}>
                {title}
                <i style={{ transform: `rotate(${rotateIcon})` }} className="fa-solid fa-circle-chevron-up"></i>
             </h3>
          </div>
          {isOpen && (
-            <ul className={cssDashbroadMenu.listMenu}>
+            <ul className={styles.listMenu}>
                {viewAlls.map((viewAll, index) => (
-                  <li key={index} className={cssDashbroadMenu.menuOption}>
+                  <li key={index} className={styles.menuOption}>
                      <Link
                         to={pagination ? `/dashbroad/${viewAll.objectView}/page/1` : `/dashbroad/${viewAll.objectView}`}
-                        className={cssDashbroadMenu.menuLink}
+                        className={styles.menuLink}
                      >
                         {viewAll.title}
                      </Link>
                   </li>
                ))}
                {addNews.map((addNew, index) => (
-                  <li key={index} className={cssDashbroadMenu.menuOption}>
+                  <li key={index} className={styles.menuOption}>
                      <Link
                         to={`/dashbroad/${objectHandle}${
                            addNew.objectChildren ? `/${addNew.objectChildren}` : ''
                         }/create`}
-                        className={cssDashbroadMenu.menuLink}
+                        className={styles.menuLink}
                      >
                         {addNew.title}
                      </Link>

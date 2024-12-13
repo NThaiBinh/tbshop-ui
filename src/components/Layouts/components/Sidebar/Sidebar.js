@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
-import cssSidebar from './Sidebar.module.css'
+import styles from './Sidebar.module.css'
 import StoreContext from '../../../../store/StoreContext'
 
 function Sidebar() {
@@ -20,7 +20,7 @@ function Sidebar() {
       {
          id: 'clock',
          href: '/products/clock',
-         icon: `${cssSidebar.menuIcon} `,
+         icon: `${styles.menuIcon} `,
          title: 'Đồng hồ',
       },
       {
@@ -35,66 +35,66 @@ function Sidebar() {
       return false
    }
    return (
-      <div className={cssSidebar.sidebar}>
-         <ul className={cssSidebar.menuList}>
+      <div className={styles.sidebar}>
+         <ul className={styles.menuList}>
             <li
-               className={clsx(cssSidebar.menuItem, {
-                  [cssSidebar.active]: activeMenu === 'home',
+               className={clsx(styles.menuItem, {
+                  [styles.active]: activeMenu === 'home',
                })}
                onClick={() => {
                   setActiveMenu('home')
                }}
             >
-               <Link className={cssSidebar.menuLink} to="/">
-                  <i className={clsx('fa-solid fa-house', cssSidebar.menuIcon)}></i>
+               <Link className={styles.menuLink} to="/">
+                  <i className={clsx('fa-solid fa-house', styles.menuIcon)}></i>
                   Trang chủ
                </Link>
             </li>
             <li
-               className={clsx(cssSidebar.menuItem, {
-                  [cssSidebar.active]: activeMenu === 'phone',
+               className={clsx(styles.menuItem, {
+                  [styles.active]: activeMenu === 'phone',
                })}
                onClick={() => {
                   setActiveMenu('phone')
                }}
             >
-               <Link className={cssSidebar.menuLink} to="/phones">
-                  <i className={clsx('fa-solid fa-mobile', cssSidebar.menuIcon)}></i>
+               <Link className={styles.menuLink} to="/phones">
+                  <i className={clsx('fa-solid fa-mobile', styles.menuIcon)}></i>
                   Điện thoại
                </Link>
             </li>
             <li
-               className={clsx(cssSidebar.menuItem, {
-                  [cssSidebar.active]: activeMenu === 'laptop',
+               className={clsx(styles.menuItem, {
+                  [styles.active]: activeMenu === 'laptop',
                })}
                onClick={() => {
                   setActiveMenu('laptop')
                }}
             >
-               <Link className={cssSidebar.menuLink} to="/laptops">
-                  <i className={clsx('fa-solid fa-laptop', cssSidebar.menuIcon)}></i>
+               <Link className={styles.menuLink} to="/laptops">
+                  <i className={clsx('fa-solid fa-laptop', styles.menuIcon)}></i>
                   Laptop
                </Link>
             </li>
             {localStorage.getItem('cartInfo') && (
                <li
-                  className={clsx(cssSidebar.menuItem, {
-                     [cssSidebar.active]: activeMenu === 'cart',
+                  className={clsx(styles.menuItem, {
+                     [styles.active]: activeMenu === 'cart',
                   })}
                   onClick={() => {
                      setActiveMenu('cart')
                   }}
                >
-                  <Link className={cssSidebar.menuLink} to="/cart">
-                     <i className={clsx('fa-solid fa-cart-shopping', cssSidebar.menuIcon)}></i>
+                  <Link className={styles.menuLink} to="/cart">
+                     <i className={clsx('fa-solid fa-cart-shopping', styles.menuIcon)}></i>
                      Giỏ hàng
                   </Link>
                </li>
             )}
          </ul>
          {state.isLogin && checkPermission(userInfo?.roles) && (
-            <Link to="/dashbroad/products/page/1" className={cssSidebar.menuItem}>
-               <i className={clsx(cssSidebar.menuIcon, 'fa-solid fa-screwdriver-wrench')}></i>
+            <Link to="/dashbroad/statistical" className={styles.menuItem}>
+               <i className={clsx(styles.menuIcon, 'fa-solid fa-screwdriver-wrench')}></i>
                Quản trị
             </Link>
          )}

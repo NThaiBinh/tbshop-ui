@@ -1,0 +1,13 @@
+.wrapper {
+   width: 500px;
+   height: 40px;
+   border: 2px dashed #333;
+   border-radius: 20px;
+   padding: 10px;
+   display: flex;
+   align-items: center;
+}
+
+.input {
+   width: 100%;
+}

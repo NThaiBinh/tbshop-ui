@@ -23,7 +23,18 @@ function cartItemMapper(cartItemInfo) {
       price: cartItemInfo.GIA,
       totalPrice: cartItemInfo.TONGTIEN,
       status: cartItemInfo.TRANGTHAI,
+      discountList: cartItemInfo.DANHSACHKHUYENMAI.map((discount) => discountCarItemMapper(discount)),
    }
 }
 
-export { cartMapper, cartItemMapper }
+function discountCarItemMapper(discount) {
+   return {
+      discountId: discount.MAKM,
+      discountName: discount.TENKM,
+      discountPrice: discount.GIAKM,
+      startDate: discount.NGAYBATDAU,
+      endDate: discount.NGAYKETTHUC,
+   }
+}
+
+export { cartMapper, cartItemMapper, discountCarItemMapper }

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import cssInvoiceDelivering from './InvoiceDelivering.module.css'
 import clsx from 'clsx'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import ButtonMedium from '../../../components/ButtonMedium/ButtonMedium'
 import { imageApi } from '../../../../services'
 import currencyFormat from '../../../../utils/currencyFormat'
@@ -11,6 +11,7 @@ import { setShowToast } from '../../../../store/actions'
 import { getAllInvoices } from '../../../../services/invoiceServices'
 
 function InvoiceDelivering() {
+   const navigate = useNavigate()
    const [state, dispatch] = useContext(StoreContext)
    const [invoices, setInvoices] = useState([])
    const [userInfo, setUserInfo] = useState()
@@ -60,6 +61,13 @@ function InvoiceDelivering() {
                      <strong className={cssInvoiceDelivering.customerId}>{order.customerId}</strong>
                      <strong className={cssInvoiceDelivering.name}>{order.name}</strong>
                      <strong className={cssInvoiceDelivering.address}>{order.address}</strong>
+                     <div className={cssInvoiceDelivering.wrapperItem}>
+                        <ButtonMedium
+                           title="In hóa đơn"
+                           type="delete"
+                           handleClick={() => navigate(`/dashbroad/invoice/print/${order.invoiceId}`)}
+                        />
+                     </div>
                   </div>
                   {order.invoiceList.map((orderItem, index) => {
                      totalOrderPrice += orderItem.totalPrice

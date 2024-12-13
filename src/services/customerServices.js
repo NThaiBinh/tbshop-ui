@@ -1,5 +1,19 @@
-import { customerAddressMapper } from '../utils/customerMapper'
+import { customerAddressMapper, customerMapper } from '../utils/customerMapper'
 import { api } from './index'
+
+async function getAllCustomers() {
+   return await fetch(`${api}/customers`, {
+      method: 'GET',
+      credentials: 'include',
+   })
+      .then((response) => response.json())
+      .then((results) => {
+         return {
+            code: results.code,
+            data: results.data?.map((customer) => customerMapper(customer)),
+         }
+      })
+}
 
 async function getCustomerInfo(customerId) {
    return await fetch(`${api}/customers/info/${customerId}`, {
@@ -66,6 +80,7 @@ async function deleteCustomerAddress(addressId) {
 }
 
 export {
+   getAllCustomers,
    getCustomerInfo,
    updateCustomer,
    createCustomerAddress,

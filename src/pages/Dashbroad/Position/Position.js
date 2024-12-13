@@ -2,7 +2,7 @@ import { Fragment, useContext, useEffect, useState } from 'react'
 import TabelBodyDashbroad from '../../components/TableBodyDashbroad/TableBodyDashbroad'
 import TableInfoDashbroad from '../../components/TableInfoDashbroad/TableInfoDashbroad'
 import BlankPage from '../../BlankPage/BlankPage'
-import { deletePosition, getAllPosition } from '../../../services/positionServices'
+import { deletePosition, getAllPositions } from '../../../services/positionServices'
 import StoreContext from '../../../store/StoreContext'
 import { useNavigate } from 'react-router-dom'
 import { setShowToast } from '../../../store/actions'
@@ -14,7 +14,7 @@ function Position() {
 
    useEffect(() => {
       async function handleGetAllPositions() {
-         const positionInfo = await getAllPosition()
+         const positionInfo = await getAllPositions()
          if (positionInfo.code === 'SS') {
             setPositions(positionInfo.data)
          }

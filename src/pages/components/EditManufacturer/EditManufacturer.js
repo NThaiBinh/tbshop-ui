@@ -4,7 +4,7 @@ import StoreContext from '../../../store/StoreContext'
 import EditWidthImage from '../EditWidthImage/EditWidthImage'
 import InputValue from '../InputValue/InputValue'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
-import cssEditManudacturer from './EditManufacturer.module.css'
+import styles from './EditManufacturer.module.css'
 function EditManufacturer({
    title,
    image,
@@ -35,7 +35,7 @@ function EditManufacturer({
             handleSubmit={handleSubmit}
             handleExit={handleExit}
          >
-            <div className={cssEditManudacturer.wrapper}>
+            <div className={styles.wrapper}>
                <InputValue
                   title="Tên nhà sản xuất:"
                   id="name"

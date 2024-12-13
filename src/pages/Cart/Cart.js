@@ -1,6 +1,6 @@
 import { Fragment, useContext, useEffect, useState } from 'react'
 import clsx from 'clsx'
-import cssCart from './Cart.module.css'
+import styles from './Cart.module.css'
 import Quantity from '../components/Quantity/Quantity'
 import StoreContext from '../../store/StoreContext'
 import currencyFormat from '../../utils/currencyFormat'
@@ -24,7 +24,6 @@ function Cart() {
    const [timerId, setTimerId] = useState()
    const [isSelectAll, setIsSelectAll] = useState(false)
    const [products, setProducts] = useState([])
-   const navigate = useNavigate()
    let totalProduct = 0
    let totalProductPrice = 0
 
@@ -32,9 +31,6 @@ function Cart() {
       const storedCartInfo = localStorage.getItem('cartInfo')
       if (storedCartInfo) {
          setCartInfo(JSON.parse(storedCartInfo))
-      } else {
-         navigate('/')
-         dispatch(setShowToast(true, 'error', 'Bạn phải đăng nhập trước!'))
       }
    }, [])
 
@@ -82,6 +78,7 @@ function Cart() {
       const newTimerId = setTimeout(() => {
          setCartIndexChange(index)
       }, 1000)
+
       setTimerId(newTimerId)
    }
 
@@ -183,75 +180,73 @@ function Cart() {
    }
 
    return (
-      <div className={cssCart.wrapper}>
+      <div className={styles.wrapper}>
          <Loading isVisible={isLoading} />
-         <div className={cssCart.cartInfo}>
+         <div className={styles.cartInfo}>
             {cartItems.length > 0 ? (
                <Fragment>
-                  <div className={clsx(cssCart.wrapperGroup, cssCart.cartHeader)}>
-                     <div className={cssCart.groupCheckbox}>
+                  <div className={clsx(styles.wrapperGroup, styles.cartHeader)}>
+                     <div className={styles.groupCheckbox}>
                         <input type="checkbox" checked={isSelectAll} onChange={handleSelectAll} />
                      </div>
-                     <div className={clsx(cssCart.wrapperItem, cssCart.wrapperItemMain)}>
+                     <div className={clsx(styles.wrapperItem, styles.wrapperItemMain)}>
                         <strong>Sản phẩm</strong>
                      </div>
-                     <div className={cssCart.wrapperItem}>
+                     <div className={styles.wrapperItem}>
                         <strong>Màu sắc</strong>
                      </div>
-                     <div className={cssCart.wrapperItem}>
+                     <div className={styles.wrapperItem}>
                         <strong>Đơn giá</strong>
                      </div>
-                     <div className={cssCart.wrapperItem}>
+                     <div className={styles.wrapperItem}>
                         <strong>Số lượng</strong>
                      </div>
-                     <div className={cssCart.wrapperItem}>
+                     <div className={styles.wrapperItem}>
                         <strong>Thành tiền</strong>
                      </div>
-                     <div className={cssCart.wrapperItem}>
+                     <div className={styles.wrapperItem}>
                         <strong>Hành động</strong>
                      </div>
                   </div>
-                  <div className={clsx(cssCart.wrapperGroup, cssCart.cartContainer)}>
+                  <div className={clsx(styles.wrapperGroup, styles.cartContainer)}>
                      {cartItems.map((cartItem, index) => {
                         if (cartItem.status === 'in-cart') {
                            totalProduct += parseInt(cartItem.quantity)
                            totalProductPrice += parseFloat(cartItem.totalPrice)
                            return (
-                              <div key={cartItem.productConfigurationId} className={cssCart.cartItem}>
-                                 <div className={cssCart.groupCheckbox}>
+                              <div key={cartItem.productConfigurationId} className={styles.cartItem}>
+                                 <div className={styles.groupCheckbox}>
                                     <input
                                        type="checkbox"
                                        checked={cartItem.isChecked || false}
                                        onChange={() => handleSelectItem(index)}
                                     />
                                  </div>
-                                 <div
-                                    className={clsx(cssCart.wrapperItem, cssCart.wrapperItemMain, cssCart.groupProduct)}
-                                 >
+                                 <div className={clsx(styles.wrapperItem, styles.wrapperItemMain, styles.groupProduct)}>
                                     <img
-                                       className={cssCart.productImage}
+                                       className={styles.productImage}
                                        src={`${imageApi}/${cartItem.image}`}
                                        alt="Ảnh sản phẩm"
                                     />
-                                    <h3 className={cssCart.productName}>
+                                    <h3 className={styles.productName}>
                                        <Link
-                                          className={cssCart.productLink}
+                                          className={styles.productLink}
                                           to={`/product/detail?productId=SP_25112024005010&productConfigurationId=CH_25112024005010`}
                                        >
                                           {cartItem.name}
                                        </Link>
                                     </h3>
                                     <strong
-                                       className={cssCart.productType}
+                                       className={styles.productType}
                                     >{`${cartItem.storageCapacity} ${cartItem.cpu} ${cartItem.gpu}`}</strong>
                                  </div>
-                                 <div className={cssCart.wrapperItem}>
+                                 <div className={styles.wrapperItem}>
                                     <strong>{cartItem.color}</strong>
                                  </div>
-                                 <div className={clsx(cssCart.wrapperItem, cssCart.productPrice)}>
+                                 <div className={clsx(styles.wrapperItem, styles.productPrice)}>
                                     <strong>{currencyFormat(cartItem.price)}</strong>
                                  </div>
-                                 <div className={cssCart.wrapperItem}>
+                                 <div className={styles.wrapperItem}>
                                     <Quantity
                                        quantity={cartItem.quantity}
                                        onIncrease={() => handleIncrease(cartItem.stockQuantity, index)}
@@ -261,10 +256,10 @@ function Cart() {
                                        }
                                     />
                                  </div>
-                                 <div className={clsx(cssCart.wrapperItem, cssCart.productPrice)}>
+                                 <div className={clsx(styles.wrapperItem, styles.productPrice)}>
                                     <strong>{currencyFormat(cartItem.totalPrice)}</strong>
                                  </div>
-                                 <div className={cssCart.wrapperItem}>
+                                 <div className={styles.wrapperItem}>
                                     <ButtonMedium
                                        title="Xóa"
                                        type="delete"
@@ -276,20 +271,20 @@ function Cart() {
                         }
                      })}
                   </div>
-                  <div className={cssCart.cartFooter}>
-                     <div className={cssCart.totalProduct}>
+                  <div className={styles.cartFooter}>
+                     <div className={styles.totalProduct}>
                         Tổng số sản phẩm: <strong>{totalProduct}</strong>
                      </div>
-                     <div className={cssCart.totalPrice}>
+                     <div className={styles.totalPrice}>
                         Tổng tiền: <strong>{currencyFormat(totalProductPrice)}</strong>
                      </div>
-                     <div className={cssCart.action}>
+                     <div className={styles.action}>
                         <ButtonMedium title="Mua ngay" type="submit" handleClick={handleBuy} />
                      </div>
                   </div>
                </Fragment>
             ) : (
-               <div className={cssCart.groupBlankPage}>
+               <div className={styles.groupBlankPage}>
                   <BlankPage />
                </div>
             )}

@@ -11,6 +11,8 @@ function employeeMapper(employeeInfo) {
       email: employeeInfo.EMAILNV,
       createdAt: employeeInfo.NGAYTAO,
       updatedAt: employeeInfo.NGAYCAPNHAT,
+      positionId: employeeInfo.MACV,
+      positionName: employeeInfo.TENCV,
    }
 }
 

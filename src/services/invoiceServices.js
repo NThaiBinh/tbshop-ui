@@ -1,9 +1,8 @@
-import { cartItemMapper } from '../utils/cartMapper'
-import { invoiceItemMapper } from '../utils/invoicemapper'
+import { invoiceItemMapper, invoicePrintMapper } from '../utils/invoiceMapper'
 import { api } from './index'
 
-async function getAllInvoices() {
-   return await fetch(`${api}/invoices`, {
+async function getAllInvoices(status) {
+   return await fetch(`${api}/invoices?status=${status}`, {
       method: 'GET',
       credentials: 'include',
    })
@@ -13,10 +12,11 @@ async function getAllInvoices() {
             code: invoices.code,
             data: invoices.data.map((invoice) => {
                return {
+                  invoiceId: invoice.invoiceId,
                   customerId: invoice.customerId,
                   name: invoice.name,
                   address: invoice.address,
-                  invoiceList: invoice.invoiceList.map((invoiceItem) => cartItemMapper(invoiceItem)),
+                  orderList: invoice.invoiceList.map((invoiceItem) => invoiceItemMapper(invoiceItem)),
                }
             }),
          }
@@ -59,4 +59,27 @@ async function confirmInvoice(invoiceId) {
       .then((result) => result)
 }
 
-export { getAllInvoices, getAllInvoicesByCustomerId, createInvoice, confirmInvoice }
+async function printInvoice(invoiceId) {
+   return await fetch(`${api}/invoices/print/${invoiceId}`, {
+      method: 'GET',
+      credentials: 'include',
+   })
+      .then((response) => response.json())
+      .then((invoiceInfo) => {
+         return {
+            code: invoiceInfo.code,
+            data: invoicePrintMapper(invoiceInfo.data),
+         }
+      })
+}
+
+async function getStatistical(startDate, endDate) {
+   return await fetch(`${api}/invoices/statistical?startDate=${startDate}&endDate=${endDate}`, {
+      method: 'GET',
+      credentials: 'include',
+   })
+      .then((response) => response.json())
+      .then((statisticalInfo) => statisticalInfo)
+}
+
+export { getAllInvoices, getAllInvoicesByCustomerId, createInvoice, confirmInvoice, printInvoice, getStatistical }

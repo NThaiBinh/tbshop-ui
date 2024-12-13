@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import StoreContext from '../../../store/StoreContext'
-import cssEditCategory from './EditCategory.module.css'
+import styles from './EditCategory.module.css'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import InputValue from '../InputValue/InputValue'
 import EditWithoutImage from '../EditWithoutImage/EditWithoutImage'
@@ -16,7 +16,7 @@ function EditCategory({ title, titleName, name, setName, nameMessage, handleSubm
    return (
       <Modal>
          <EditWithoutImage title={title} handleSubmit={handleSubmit} handleExit={handleExit}>
-            <div className={cssEditCategory.wrapper}>
+            <div className={styles.wrapper}>
                <InputValue
                   id="name"
                   title={titleName}

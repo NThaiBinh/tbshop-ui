@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import cssEditProduct from './EditProduct.module.css'
+import styles from './EditProduct.module.css'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import EditMultipleImages from '../EditMultipleImages/EditMultipleImages'
 import InputValue from '../InputValue/InputValue'
@@ -140,13 +140,13 @@ function EditProduct({
             handleSubmit={handleSubmit}
             isDisableInput={isDisableInput}
          >
-            <div className={cssEditProduct.columnLeft}>
-               <div className={cssEditProduct.columnHeader}>
-                  <h4 className={cssEditProduct.title}>THÔNG TIN SẢN PHẨM</h4>
+            <div className={styles.columnLeft}>
+               <div className={styles.columnHeader}>
+                  <h4 className={styles.title}>THÔNG TIN SẢN PHẨM</h4>
                </div>
-               <div className={cssEditProduct.columnBody}>
-                  <div className={cssEditProduct.groupColumn}>
-                     <div className={cssEditProduct.input}>
+               <div className={styles.columnBody}>
+                  <div className={styles.groupColumn}>
+                     <div className={styles.input}>
                         <SelectOptions
                            id="manufacturer"
                            title="Nhà sản xuất:"
@@ -162,7 +162,7 @@ function EditProduct({
                            }}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <SelectOptions
                            id="category"
                            title="Danh mục:"
@@ -178,7 +178,7 @@ function EditProduct({
                            }
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <SelectOptions
                            id="productType"
                            title="Loại sản phẩm:"
@@ -194,7 +194,7 @@ function EditProduct({
                            }
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="name"
                            title="Tên sản phẩm:"
@@ -209,7 +209,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="price"
                            title="Giá sản phẩm:"
@@ -226,7 +226,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="quantity"
                            title="Số lượng tồn:"
@@ -246,14 +246,14 @@ function EditProduct({
                   </div>
                </div>
             </div>
-            <div className={cssEditProduct.columnRight}>
-               <div className={cssEditProduct.columnHeader}>
-                  <h4 className={cssEditProduct.title}>CẤU HÌNH SẢN PHẨM</h4>
+            <div className={styles.columnRight}>
+               <div className={styles.columnHeader}>
+                  <h4 className={styles.title}>CẤU HÌNH SẢN PHẨM</h4>
                </div>
-               <div className={cssEditProduct.columnBody}>
-                  <div className={cssEditProduct.groupColumn}>
+               <div className={styles.columnBody}>
+                  <div className={styles.groupColumn}>
                      {isCreate && (
-                        <div className={cssEditProduct.groupCheckBox}>
+                        <div className={styles.groupCheckBox}>
                            <input
                               id="addConfig"
                               type="checkbox"
@@ -263,11 +263,11 @@ function EditProduct({
                                  setIsDisableInput(!isDisableInput)
                               }}
                            />
-                           <label htmlFor="addConfig" className={cssEditProduct.labelAddConfig}>
+                           <label htmlFor="addConfig" className={styles.labelAddConfig}>
                               Thêm cấu hình cho sản phẩm có sẳn
                            </label>
                            {isAddConfig && (
-                              <div className={cssEditProduct.input}>
+                              <div className={styles.input}>
                                  <InputValue
                                     id="productHandleId"
                                     title="Nhập mã sản phẩm cần thêm:"
@@ -279,7 +279,7 @@ function EditProduct({
                            )}
                         </div>
                      )}
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="cpu"
                            title="CPU:"
@@ -341,7 +341,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="core"
                            title="Số nhân:"
@@ -403,7 +403,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="cacheCPU"
                            title="Bộ nhớ đệm:"
@@ -450,7 +450,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="resolution"
                            title="Độ phân giải:"
@@ -512,7 +512,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="monitorTechnology"
                            title="Công nghệ màn hình:"
@@ -545,7 +545,7 @@ function EditProduct({
                         />
                      </div>
                      {!isAddConfig && (
-                        <div className={cssEditProduct.input}>
+                        <div className={styles.input}>
                            <InputValue
                               id="wireless"
                               title="Kết nối không dây:"
@@ -594,9 +594,9 @@ function EditProduct({
                         </div>
                      )}
                   </div>
-                  <div className={cssEditProduct.groupColumn}>
+                  <div className={styles.groupColumn}>
                      {isAddConfig && (
-                        <div className={cssEditProduct.input}>
+                        <div className={styles.input}>
                            <InputValue
                               id="wireless"
                               title="Kết nối không dây:"
@@ -644,7 +644,7 @@ function EditProduct({
                            />
                         </div>
                      )}
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="frontCamera"
                            title="Camera trước:"
@@ -676,7 +676,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="frontCameraTechnology"
                            title="Công nghệ camera trước:"
@@ -693,7 +693,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="backCameraTechnology"
                            title="Công nghệ camera sau:"
@@ -710,7 +710,7 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="charging"
                            title="Sạc:"
@@ -772,12 +772,12 @@ function EditProduct({
                            isRequire={true}
                         />
                      </div>
-                     <div className={cssEditProduct.input}>
-                        <div className={cssEditProduct.productColor}>
-                           <div className={cssEditProduct.groupChooseColor}>
+                     <div className={styles.input}>
+                        <div className={styles.productColor}>
+                           <div className={styles.groupChooseColor}>
                               <input
                                  id="colorPicker"
-                                 className={cssEditProduct.colorPicker}
+                                 className={styles.colorPicker}
                                  type="color"
                                  value={colorPickerValue}
                                  onChange={(e) => setColorPickerValue(e.target.value)}
@@ -785,21 +785,21 @@ function EditProduct({
                               Chọn màu sản phẩm, Tên màu:
                               <input
                                  id="colorName"
-                                 className={cssEditProduct.productColorName}
+                                 className={styles.productColorName}
                                  value={colorName}
                                  onChange={(e) => setColorName(e.target.value)}
                               />
-                              <button className={cssEditProduct.btnChooseColor} onClick={handleAddColor}>
+                              <button className={styles.btnChooseColor} onClick={handleAddColor}>
                                  Chọn
                               </button>
                            </div>
-                           <div className={cssEditProduct.groupProductColor}>
+                           <div className={styles.groupProductColor}>
                               {productColors?.map((productColor, index) => {
                                  if (productColor.state !== 'delete') {
                                     return (
-                                       <div key={index} className={cssEditProduct.groupColor}>
+                                       <div key={index} className={styles.groupColor}>
                                           <div
-                                             className={cssEditProduct.color}
+                                             className={styles.color}
                                              style={{ backgroundColor: `${productColor.color}` }}
                                           ></div>
                                           <strong>{productColor.name}</strong>

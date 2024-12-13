@@ -1,4 +1,4 @@
-import { IS_LOGIN, IS_USER_UPDATE, SET_PAGE, SET_SHOW_TOAST } from './constant'
+import { IS_LOGIN, IS_USER_UPDATE, SET_IS_UPDATE, SET_PAGE, SET_SEARCH_DASHBROAD, SET_SHOW_TOAST } from './constant'
 
 function setPage(payload) {
    return {
@@ -30,4 +30,18 @@ function setIsUserUpdate(isUserUpdate) {
    }
 }
 
-export { setPage, setShowToast, setIsLogin, setIsUserUpdate }
+function setSearchDashbroad(searchValue) {
+   return {
+      type: SET_SEARCH_DASHBROAD,
+      searchValue,
+   }
+}
+
+function setIsUpdate(isUpdate) {
+   return {
+      type: SET_IS_UPDATE,
+      isUpdate,
+   }
+}
+
+export { setPage, setShowToast, setIsLogin, setIsUserUpdate, setSearchDashbroad, setIsUpdate }

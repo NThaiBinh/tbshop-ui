@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import ProductFilter from '../components/ProductFilter/ProductFilter'
 import ProductsList from '../components/ProductsList/ProductsList'
-import { filterPrtoduct } from '../../services/productServices'
+import { filterProduct } from '../../services/productServices'
 import { getAllManufacsByCategoryId } from '../../services/manufacturerServices'
 function Laptop() {
    const [phones, setPhones] = useState([])
@@ -21,11 +21,12 @@ function Laptop() {
 
    useEffect(() => {
       async function handleFilterProduct(categoryId, manufacId, productTypeId, page) {
-         const result = await filterPrtoduct(categoryId, manufacId, productTypeId, page)
+         const result = await filterProduct(categoryId, manufacId, productTypeId, page)
          if (result.code === 'SS') {
             setPhones(result.data)
          }
       }
+
       handleFilterProduct('laptop', activeManufac, activeProductType)
    }, [activeManufac, activeProductType])
 

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import Modal from '../../components/Layouts/components/Modal/Modal'
 import EditWithoutImage from '../components/EditWithoutImage/EditWithoutImage'
 import InputValue from '../components/InputValue/InputValue'
-import cssAddress from './Address.module.css'
+import styles from './Address.module.css'
 import { useNavigate } from 'react-router-dom'
 import {
    createCustomerAddress,
@@ -11,7 +11,7 @@ import {
    updateDefaultCustomerAddress,
 } from '../../services/customerServices'
 import StoreContext from '../../store/StoreContext'
-import { setShowToast } from '../../store/actions'
+import { setIsUpdate, setShowToast } from '../../store/actions'
 import ButtonMedium from '../components/ButtonMedium/ButtonMedium'
 
 function Address() {
@@ -38,12 +38,13 @@ function Address() {
       if (userInfo.userId) {
          handleGetAllCustomerAddress(userInfo.userId)
       }
-   }, [userInfo.userId, state.isShowToast])
+   }, [userInfo.userId, state.isUpdate])
 
    async function handleSubmit() {
       const result = await createCustomerAddress(userInfo.userId, address)
       if (result.code === 'SS') {
          setAddress('')
+         dispatch(setIsUpdate(!state.isUpdate))
          dispatch(setShowToast(true, 'success', 'Thêm địa chỉ thành công!'))
       }
    }
@@ -51,6 +52,7 @@ function Address() {
    async function handleUpdateDefault(index) {
       const result = await updateDefaultCustomerAddress(customerAddresses[index].addressId)
       if (result.code === 'SS') {
+         dispatch(setIsUpdate(!state.isUpdate))
          dispatch(setShowToast(true, 'success', 'Cập nhật địa chỉ thành công!'))
       }
    }
@@ -61,6 +63,7 @@ function Address() {
       } else {
          const result = await deleteCustomerAddress(customerAddresses[index].addressId)
          if (result.code === 'SS') {
+            dispatch(setIsUpdate(!state.isUpdate))
             dispatch(setShowToast(true, 'success', 'Xóa địa chỉ thành công!'))
          }
       }
@@ -71,18 +74,18 @@ function Address() {
    return (
       <Modal>
          <EditWithoutImage title="Thông tin địa chỉ" handleSubmit={handleSubmit} handleExit={handleExit}>
-            <div className={cssAddress.wrapper}>
-               <div className={cssAddress.groupAddress}>
+            <div className={styles.wrapper}>
+               <div className={styles.groupAddress}>
                   {customerAddresses.map((customerAddress, index) => (
-                     <div key={customerAddress.addressId} className={cssAddress.address}>
-                        <div className={cssAddress.addressInfo}>
+                     <div key={customerAddress.addressId} className={styles.address}>
+                        <div className={styles.addressInfo}>
                            <h4>
                               Địa chỉ {index + 1}
                               {customerAddress.isDefault && ' (Mặc định)'}:
                            </h4>
                            <p>{customerAddress.address}</p>
                         </div>
-                        <div className={cssAddress.action}>
+                        <div className={styles.action}>
                            <ButtonMedium
                               title="Mặc định"
                               type="submit"
@@ -93,7 +96,7 @@ function Address() {
                      </div>
                   ))}
                </div>
-               <div className={cssAddress.addNewAddress}>
+               <div className={styles.addNewAddress}>
                   <InputValue
                      id="addNewAddress"
                      title="Thêm địa chỉ mới:"

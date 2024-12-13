@@ -3,17 +3,17 @@ import EditWidthImage from '../../components/EditWidthImage/EditWidthImage'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import InputValue from '../InputValue/InputValue'
 import SelectOptions from '../SelectOptions/SelectOptions'
-import cssEditEmployee from './EditEmployee.module.css'
+import styles from './EditEmployee.module.css'
 import { useEffect, useState } from 'react'
-import { getAllPosition } from '../../../services/positionServices'
+import { getAllPositions } from '../../../services/positionServices'
 
 function EditEmployee({ title, employee, setEmployee, nameMessage, handleDropFile, handleImageChange, handleSubmit }) {
    const navigate = useNavigate()
    const [positions, setPositions] = useState([])
 
    useEffect(() => {
-      async function handleGetAllPosition() {
-         const positionInfo = await getAllPosition()
+      async function handleGetAllPositions() {
+         const positionInfo = await getAllPositions()
          if (positionInfo.code === 'SS') {
             setPositions(
                positionInfo.data.map((position) => {
@@ -26,7 +26,7 @@ function EditEmployee({ title, employee, setEmployee, nameMessage, handleDropFil
          }
       }
 
-      handleGetAllPosition()
+      handleGetAllPositions()
    }, [])
    function handleExit() {
       navigate(-1)
@@ -36,21 +36,23 @@ function EditEmployee({ title, employee, setEmployee, nameMessage, handleDropFil
       <Modal>
          <EditWidthImage
             title={title}
+            image={employee.image}
             handleSubmit={handleSubmit}
             handleExit={handleExit}
             handleDropFile={handleDropFile}
             handleImageChange={handleImageChange}
          >
             <div>
-               <div className={cssEditEmployee.input}>
+               <div className={styles.input}>
                   <SelectOptions
                      title="Chức vụ:"
                      isRequire={true}
+                     defaultValue={employee.positionId}
                      values={positions}
                      handleOptionChange={(e) => setEmployee({ ...employee, positionId: e.target.value })}
                   />
                </div>
-               <div className={cssEditEmployee.input}>
+               <div className={styles.input}>
                   <InputValue
                      id="name"
                      title="Tên nhân viên:"
@@ -60,16 +62,16 @@ function EditEmployee({ title, employee, setEmployee, nameMessage, handleDropFil
                      message={nameMessage}
                   />
                </div>
-               <div className={cssEditEmployee.input}>
+               <div className={styles.input}>
                   <InputValue
                      id="birth"
                      title="Ngày sinh:"
-                     value={employee.birth}
+                     value={employee?.birth?.split('T')[0] || ''}
                      onChange={(e) => setEmployee({ ...employee, birth: e.target.value })}
                      type="date"
                   />
                </div>
-               <div className={cssEditEmployee.input}>
+               <div className={styles.input}>
                   <InputValue
                      id="address"
                      title="Địa chỉ"
@@ -77,7 +79,7 @@ function EditEmployee({ title, employee, setEmployee, nameMessage, handleDropFil
                      onChange={(e) => setEmployee({ ...employee, address: e.target.value })}
                   />
                </div>
-               <div className={cssEditEmployee.input}>
+               <div className={styles.input}>
                   <InputValue
                      id="phoneNumber"
                      title="Số điện thoại"
@@ -86,7 +88,7 @@ function EditEmployee({ title, employee, setEmployee, nameMessage, handleDropFil
                      isRequire={true}
                   />
                </div>
-               <div className={cssEditEmployee.input}>
+               <div className={styles.input}>
                   <InputValue
                      id="email"
                      title="Email:"

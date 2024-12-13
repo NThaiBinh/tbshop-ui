@@ -4,6 +4,7 @@ function storeInfoMapper(storeInfo) {
       address: storeInfo.DIACHICUAHANG,
       phoneNumber: storeInfo.SDTCUAHANG,
       email: storeInfo.EMAILCUAHANG,
+      image: storeInfo.LOGO,
    }
 }
 

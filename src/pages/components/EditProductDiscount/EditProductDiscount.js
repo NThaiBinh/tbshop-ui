@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Modal from '../../../components/Layouts/components/Modal/Modal'
 import InputValue from '../InputValue/InputValue'
-import cssEditProductDiscount from './EditProductDiscount.module.css'
+import styles from './EditProductDiscount.module.css'
 import StoreContext from '../../../store/StoreContext'
 import EditWidthPanel from '../EditWidthPanel/EditWidthPanel'
 function EditProductDiscount({
@@ -37,10 +37,10 @@ function EditProductDiscount({
             handleSubmit={handleSubmit}
             handleExit={handleExit}
          >
-            <div className={cssEditProductDiscount.wrapper}>
-               <div className={cssEditProductDiscount.groupInput}>
-                  <div className={cssEditProductDiscount.flexInput}>
-                     <div className={cssEditProductDiscount.input}>
+            <div className={styles.wrapper}>
+               <div className={styles.groupInput}>
+                  <div className={styles.flexInput}>
+                     <div className={styles.input}>
                         <InputValue
                            id="productId"
                            title="Mã sản phẩm khuyến mãi:"
@@ -49,7 +49,7 @@ function EditProductDiscount({
                            onChange={(e) => setProductId(e.target.value)}
                         />
                      </div>
-                     <div className={cssEditProductDiscount.input}>
+                     <div className={styles.input}>
                         <InputValue
                            id="name"
                            title="Tên khuyến mãi:"
@@ -59,7 +59,7 @@ function EditProductDiscount({
                         />
                      </div>
                   </div>
-                  <div className={cssEditProductDiscount.input}>
+                  <div className={styles.input}>
                      <InputValue
                         id="price"
                         title="Giá khuyến mãi:"
@@ -69,8 +69,8 @@ function EditProductDiscount({
                      />
                   </div>
                </div>
-               <div className={cssEditProductDiscount.groupInput}>
-                  <div className={cssEditProductDiscount.input}>
+               <div className={styles.groupInput}>
+                  <div className={styles.input}>
                      <InputValue
                         id="startDate"
                         title="Ngày bắt đầu:"
@@ -80,7 +80,7 @@ function EditProductDiscount({
                         type="datetime-local"
                      />
                   </div>
-                  <div className={cssEditProductDiscount.input}>
+                  <div className={styles.input}>
                      <InputValue
                         id="endDate"
                         title="Ngày kết thúc:"

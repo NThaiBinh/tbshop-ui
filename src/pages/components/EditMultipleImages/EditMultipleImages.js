@@ -1,5 +1,5 @@
 import DropFile from '../DropFile/DropFile'
-import cssEditMultipleImages from './EditMultipleImages.module.css'
+import styles from './EditMultipleImages.module.css'
 import ButtonMedium from '../ButtonMedium/ButtonMedium'
 
 function EditMultipleImages({ children, images, setImages, handleSubmit, handleExit, isDisableInput }) {
@@ -23,13 +23,13 @@ function EditMultipleImages({ children, images, setImages, handleSubmit, handleE
    }
 
    return (
-      <div className={cssEditMultipleImages.wrapper}>
-         <div className={cssEditMultipleImages.header}>
+      <div className={styles.wrapper}>
+         <div className={styles.header}>
             <h3>THÔNG TIN SẢN PHẨM</h3>
          </div>
-         <div className={cssEditMultipleImages.container}>
-            <div className={cssEditMultipleImages.productImages}>
-               <div className={cssEditMultipleImages.mainProductImage}>
+         <div className={styles.container}>
+            <div className={styles.productImages}>
+               <div className={styles.mainProductImage}>
                   <DropFile
                      id={0}
                      image={images[0].image}
@@ -38,8 +38,8 @@ function EditMultipleImages({ children, images, setImages, handleSubmit, handleE
                      isDisabled={isDisableInput}
                   />
                </div>
-               <div className={cssEditMultipleImages.detailProductImages}>
-                  <div className={cssEditMultipleImages.groupImageDetail}>
+               <div className={styles.detailProductImages}>
+                  <div className={styles.groupImageDetail}>
                      <DropFile
                         id={1}
                         image={images[1].image}
@@ -48,7 +48,7 @@ function EditMultipleImages({ children, images, setImages, handleSubmit, handleE
                         isDisabled={isDisableInput}
                      />
                   </div>
-                  <div className={cssEditMultipleImages.groupImageDetail}>
+                  <div className={styles.groupImageDetail}>
                      <DropFile
                         id={2}
                         image={images[2].image}
@@ -57,7 +57,7 @@ function EditMultipleImages({ children, images, setImages, handleSubmit, handleE
                         isDisabled={isDisableInput}
                      />
                   </div>
-                  <div className={cssEditMultipleImages.groupImageDetail}>
+                  <div className={styles.groupImageDetail}>
                      <DropFile
                         id={3}
                         image={images[3].image}
@@ -66,7 +66,7 @@ function EditMultipleImages({ children, images, setImages, handleSubmit, handleE
                         isDisabled={isDisableInput}
                      />
                   </div>
-                  <div className={cssEditMultipleImages.groupImageDetail}>
+                  <div className={styles.groupImageDetail}>
                      <DropFile
                         id={4}
                         image={images[4].image}
@@ -77,8 +77,8 @@ function EditMultipleImages({ children, images, setImages, handleSubmit, handleE
                   </div>
                </div>
             </div>
-            <div className={cssEditMultipleImages.content}>{children}</div>
-            <div className={cssEditMultipleImages.footer}>
+            <div className={styles.content}>{children}</div>
+            <div className={styles.footer}>
                <ButtonMedium title="Thoát" type="exit" handleClick={handleExit} />
                <ButtonMedium title="Đồng ý" type="submit" handleClick={handleSubmit} />
             </div>

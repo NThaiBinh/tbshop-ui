@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
-import cssUserInfo from './UserInfo.module.css'
+import styles from './UserInfo.module.css'
 import defaultAvatar from '../images/default_avatar.jpg'
-import { logout } from '../../../../services/authServices'
+import { getUserInfoById, logout } from '../../../../services/authServices'
 import StoreContext from '../../../../store/StoreContext'
 import { setIsLogin, setShowToast } from '../../../../store/actions'
 import { useNavigate } from 'react-router-dom'
 const imageLink = 'http://localhost:3001'
 
-function InfoCustomer() {
+function UserInfo() {
    const [state, dispatch] = useContext(StoreContext)
    const [userInfo, setUserInfo] = useState()
    const [cartInfo, setCartInfo] = useState()
@@ -25,6 +25,8 @@ function InfoCustomer() {
       }
    }, [state.isUserUpdate])
 
+   useEffect(() => {}, [])
+
    async function handleLogout() {
       const result = await logout()
       if (result.code === 'SS') {
@@ -38,10 +40,10 @@ function InfoCustomer() {
    }
 
    return (
-      <div className={cssUserInfo.wrapper}>
-         <h2 className={cssUserInfo.userName}>{userInfo?.name}</h2>
+      <div className={styles.wrapper}>
+         <h2 className={styles.userName}>{userInfo?.name}</h2>
          <img
-            className={cssUserInfo.userImg}
+            className={styles.userImg}
             src={
                userInfo?.image
                   ? `${userInfo.image}`.includes('blob:')
@@ -50,20 +52,20 @@ function InfoCustomer() {
                   : defaultAvatar
             }
          />
-         <div className={cssUserInfo.userAction}>
-            <ul className={cssUserInfo.menuList}>
-               <li className={cssUserInfo.menuItem} onClick={() => navigate('/user/profile')}>
+         <div className={styles.userAction}>
+            <ul className={styles.menuList}>
+               <li className={styles.menuItem} onClick={() => navigate('/profile')}>
                   <i className="fa-solid fa-user"></i>Xem hồ sơ
                </li>
                {cartInfo && (
-                  <li className={cssUserInfo.menuItem} onClick={() => navigate('/user/orders')}>
+                  <li className={styles.menuItem} onClick={() => navigate('/orders')}>
                      <i className="fa-solid fa-box-open"></i>Đơn mua
                   </li>
                )}
-               <li className={cssUserInfo.menuItem} onClick={() => navigate('/user/address')}>
+               <li className={styles.menuItem} onClick={() => navigate('/address')}>
                   <i className="fa-solid fa-location-dot"></i>Thông tin địa chỉ
                </li>
-               <li className={cssUserInfo.menuItem} onClick={handleLogout}>
+               <li className={styles.menuItem} onClick={handleLogout}>
                   <i className="fa-solid fa-right-from-bracket"></i>Đăng xuất
                </li>
             </ul>
@@ -72,4 +74,4 @@ function InfoCustomer() {
    )
 }
 
-export default InfoCustomer
+export default UserInfo

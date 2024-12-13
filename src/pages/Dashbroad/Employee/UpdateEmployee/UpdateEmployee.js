@@ -30,7 +30,7 @@ function UpdateEmployee() {
       formData.append('image', employee.image)
       formData.append('birth', employee.birth)
       formData.append('address', employee.address)
-      formData.append('phoneNumber', employee.address)
+      formData.append('phoneNumber', employee.phoneNumber)
       formData.append('email', employee.email)
       const result = await updateEmployee(employeeId, formData)
       if (result.code === 'SS') {

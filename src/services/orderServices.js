@@ -10,12 +10,12 @@ async function getAllOrders() {
       .then((orders) => {
          return {
             code: orders.code,
-            data: orders.data.map((order) => {
+            data: orders.data?.map((order) => {
                return {
-                  customerId: order.customerId,
-                  name: order.name,
-                  address: order.address,
-                  orderList: order.orderList.map((orderItem) => cartItemMapper(orderItem)),
+                  customerId: order.MAKH,
+                  name: order.TENKH,
+                  address: order.DIACHIGOAO,
+                  orderList: order.DANHSACHSANPHAM.map((orderItem) => cartItemMapper(orderItem)),
                }
             }),
          }
@@ -48,4 +48,25 @@ async function cancelOrder(cartItem) {
       .then((result) => result)
 }
 
-export { getAllOrders, createOrder, cancelOrder }
+async function getSearchResults(query) {
+   return await fetch(`${api}/orders/search?q=${query}`, {
+      method: 'GET',
+      credentials: 'include',
+   })
+      .then((response) => response.json())
+      .then((searchResults) => {
+         return {
+            code: searchResults.code,
+            data: searchResults.data?.map((order) => {
+               return {
+                  customerId: order.MAKH,
+                  name: order.TENKH,
+                  address: order.DIACHIGOAO,
+                  orderList: order.DANHSACHSANPHAM.map((orderItem) => cartItemMapper(orderItem)),
+               }
+            }),
+         }
+      })
+}
+
+export { getAllOrders, createOrder, cancelOrder, getSearchResults }

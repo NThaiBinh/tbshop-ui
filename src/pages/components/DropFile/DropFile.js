@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import clsx from 'clsx'
-import cssDropFile from './DropFile.module.css'
+import styles from './DropFile.module.css'
 import { imageApi } from '../../../services'
 
 function DropFile({ id, image, handleDropFile, handleImageChange, isDisabled }) {
@@ -16,9 +16,9 @@ function DropFile({ id, image, handleDropFile, handleImageChange, isDisabled }) 
    }
 
    return (
-      <div className={cssDropFile.wrapper}>
+      <div className={styles.wrapper}>
          <div
-            className={cssDropFile.dropZone}
+            className={styles.dropZone}
             onDrop={(e) => {
                e.preventDefault()
                if (!isDisabled) {
@@ -33,12 +33,12 @@ function DropFile({ id, image, handleDropFile, handleImageChange, isDisabled }) 
             onClick={() => fileInput.click()}
          >
             <h3>Nhấn hoặc kéo thả</h3>
-            <i className={clsx('fa-solid fa-circle-plus', cssDropFile.icon)}></i>
-            {(image || preview) && <img className={cssDropFile.img} src={preview || `${imageApi}/${image}`} />}
+            <i className={clsx('fa-solid fa-circle-plus', styles.icon)}></i>
+            {(image || preview) && <img className={styles.img} src={preview || `${imageApi}/${image}`} />}
          </div>
          <input
             id={id}
-            className={cssDropFile.fileInput}
+            className={styles.fileInput}
             type="file"
             onChange={(e) => {
                const file = e.target.files[0]

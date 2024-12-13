@@ -1,13 +1,13 @@
 import clsx from 'clsx'
-import cssButtonMedium from './ButtonMedium.module.css'
+import styles from './ButtonMedium.module.css'
 
 function ButtonMedium({ title, type, handleClick }) {
    return (
       <button
-         className={clsx(cssButtonMedium.btnMedium, {
-            [cssButtonMedium.btnExit]: type === 'exit',
-            [cssButtonMedium.btnSubmit]: type === 'submit',
-            [cssButtonMedium.btnDelete]: type === 'delete',
+         className={clsx(styles.btnMedium, {
+            [styles.btnExit]: type === 'exit',
+            [styles.btnSubmit]: type === 'submit',
+            [styles.btnDelete]: type === 'delete',
          })}
          onClick={handleClick}
       >

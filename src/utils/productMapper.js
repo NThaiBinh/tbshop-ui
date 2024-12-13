@@ -1,5 +1,4 @@
 import { productDiscountMapper } from './productDiscountMapper'
-import { storewideDiscountMapper } from './storewideDiscountMapper'
 
 function productMapper(productInfo) {
    return {
@@ -21,6 +20,7 @@ function productInfoMapper(productInfo) {
       productConfigurationId: productInfo.MACAUHINH,
       productImage: productInfo.ANHSP,
       name: productInfo.TENSP,
+      manufacName: productInfo.TENNSX,
       cpu: productInfo.CPU,
       gpu: productInfo.GPU,
       monitor: productInfo.MANHINH,
@@ -35,7 +35,7 @@ function productInfoMapper(productInfo) {
       productDiscounts: productInfo.DANHSACHKHUYENMAI,
       discountPercentage: productInfo.PHANTRAMGIAM,
       discountPrice: productInfo.GIAKM,
-      storewideDiscounts: productInfo.DANHSACHKHUYENMAICHUNG,
+      quantityInStock: productInfo.SOLUONGTON,
    }
 }
 
@@ -54,11 +54,6 @@ function productDetailMapper(productDetailInfo) {
          productDiscounts: productDetailInfo.productInfo.DANHSACHKHUYENMAI
             ? productDetailInfo.productInfo.DANHSACHKHUYENMAI.map((productDiscount) =>
                  productDiscountMapper(productDiscount),
-              )
-            : null,
-         storewideDiscounts: productDetailInfo.productInfo.DANHSACHKHUYENMAICHUNG
-            ? productDetailInfo.productInfo.DANHSACHKHUYENMAICHUNG.map((storewideDiscount) =>
-                 storewideDiscountMapper(storewideDiscount),
               )
             : null,
          createdAt: productDetailInfo.productInfo.NGAYTAO,

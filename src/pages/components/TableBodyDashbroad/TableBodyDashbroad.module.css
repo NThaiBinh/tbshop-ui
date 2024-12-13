@@ -12,7 +12,13 @@ tr td {
 }
 
 td h3 {
+   text-align: left;
    min-width: 100px;
+   display: -webkit-box;
+   -webkit-line-clamp: 1;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
 }
 
 .img {

@@ -1,4 +1,4 @@
-import { IS_LOGIN, IS_USER_UPDATE, SET_PAGE, SET_SHOW_TOAST } from './constant'
+import { IS_LOGIN, IS_USER_UPDATE, SET_IS_UPDATE, SET_PAGE, SET_SEARCH_DASHBROAD, SET_SHOW_TOAST } from './constant'
 
 const initState = {
    isUserUpdate: false,
@@ -7,6 +7,8 @@ const initState = {
    isShowToast: false,
    toastType: '',
    toastMessage: '',
+   searchValue: '',
+   isUpdate: false,
 }
 
 function reducer(state, action) {
@@ -32,6 +34,16 @@ function reducer(state, action) {
          return {
             ...state,
             isUserUpdate: action.isUserUpdate,
+         }
+      case SET_SEARCH_DASHBROAD:
+         return {
+            ...state,
+            searchValue: action.searchValue,
+         }
+      case SET_IS_UPDATE:
+         return {
+            ...state,
+            isUpdate: action.isUpdate,
          }
       default:
    }

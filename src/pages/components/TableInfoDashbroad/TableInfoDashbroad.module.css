@@ -28,17 +28,26 @@ th {
    width: 200px;
 }
 
+.refName {
+   width: 240px;
+}
+
 .name {
    text-align: center;
+   flex: 1;
 }
 .image {
-   width: 20px;
+   width: 120px;
 }
 .date {
    width: 250px;
 }
 .action {
    width: 250px;
+}
+
+.quantityInStock {
+   width: 120px;
 }
 
 .selectPage {

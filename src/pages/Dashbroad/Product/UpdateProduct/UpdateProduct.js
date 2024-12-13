@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import StoreContext from '../../../../store/StoreContext'
-import { setShowToast } from '../../../../store/actions'
+import { setIsUpdate, setShowToast } from '../../../../store/actions'
 import { getProductEdit, updateProduct } from '../../../../services/productServices'
 import EditProduct from '../../../components/EditProduct/EditProduct'
 import { objProductConfiguration, objProductImages, objProductInfo } from '../objectProduct'
@@ -47,6 +47,7 @@ function UpdateProduct() {
 
       const result = await updateProduct({ productId, productConfigurationId, formData })
       if (result.code === 'SS') {
+         dispatch(setIsUpdate(!state.setIsUpdate))
          dispatch(setShowToast(true, 'success', 'Sửa sản phẩm thành công!'))
          navigate(-1)
       } else {

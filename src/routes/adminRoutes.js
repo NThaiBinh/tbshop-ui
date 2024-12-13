@@ -13,76 +13,177 @@ import Product from '../pages/Dashbroad/Product/Product/Product'
 import CreateProduct from '../pages/Dashbroad/Product/CreateProduct/CreateProduct'
 import UpdateProduct from '../pages/Dashbroad/Product/UpdateProduct/UpdateProduct'
 import Discount from '../pages/Dashbroad/Discount/Discount'
-import CreateStorewideDiscount from '../pages/Dashbroad/Discount/CreateStorewideDiscount/CreateStorewideDiscount'
 import CreateProductDiscount from '../pages/Dashbroad/Discount/CreateProductDiscount/CreateProductDiscount'
-import Role from '../pages/Dashbroad/AccessPermissions/Role/Role'
-import Order from '../pages/Dashbroad/Order/Order'
-import InvoiceDelivering from '../pages/Dashbroad/Invoice/InvoiceDelivering/InvoiceDelivering'
 import UpdatePosition from '../pages/Dashbroad/Position/UpdatePosition/UpdatePosition'
 import CreateEmployee from '../pages/Dashbroad/Employee/CreateEmployee/CreateEmployee'
 import UpdateEmployee from '../pages/Dashbroad/Employee/UpdateEmployee/UpdateEmployee'
+import AccessPermissions from '../pages/Dashbroad/AccessPermissions/AccessPermissions'
+import CreateAccountEmployee from '../pages/Dashbroad/AccessPermissions/CreateAccountEmployee/CreateAccountEmployee'
+import Printable from '../pages/components/Printable/Printable'
+import Statistical from '../pages/Dashbroad/Statistical/Statistical'
+import OrderPending from '../pages/Dashbroad/Order/OrderPending/OrderPending'
+import OrderDelivering from '../pages/Dashbroad/Order/OrderDelivering/OrderDelivering'
+import OrderDelivered from '../pages/Dashbroad/Order/OrderDelivered/OrderDelivered'
+import UpdateStoreInfo from '../pages/Dashbroad/StoreInfo/UpdateStoreInfo/UpdateStoreInfo'
+import Customer from '../pages/Dashbroad/Customer/Customer'
 
 export const adminRoutes = [
-   { path: '/dashbroad/general-categories', component: GeneralCategory, layout: DashbroadLayout },
+   {
+      path: '/dashbroad/store-info/edit',
+      component: Statistical,
+      layout: DashbroadLayout,
+      edit: UpdateStoreInfo,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/general-categories',
+      component: GeneralCategory,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
    {
       path: '/dashbroad/general-categories/category/edit/:categoryId',
       component: GeneralCategory,
       layout: DashbroadLayout,
       edit: UpdateCategory,
+      allowedRoles: ['admin', 'editor'],
    },
    {
       path: '/dashbroad/general-categories/product-type/create/',
       component: GeneralCategory,
       layout: DashbroadLayout,
       edit: CreateProductType,
+      allowedRoles: ['admin', 'editor'],
    },
    {
       path: '/dashbroad/general-categories/product-type/edit/:productTypeId',
       component: GeneralCategory,
       layout: DashbroadLayout,
       edit: UpdateProductType,
+      allowedRoles: ['admin', 'editor'],
    },
-   { path: '/dashbroad/manufacturers/page/:page', component: Manufacturer, layout: DashbroadLayout },
-   { path: '/dashbroad/manufacturers/create', component: CreateManufacturer, layout: DashbroadLayout },
-   { path: '/dashbroad/manufacturers/edit/:manufacId', component: UpdateManufacturer, layout: DashbroadLayout },
+   {
+      path: '/dashbroad/manufacturers/page/:page',
+      component: Manufacturer,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/manufacturers/create',
+      component: CreateManufacturer,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/manufacturers/edit/:manufacId',
+      component: UpdateManufacturer,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
    {
       path: '/dashbroad/products/page/:page',
       component: Product,
       layout: DashbroadLayout,
       allowedRoles: ['admin', 'editor'],
    },
-   { path: '/dashbroad/products/create', component: CreateProduct, layout: DashbroadLayout },
-   { path: '/dashbroad/products/edit', component: UpdateProduct, layout: DashbroadLayout },
-   { path: '/dashbroad/positions', component: Position, layout: DashbroadLayout },
-   { path: '/dashbroad/positions/create', component: CreatePosition, layout: DashbroadLayout },
-   { path: '/dashbroad/positions/edit/:positionId', component: UpdatePosition, layout: DashbroadLayout },
-   { path: '/dashbroad/employees', component: Employee, layout: DashbroadLayout },
-   { path: '/dashbroad/employees/create', component: CreateEmployee, layout: DashbroadLayout },
-   { path: '/dashbroad/employees/edit/:employeeId', component: UpdateEmployee, layout: DashbroadLayout },
-   { path: '/dashbroad/discounts/page/:page', component: Discount, layout: DashbroadLayout },
    {
-      path: '/dashbroad/discounts/storewide-discount/create',
-      component: CreateStorewideDiscount,
+      path: '/dashbroad/products/create',
+      component: CreateProduct,
       layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/products/edit',
+      component: UpdateProduct,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   { path: '/dashbroad/positions', component: Position, layout: DashbroadLayout, allowedRoles: ['admin', 'editor'] },
+   {
+      path: '/dashbroad/positions/create',
+      component: CreatePosition,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/positions/edit/:positionId',
+      component: UpdatePosition,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   { path: '/dashbroad/employees', component: Employee, layout: DashbroadLayout, allowedRoles: ['admin', 'editor'] },
+   {
+      path: '/dashbroad/employees/create',
+      component: CreateEmployee,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/employees/edit/:employeeId',
+      component: UpdateEmployee,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/discounts/page/:page',
+      component: Discount,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
    },
    {
       path: '/dashbroad/discounts/product-discount/create',
       component: CreateProductDiscount,
       layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
    },
    {
-      path: '/dashbroad/acccess-permissions/add-role/create',
-      component: Role,
+      path: '/dashbroad/acccess-permissions',
+      component: AccessPermissions,
       layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
    },
    {
-      path: '/dashbroad/orders',
-      component: Order,
+      path: '/dashbroad/acccess-permissions/employee-account/create',
+      component: AccessPermissions,
       layout: DashbroadLayout,
+      edit: CreateAccountEmployee,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/orders-pending',
+      component: OrderPending,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
    },
    {
       path: '/dashbroad/orders-delivering',
-      component: InvoiceDelivering,
+      component: OrderDelivering,
       layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/orders-delivered',
+      component: OrderDelivered,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/orders-delivering/print/:invoiceId',
+      component: OrderDelivering,
+      layout: DashbroadLayout,
+      edit: Printable,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/statistical',
+      component: Statistical,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
+   },
+   {
+      path: '/dashbroad/customers',
+      component: Customer,
+      layout: DashbroadLayout,
+      allowedRoles: ['admin', 'editor'],
    },
 ]

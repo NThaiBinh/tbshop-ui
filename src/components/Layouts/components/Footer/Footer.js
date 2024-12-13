@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
-import cssFooter from './Footer.module.css'
+import styles from './Footer.module.css'
 import { useEffect, useState } from 'react'
 import { getStoreInfo } from '../../../../services/storeServices'
 
@@ -19,11 +19,11 @@ function Footer() {
    }, [])
 
    return (
-      <div className={cssFooter.wrapper}>
-         <div className={cssFooter.content}>
-            <div className={clsx(cssFooter.footerContent, cssFooter.left)}>
+      <div className={styles.wrapper}>
+         <div className={styles.content}>
+            <div className={clsx(styles.footerContent, styles.left)}>
                <h2>VỀ CHÚNG TÔI</h2>
-               <ul className={cssFooter.listInfo}>
+               <ul className={styles.listInfo}>
                   <li>
                      <i className="fa-solid fa-signature"></i>
                      {storeInfo?.name}
@@ -42,10 +42,10 @@ function Footer() {
                   </li>
                </ul>
             </div>
-            <div className={cssFooter.line}></div>
-            <div className={clsx(cssFooter.footerContent, cssFooter.center)}>
+            <div className={styles.line}></div>
+            <div className={clsx(styles.footerContent, styles.center)}>
                <h2>KHÁM PHÁ</h2>
-               <ul className={cssFooter.listInfo}>
+               <ul className={styles.listInfo}>
                   <li onClick={() => navigate('/')}>
                      <i className="fa-solid fa-house"></i>
                      Trang chủ
@@ -64,23 +64,23 @@ function Footer() {
                   </li>
                </ul>
             </div>
-            <div className={cssFooter.line}></div>
-            <div className={clsx(cssFooter.footerContent, cssFooter.right)}>
+            <div className={styles.line}></div>
+            <div className={clsx(styles.footerContent, styles.right)}>
                <h2>MẠNG XẢ HỘI</h2>
-               <ul className={cssFooter.listInfo}>
-                  <li>
+               <ul className={styles.listInfo}>
+                  <li className={styles.listItem}>
                      <i className="fa-brands fa-facebook"></i>
                      Facebook
                   </li>
-                  <li>
+                  <li className={styles.listItem}>
                      <i className="fa-brands fa-tiktok"></i>
                      TikTok
                   </li>
-                  <li>
+                  <li className={styles.listItem}>
                      <i className="fa-brands fa-square-instagram"></i>
                      Instagram
                   </li>
-                  <li>
+                  <li className={styles.listItem}>
                      <i className="fa-brands fa-youtube"></i>
                      Youtube
                   </li>

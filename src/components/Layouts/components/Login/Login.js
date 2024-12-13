@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import cssLogin from './Login.module.css'
+import styles from './Login.module.css'
 import { login, register } from '../../../../services/authServices'
 import Modal from '../Modal/Modal'
 import ButtonMedium from '../../../../pages/components/ButtonMedium/ButtonMedium'
@@ -56,6 +56,7 @@ function Login() {
 
    async function handleRegister() {
       const result = await register({ ...registerInfo, accountType: 'customer' })
+
       if (result.code === 'SS') {
          dispatch(setShowToast(true, 'success', 'Đăng ký thành công!'))
          setCheckForm(!checkForm)
@@ -64,17 +65,17 @@ function Login() {
    }
    return (
       <Modal>
-         <div className={cssLogin.loginForm}>
+         <div className={styles.loginForm}>
             {checkForm && (
-               <div className={cssLogin.loginInfo}>
-                  <h2 className={cssLogin.title}>Đăng nhập</h2>
+               <div className={styles.loginInfo}>
+                  <h2 className={styles.title}>Đăng nhập</h2>
 
-                  <div className={cssLogin.inputGroup}>
-                     <label className={cssLogin.labelInput} htmlFor="userName">
+                  <div className={styles.inputGroup}>
+                     <label className={styles.labelInput} htmlFor="userName">
                         Tên đăng nhập
                      </label>
                      <input
-                        className={cssLogin.loginInput}
+                        className={styles.loginInput}
                         value={loginInfo.userName}
                         onChange={(e) => setLoginInfo({ ...loginInfo, userName: e.target.value })}
                         type="text"
@@ -82,12 +83,12 @@ function Login() {
                      />
                   </div>
 
-                  <div className={cssLogin.inputGroup}>
-                     <label className={cssLogin.labelInput} htmlFor="password">
+                  <div className={styles.inputGroup}>
+                     <label className={styles.labelInput} htmlFor="password">
                         Mật khẩu
                      </label>
                      <input
-                        className={cssLogin.loginInput}
+                        className={styles.loginInput}
                         value={loginInfo.password}
                         onChange={(e) => setLoginInfo({ ...loginInfo, password: e.target.value })}
                         type="password"
@@ -95,17 +96,17 @@ function Login() {
                      />
                   </div>
 
-                  <p className={cssLogin.meaasge}>{message}</p>
+                  <p className={styles.meaasge}>{message}</p>
 
-                  <div className={cssLogin.buttonGroup}>
+                  <div className={styles.buttonGroup}>
                      <ButtonMedium title="Thoát" type="exit" handleClick={handleExit} />
                      <ButtonMedium title="Đăng nhập" type="submit" handleClick={handleLogin} />
                   </div>
-                  <div className={cssLogin.switchForm}>
+                  <div className={styles.switchForm}>
                      <p>
                         Bạn chưa có tài khoản?
                         <strong
-                           className={cssLogin.switchFormLink}
+                           className={styles.switchFormLink}
                            onClick={() => {
                               setCheckForm(!checkForm)
                               navigate('/register', { replace: true })
@@ -114,20 +115,22 @@ function Login() {
                            Đăng ký
                         </strong>
                      </p>
-                     <strong className={cssLogin.switchFormLink}>Quên mật khẩu?</strong>
+                     <strong className={styles.switchFormLink} onClick={() => navigate('/user/forgot-password')}>
+                        Quên mật khẩu?
+                     </strong>
                   </div>
                </div>
             )}
             {!checkForm && (
-               <div className={cssLogin.registerInfo}>
-                  <h2 className={cssLogin.title}>Đăng ký</h2>
+               <div className={styles.registerInfo}>
+                  <h2 className={styles.title}>Đăng ký</h2>
 
-                  <div className={cssLogin.inputGroup}>
-                     <label className={cssLogin.labelInput} htmlFor="userName">
+                  <div className={styles.inputGroup}>
+                     <label className={styles.labelInput} htmlFor="userName">
                         Họ và tên
                      </label>
                      <input
-                        className={cssLogin.loginInput}
+                        className={styles.loginInput}
                         value={registerInfo.name}
                         onChange={(e) => setRegisterInfo({ ...registerInfo, name: e.target.value })}
                         type="text"
@@ -135,12 +138,12 @@ function Login() {
                      />
                   </div>
 
-                  <div className={cssLogin.inputGroup}>
-                     <label className={cssLogin.labelInput} htmlFor="userName">
+                  <div className={styles.inputGroup}>
+                     <label className={styles.labelInput} htmlFor="userName">
                         Tên đăng nhập
                      </label>
                      <input
-                        className={cssLogin.loginInput}
+                        className={styles.loginInput}
                         value={registerInfo.userName}
                         onChange={(e) => setRegisterInfo({ ...registerInfo, userName: e.target.value })}
                         type="text"
@@ -148,12 +151,12 @@ function Login() {
                      />
                   </div>
 
-                  <div className={cssLogin.inputGroup}>
-                     <label className={cssLogin.labelInput} htmlFor="password">
+                  <div className={styles.inputGroup}>
+                     <label className={styles.labelInput} htmlFor="password">
                         Mật khẩu
                      </label>
                      <input
-                        className={cssLogin.loginInput}
+                        className={styles.loginInput}
                         value={registerInfo.password}
                         onChange={(e) => setRegisterInfo({ ...registerInfo, password: e.target.value })}
                         type="password"
@@ -161,12 +164,12 @@ function Login() {
                      />
                   </div>
 
-                  <div className={cssLogin.inputGroup}>
-                     <label className={cssLogin.labelInput} htmlFor="re-enter-password">
+                  <div className={styles.inputGroup}>
+                     <label className={styles.labelInput} htmlFor="re-enter-password">
                         Nhập lại mật khẩu
                      </label>
                      <input
-                        className={cssLogin.loginInput}
+                        className={styles.loginInput}
                         value={reEnterPassword}
                         onChange={(e) => setReEnterPassword(e.target.value)}
                         type="password"
@@ -174,17 +177,17 @@ function Login() {
                      />
                   </div>
 
-                  <p className={cssLogin.meaasge}>{message}</p>
+                  <p className={styles.meaasge}>{message}</p>
 
-                  <div className={cssLogin.buttonGroup}>
+                  <div className={styles.buttonGroup}>
                      <ButtonMedium title="Thoát" type="exit" handleClick={handleExit} />
                      <ButtonMedium title="Đăng ký" type="submit" handleClick={handleRegister} />
                   </div>
-                  <div className={cssLogin.switchForm}>
+                  <div className={styles.switchForm}>
                      <p>
                         Bạn đã có tài khoản?
                         <strong
-                           className={cssLogin.switchFormLink}
+                           className={styles.switchFormLink}
                            onClick={() => {
                               setCheckForm(!checkForm)
                               navigate('/login', { replace: true })
@@ -197,23 +200,23 @@ function Login() {
                </div>
             )}
             <div
-               className={clsx(cssLogin.wellcome, {
-                  [cssLogin.loginContent]: checkForm,
-                  [cssLogin.registerContent]: !checkForm,
+               className={clsx(styles.wellcome, {
+                  [styles.loginContent]: checkForm,
+                  [styles.registerContent]: !checkForm,
                })}
             >
                {checkForm && (
-                  <div className={cssLogin.wellcomeBack}>
-                     <h2 className={cssLogin.wellcomeBackTitle}>Wellcome Back!</h2>
-                     <p className={cssLogin.wellcomeBackDescription}>
+                  <div className={styles.wellcomeBack}>
+                     <h2 className={styles.wellcomeBackTitle}>Wellcome Back!</h2>
+                     <p className={styles.wellcomeBackDescription}>
                         Đăng ký <strong>TBShop</strong> để trải nghiệm mua sắm tuyệt vời!
                      </p>
                   </div>
                )}
                {!checkForm && (
-                  <div className={cssLogin.wellcomeTo}>
-                     <h2 className={cssLogin.wellcomeToTitle}>Wellcome To TBSHOP!</h2>
-                     <p className={cssLogin.wellcomeToDescription}>
+                  <div className={styles.wellcomeTo}>
+                     <h2 className={styles.wellcomeToTitle}>Wellcome To TBSHOP!</h2>
+                     <p className={styles.wellcomeToDescription}>
                         Đăng nhập <strong>TBShop</strong> để trải nghiệm những điều tuyệt vời!
                      </p>
                   </div>

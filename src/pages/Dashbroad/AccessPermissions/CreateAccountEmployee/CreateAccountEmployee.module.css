@@ -1,0 +1,10 @@
+.wrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+.wrapperInput {
+   width: 400px;
+   margin-top: 10px;
+}

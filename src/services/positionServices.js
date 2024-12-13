@@ -1,7 +1,7 @@
 import { positionMapper } from '../utils/positionMapper'
 import { api } from './index'
 
-async function getAllPosition() {
+async function getAllPositions() {
    return await fetch(`${api}/positions`, {
       method: 'GET',
       credentials: 'include',
@@ -64,4 +64,4 @@ async function deletePosition(positionId) {
       .then((result) => result)
 }
 
-export { getAllPosition, createPosition, getPositionById, updatePosition, deletePosition }
+export { getAllPositions, createPosition, getPositionById, updatePosition, deletePosition }
