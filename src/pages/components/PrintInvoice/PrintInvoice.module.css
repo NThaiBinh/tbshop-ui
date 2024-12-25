@@ -1,0 +1,60 @@
+.wrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+}
+
+.header {
+   margin-bottom: 10px;
+}
+
+.nameAndLogo {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-bottom: 10px;
+}
+
+.logo {
+   width: 60px;
+   height: 60px;
+   border: 1px solid #ccc;
+   border-radius: 50%;
+   margin-right: 10px;
+}
+
+.title {
+   text-align: center;
+}
+
+.groupInfo {
+   display: flex;
+}
+
+.groupInfo h4 {
+   margin-right: 6px;
+}
+
+.tableDiscount {
+   margin-bottom: 10px;
+}
+
+.tableDiscount tr th:last-child {
+   width: 200px;
+}
+
+.tableProduct tr th {
+   min-width: 40px;
+}
+
+.tableProduct tr th:nth-child(2) {
+   width: 200px;
+}
+
+.body {
+   margin-bottom: 10px;
+}
+
+.footer {
+   text-align: center;
+}

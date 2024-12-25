@@ -42,20 +42,17 @@ function Statistical() {
                <h1 className={styles.cartBody}>{statistical.totalPrice?.TONGSODABAN}</h1>
             </div>
             <div className={styles.cart}>
-               {' '}
                <h2 className={styles.cartHeader}>TỔNG DOANH THU</h2>
                <h1 className={styles.cartBody}>{currencyFormat(statistical.totalPrice?.TONGDOANHTHU || 0)}</h1>
             </div>
          </div>
          <div className={styles.groupStatictical}>
             <div className={styles.cart}>
-               {' '}
                <h2 className={styles.cartHeader}>SẢN PHẨM BÁN CHẠY</h2>
                <h1 className={styles.cartBody}>{statistical.bestProduct?.TENSP}</h1>
             </div>
             <div className={styles.cart}>
-               {' '}
-               <h2 className={styles.cartHeader}>SẢN PHẨM BÁN BÁN CHẬM</h2>
+               <h2 className={styles.cartHeader}>SẢN PHẨM BÁN CHẬM</h2>
                <h1 className={styles.cartBody}>{statistical.lastProduct?.TENSP}</h1>
             </div>
          </div>

@@ -23,7 +23,9 @@ function cartItemMapper(cartItemInfo) {
       price: cartItemInfo.GIA,
       totalPrice: cartItemInfo.TONGTIEN,
       status: cartItemInfo.TRANGTHAI,
-      discountList: cartItemInfo.DANHSACHKHUYENMAI.map((discount) => discountCarItemMapper(discount)),
+      discountList: cartItemInfo.DANHSACHKHUYENMAI
+         ? cartItemInfo.DANHSACHKHUYENMAI.map((discount) => discountCarItemMapper(discount))
+         : null,
    }
 }
 

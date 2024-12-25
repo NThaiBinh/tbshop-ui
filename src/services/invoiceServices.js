@@ -12,11 +12,11 @@ async function getAllInvoices(status) {
             code: invoices.code,
             data: invoices.data.map((invoice) => {
                return {
-                  invoiceId: invoice.invoiceId,
-                  customerId: invoice.customerId,
-                  name: invoice.name,
-                  address: invoice.address,
-                  orderList: invoice.invoiceList.map((invoiceItem) => invoiceItemMapper(invoiceItem)),
+                  invoiceId: invoice.MAHD,
+                  customerId: invoice.MAKH,
+                  name: invoice.TENKH,
+                  address: invoice.DIACHIKH,
+                  orderList: invoice.DANHSACHDONHANG?.map((invoiceItem) => invoiceItemMapper(invoiceItem)),
                }
             }),
          }

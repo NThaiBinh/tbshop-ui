@@ -11,7 +11,13 @@ import EditWidthImage from '../../../components/EditWidthImage/EditWidthImage'
 function UpdateStoreInfo() {
    const [state, dispatch] = useContext(StoreContext)
 
-   const [storeInfo, setStoreInfo] = useState({})
+   const [storeInfo, setStoreInfo] = useState({
+      image: '',
+      name: '',
+      address: '',
+      phoneNumber: '',
+      email: '',
+   })
    const navigate = useNavigate()
 
    useEffect(() => {

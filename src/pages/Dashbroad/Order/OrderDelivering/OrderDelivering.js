@@ -10,7 +10,6 @@ function InvoiceDelivering() {
    const navigate = useNavigate()
 
    const [orderDeliverings, setOrderDeliverings] = useState([])
-   const [searchResults, setSearchResults] = useState([])
 
    useEffect(() => {
       async function handleGetAllOrders() {
@@ -25,9 +24,11 @@ function InvoiceDelivering() {
 
    useEffect(() => {
       async function handleGetSearchResults(query) {
-         const searchResults = await getSearchResults(query)
-         if (searchResults?.code === 'SS') {
-            setOrderDeliverings(searchResults.data)
+         if (state.searchValue) {
+            const searchResults = await getSearchResults(query)
+            if (searchResults?.code === 'SS') {
+               setOrderDeliverings(searchResults.data)
+            }
          }
       }
 

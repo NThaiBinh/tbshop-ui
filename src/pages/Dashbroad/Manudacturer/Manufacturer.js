@@ -6,6 +6,7 @@ import TableInfoDashbroad from '../../components/TableInfoDashbroad/TableInfoDas
 import BlankPage from '../../BlankPage/BlankPage'
 import { setShowToast } from '../../../store/actions'
 import { deleteManufac, getAllManufacs } from '../../../services/manufacturerServices'
+import exportExcel from '../../../utils/exportExcel'
 
 function Manufacturer() {
    const location = useLocation()
@@ -38,10 +39,27 @@ function Manufacturer() {
       getAllManufacsHandle(state.page)
    }, [state.page, state.isShowToast])
 
+   function handlePrint() {
+      exportExcel(
+         manufactuers.map((manufac) => {
+            return {
+               'Mã nhà sản xuất': manufac.manufacId,
+               'Tên nhà sản xuất': manufac.name,
+               'Địa chỉ nhà sản xuất': manufac.address,
+            }
+         }),
+      )
+   }
    return (
       <Fragment>
          {manufactuers.length > 0 ? (
-            <TableInfoDashbroad title="THÔNG TIN NHÀ SẢN XUẤT" image={true} pagination={false}>
+            <TableInfoDashbroad
+               title="THÔNG TIN NHÀ SẢN XUẤT"
+               image={true}
+               pagination={false}
+               print={true}
+               handlePrint={handlePrint}
+            >
                {manufactuers.map((manufactuer, index) => (
                   <TabelBodyDashbroad
                      key={index}

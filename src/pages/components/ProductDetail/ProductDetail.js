@@ -98,6 +98,7 @@ function ProductDetail() {
          navigate('/login')
       } else {
          const cartInfo = JSON.parse(localStorage.getItem('cartInfo'))
+         console.log(cartInfo.cartId)
          if (cartInfo) {
             const cartItem = {
                cartId: cartInfo.cartId,
@@ -360,8 +361,10 @@ function ProductDetail() {
                </div>
                <div className={styles.rightBody}>
                   <h3 className={styles.productName}>
-                     {productDetails.productInfo.name} {productDetails.productConfiguration.storageCapacity}{' '}
-                     {productDetails.productConfiguration.cpu} {productDetails.productConfiguration.gpu}
+                     {productDetails.productInfo.name + ' '}
+                     {productDetails.productConfiguration.storageCapacity + ' '}
+                     {productDetails.productConfiguration.cpu + ' '}
+                     {productDetails.productConfiguration.gpu}
                   </h3>
                   <div className={styles.productPrice}>
                      <strong>Giá sản phẩm:</strong>

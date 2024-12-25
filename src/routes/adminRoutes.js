@@ -26,6 +26,7 @@ import OrderDelivering from '../pages/Dashbroad/Order/OrderDelivering/OrderDeliv
 import OrderDelivered from '../pages/Dashbroad/Order/OrderDelivered/OrderDelivered'
 import UpdateStoreInfo from '../pages/Dashbroad/StoreInfo/UpdateStoreInfo/UpdateStoreInfo'
 import Customer from '../pages/Dashbroad/Customer/Customer'
+import PrintInvoice from '../pages/components/PrintInvoice/PrintInvoice'
 
 export const adminRoutes = [
    {
@@ -171,7 +172,7 @@ export const adminRoutes = [
       path: '/dashbroad/orders-delivering/print/:invoiceId',
       component: OrderDelivering,
       layout: DashbroadLayout,
-      edit: Printable,
+      edit: PrintInvoice,
       allowedRoles: ['admin', 'editor'],
    },
    {

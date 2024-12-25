@@ -1,51 +1,5 @@
 .wrapper {
-   width: 600px;
    padding: 20px;
-}
-
-.header {
-   border-bottom: 1px solid #ccc;
-   padding: 10px 0px;
-   margin-bottom: 10px;
-}
-
-.shopInfo {
-   display: flex;
-   justify-content: space-between;
-}
-
-.infoLeft {
-   flex: 1;
-}
-
-.infoRight {
-   flex: 1;
-   text-align: center;
-}
-
-.address {
-   font-size: 1.2rem;
-}
-
-.invoiceInfo {
-}
-
-.groupInfo {
-   display: flex;
-}
-
-.groupInfo p {
-   margin-right: 6px;
-}
-
-.title {
-   text-align: center;
-   margin: 10px 0px;
-}
-
-.footer {
-   padding: 10px;
-   text-align: center;
 }
 
 .btnPrint {
@@ -57,11 +11,11 @@
 }
 
 @media print {
-   #notToPrint {
+   .btnPrint {
       display: none;
    }
 
-   #printableArea {
+   .printArea {
       display: block;
    }
 }

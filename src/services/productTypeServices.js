@@ -21,7 +21,12 @@ async function getProductTypeById(productTypeId) {
       credentials: 'include',
    })
       .then((response) => response.json())
-      .then((category) => category)
+      .then((productType) => {
+         return {
+            code: productType.code,
+            data: productTypeMapper(productType.data),
+         }
+      })
 }
 
 async function createProductType(productTypeInfo) {

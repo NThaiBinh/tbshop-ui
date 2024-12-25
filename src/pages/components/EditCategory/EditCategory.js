@@ -8,7 +8,6 @@ import EditWithoutImage from '../EditWithoutImage/EditWithoutImage'
 
 function EditCategory({ title, titleName, name, setName, nameMessage, handleSubmit }) {
    const navigate = useNavigate()
-   const [state, dispatch] = useContext(StoreContext)
 
    function handleExit() {
       navigate(-1)

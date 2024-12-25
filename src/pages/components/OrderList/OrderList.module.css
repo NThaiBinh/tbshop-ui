@@ -124,6 +124,14 @@
    flex: 2;
 }
 
+.groupProduct strong {
+   display: -webkit-box; /* Sử dụng box model của Webkit */
+   -webkit-line-clamp: 3; /* Giới hạn số dòng là 3 */
+   -webkit-box-orient: vertical; /* Thiết lập hướng của box là dọc */
+   overflow: hidden; /* Ẩn nội dung bị tràn */
+   text-overflow: ellipsis; /* Thêm 3 chấm khi nội dung bị cắt */
+}
+
 .productType {
    flex: 1;
 }

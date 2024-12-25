@@ -43,9 +43,11 @@ function Profile() {
          navigate(-1)
       }
    }
+
    function handleExit() {
       navigate(-1)
    }
+
    return (
       <Modal>
          <EditWidthImage

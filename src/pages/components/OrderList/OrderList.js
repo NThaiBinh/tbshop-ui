@@ -61,9 +61,7 @@ function OrderList({ orders = [], handleConfirm, titleBtnAction }) {
                                     {orderItem.name}
                                  </Link>
                               </h3>
-                              <strong
-                                 className={styles.productType}
-                              >{`${orderItem.storageCapacity} ${orderItem.cpu} ${orderItem.gpu}`}</strong>
+                              <strong className={styles.productType}>{`${orderItem.cpu} ${orderItem.gpu}`}</strong>
                            </div>
                            <div className={styles.wrapperItem}>
                               <strong>{orderItem.color}</strong>

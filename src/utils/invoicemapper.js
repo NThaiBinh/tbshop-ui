@@ -29,6 +29,13 @@ function invoicePrintMapper(invoicePrintInfo) {
       employeeName: invoicePrintInfo.TENNV,
       totalPrice: invoicePrintInfo.TONGTIEN,
       createdAt: invoicePrintInfo.NGAYTAO,
+      discountList: invoicePrintInfo.DANHSACHKHUYENMAI?.map((discount) => {
+         return {
+            discountName: discount.TENKM,
+            discountPrice: discount.GIAKM,
+            applyTo: discount.TENSP,
+         }
+      }),
       productList: invoicePrintInfo?.DANHSACHSANPHAM.map((product) => {
          return {
             productName: product.TENSP,

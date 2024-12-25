@@ -3,13 +3,25 @@
    height: auto;
 }
 
-table {
+.tableInfo {
    width: 100%;
    height: auto;
    color: var(--primary-text-color);
 }
 
-table caption h2 {
+.btnPrint {
+   margin-left: 50px;
+   width: 150px;
+   height: 40px;
+   border-radius: 20px;
+   font-size: 1.6rem;
+}
+
+.btnPrint i {
+   margin-right: 5px;
+}
+
+.tableInfo caption h2 {
    width: 100%;
    height: 40px;
    font-size: 2rem;

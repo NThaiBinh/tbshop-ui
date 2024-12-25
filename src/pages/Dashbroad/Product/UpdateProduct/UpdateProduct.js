@@ -20,17 +20,17 @@ function UpdateProduct() {
    })
    const [productColors, setProductColors] = useState([])
 
-   async function handleGetProductDetails(productId, productConfigurationId) {
-      const productDetailsInfo = await getProductEdit(productId, productConfigurationId)
-
-      if (productDetailsInfo.code === 'SS') {
-         const { productImages, productDetails, productColors } = productDetailsInfo.data
-         setProductImages(productImages)
-         setProductDetails(productDetails)
-         setProductColors(productColors)
-      }
-   }
    useEffect(() => {
+      async function handleGetProductDetails(productId, productConfigurationId) {
+         const productDetailsInfo = await getProductEdit(productId, productConfigurationId)
+         if (productDetailsInfo.code === 'SS') {
+            const { productImages, productDetails, productColors } = productDetailsInfo.data
+            setProductImages(productImages)
+            setProductDetails(productDetails)
+            setProductColors(productColors)
+         }
+      }
+
       handleGetProductDetails(productId, productConfigurationId)
    }, [productId, productConfigurationId])
 

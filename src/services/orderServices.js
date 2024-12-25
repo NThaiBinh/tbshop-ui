@@ -49,7 +49,7 @@ async function cancelOrder(cartItem) {
 }
 
 async function getSearchResults(query) {
-   return await fetch(`${api}/orders/search?q=${query}`, {
+   return await fetch(`${api}/invoices/search?q=${query}`, {
       method: 'GET',
       credentials: 'include',
    })

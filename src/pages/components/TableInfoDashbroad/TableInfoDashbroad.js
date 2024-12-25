@@ -17,6 +17,8 @@ function TableInfoDashbroad({
    refId,
    manufacName,
    positionName,
+   print,
+   handlePrint,
 }) {
    const [state, dispatch] = useContext(StoreContext)
    function handleInput(e) {
@@ -24,9 +26,17 @@ function TableInfoDashbroad({
    }
    return (
       <div className={styles.wrapper}>
-         <table>
+         <table className={styles.tableInfo}>
             <caption>
-               <h2>{title}</h2>
+               <h2>
+                  {title}
+                  {print && (
+                     <button className={styles.btnPrint} onClick={handlePrint}>
+                        <i className="fa-solid fa-file-export"></i>
+                        In danh sách
+                     </button>
+                  )}
+               </h2>
             </caption>
             <thead>
                <tr>
@@ -48,9 +58,19 @@ function TableInfoDashbroad({
          </table>
          {pagination && (
             <div className={styles.selectPage}>
-               <button className={clsx(styles.btn, styles.btnPrev)}>Trang trước</button>
+               <button
+                  className={clsx(styles.btn, styles.btnPrev)}
+                  onClick={() => dispatch(setPage(parseInt(state.page) - 1))}
+               >
+                  Trang trước
+               </button>
                <input className={styles.inputPage} value={state.page} onChange={handleInput} />
-               <button className={clsx(styles.btn, styles.btnNext)}>Trang sau</button>
+               <button
+                  className={clsx(styles.btn, styles.btnNext)}
+                  onClick={() => dispatch(setPage(parseInt(state.page) + 1))}
+               >
+                  Trang sau
+               </button>
             </div>
          )}
       </div>
