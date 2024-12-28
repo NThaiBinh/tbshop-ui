@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import EditPosition from '../../../components/EditPosition/EditPosition'
-import { createPosition, getPositionById, updatePosition } from '../../../../services/positionServices'
+import { getPositionById, updatePosition } from '../../../../services/positionServices'
 import StoreContext from '../../../../store/StoreContext'
 import { setShowToast } from '../../../../store/actions'
 import { useNavigate, useParams } from 'react-router-dom'

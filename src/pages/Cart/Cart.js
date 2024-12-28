@@ -9,7 +9,7 @@ import ButtonMedium from '../components/ButtonMedium/ButtonMedium'
 import { deleteCartItem, getCartItems, updateCartItem } from '../../services/cartServices'
 import Loading from '../components/Loading/Loading'
 import { setShowToast } from '../../store/actions'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { createOrder } from '../../services/orderServices'
 import ProductList from '../../pages/components/ProductsList/ProductsList'
 import { getAllProductsInfo } from '../../services/productServices'
@@ -53,13 +53,13 @@ function Cart() {
          const result = await updateCartItem(cartItems[index])
       }
 
-      if (cartIndexChange != undefined) {
+      if (cartIndexChange !== undefined) {
          handleUpdateCartItem(cartIndexChange)
          setCartIndexChange(undefined)
       }
 
       setIsLoading(false)
-   }, [cartIndexChange])
+   }, [cartIndexChange, cartItems])
 
    useEffect(() => {
       async function handleGetAllProductInfo() {
@@ -111,6 +111,7 @@ function Cart() {
             return cartItem
          }),
       )
+
       handleUpdateTimeOut(index)
    }
 

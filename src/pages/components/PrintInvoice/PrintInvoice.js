@@ -39,10 +39,10 @@ function PrintInvoice() {
          <div className={styles.wrapper}>
             <div className={styles.header}>
                <div className={styles.nameAndLogo}>
-                  <img src={`${imageApi}/${storeInfo.image}`} className={styles.logo} />
+                  <img src={`${imageApi}/${storeInfo.image}`} className={styles.logo} alt="Logo" />
                   <h2>{storeInfo.name}</h2>
                </div>
-               <p>{storeInfo.address}</p>
+               <p className={styles.address}>{storeInfo.address}</p>
                <h1 className={styles.title}>HÓA ĐƠN BÁN LẺ</h1>
                <div className={styles.customerInfo}>
                   <div className={styles.groupInfo}>
